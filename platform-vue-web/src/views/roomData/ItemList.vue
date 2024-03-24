@@ -21,6 +21,21 @@
           </div>
           <div class="search-view">
             <div class="search-item-view">
+              <el-form-item label="房间类型">
+                <el-select
+                    v-model="searchData.roomTypeId"
+                    :clearable="true"
+                    placeholder="请选择-房间类型信息">
+                  <el-option
+                      v-for="(item,index) in roomTypeOptions"
+                      :key="item.value"
+                      :label="item.text"
+                      :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+            <div class="search-item-view">
               <el-form-item label="房间状态">
                 <el-select
                     v-model="searchData.roomStatus"
@@ -82,16 +97,6 @@
                 <el-input
                     v-model="searchData.roomFloor"
                     placeholder="请填写-房间楼层"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="房间类型">
-                <el-input
-                    v-model="searchData.roomType"
-                    placeholder="请填写-房间类型"
                     maxlength="10"
                     show-word-limit>
                 </el-input>
@@ -219,6 +224,17 @@
         </template>
       </el-table-column>
       <el-table-column
+          prop="roomTypeId"
+          label="房间类型"
+          header-align="center"
+          align="center"
+          width="200"
+      >
+        <template v-slot="scope">
+          <el-tag size="medium">{{handleTypeByValue(scope.row.roomTypeId,roomTypeOptions)}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
           prop="roomStatus"
           label="房间状态"
           header-align="center"
@@ -260,13 +276,6 @@
       <el-table-column
           prop="roomFloor"
           label="房间楼层"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="roomType"
-          label="房间类型"
           header-align="center"
           align="center"
       >
@@ -449,6 +458,7 @@
     data() {
       return {
         //-----------------
+        roomTypeOptions: [],
         roomStatusOptions: [],
         roomDataOptions: [],
         //-----------------
@@ -470,13 +480,13 @@
         multipleSelection: [],
         dataList: [],
         searchData: {
+          roomTypeId: '',
           roomStatus: '',
           roomTitle: '',
           briefData: '',
           roomNo: '',
           roomImg: '',
           roomFloor: '',
-          roomType: '',
           unitPrice: '',
           roomArea: '',
           bedNum: '',
@@ -591,13 +601,13 @@
       // 重置控件
       resetSearchForm() {
         this.searchData = {
+          roomTypeId: '',
           roomStatus: '',
           roomTitle: '',
           briefData: '',
           roomNo: '',
           roomImg: '',
           roomFloor: '',
-          roomType: '',
           unitPrice: '',
           roomArea: '',
           bedNum: '',
@@ -782,8 +792,8 @@
       },
       // 初始化数据
       async init() {
-        await this.queryRoomType();
         this.authUserOptions = await this.$bizConstants.authUserOptions()
+        await this.queryRoomType();
         //await this.queryRoomData();
         this.queryPageList();
       },

@@ -22,7 +22,14 @@ import java.io.*;
 @ColumnWidth(25)
 public class RoomDataExportResp implements Serializable {
 
-    private static final long serialVersionUID = 181777771262158895L;
+    private static final long serialVersionUID = -296670142946309906L;
+
+    /**
+     * 房间类型ID
+     */
+    @NotEmpty(message = "房间类型ID->不可为空")
+    @ExcelProperty(value = "房间类型ID")
+    private String roomTypeId;
 
     /**
      * 房间展示标题
@@ -65,13 +72,6 @@ public class RoomDataExportResp implements Serializable {
     @NotEmpty(message = "房间楼层->不可为空")
     @ExcelProperty(value = "房间楼层")
     private Integer roomFloor;
-
-    /**
-     * 房间类型
-     */
-    @NotEmpty(message = "房间类型->不可为空")
-    @ExcelProperty(value = "房间类型")
-    private String roomType;
 
     /**
      * 价格

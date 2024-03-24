@@ -5,7 +5,6 @@ import lombok.Data;
 import pro.skywalking.entity.BaseEntity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 
 /**
@@ -18,12 +17,17 @@ import java.math.BigDecimal;
 @TableName("room_data")
 public class RoomData extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -259411265501292075L;
+    private static final long serialVersionUID = -133552651946776536L;
 
     /**
      * 业务主键ID
      */
     private String roomDataId;
+
+    /**
+     * 房间类型ID
+     */
+    private String roomTypeId;
 
     /**
      * 房间展示标题
@@ -54,11 +58,6 @@ public class RoomData extends BaseEntity implements Serializable {
      * 房间楼层
      */
     private Integer roomFloor;
-
-    /**
-     * 房间类型
-     */
-    private String roomType;
 
     /**
      * 价格

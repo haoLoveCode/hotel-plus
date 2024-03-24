@@ -12,6 +12,16 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
+              房间类型:
+            </div>
+            <div class="descriptions-value">
+              {{handleTypeByValue(particularsData.roomTypeId,roomTypeOptions)}}
+            </div>
+          </div>
+        </div>
+        <div class="descriptions-item">
+          <div class="descriptions-item-view">
+            <div class="descriptions-title">
               房间状态:
             </div>
             <div class="descriptions-value">
@@ -72,16 +82,6 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
-              房间类型:
-            </div>
-            <div class="descriptions-value">
-              {{particularsData.roomType}}
-            </div>
-          </div>
-        </div>
-        <div class="descriptions-item">
-          <div class="descriptions-item-view">
-            <div class="descriptions-title">
               价格:
             </div>
             <div class="descriptions-value">
@@ -136,6 +136,7 @@ export default {
   data() {
     return {
       //-----------------
+      roomTypeOptions: [],
       roomStatusOptions: [],
       //-----------------
       authUserOptions: [],

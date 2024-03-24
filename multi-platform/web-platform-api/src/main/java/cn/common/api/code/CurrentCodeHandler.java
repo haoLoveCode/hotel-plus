@@ -51,12 +51,12 @@ public class CurrentCodeHandler {
     /**
      * 数据表配置 多张表用逗号隔开
      */
-    public final static String TABLE_NAME = "guest_identify";
+    public final static String TABLE_NAME = "room_data";
 
     /**
      * 表注释
      */
-    private final static String TABLE_DESC = "客户身份信息";
+    private final static String TABLE_DESC = "房间信息";
 
     /**
      * VUE前端路径 需要填写绝对路径

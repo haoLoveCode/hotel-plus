@@ -14,6 +14,23 @@
       >
         <div class="data-body-div">
           <div class="data-item-view">
+            <el-form-item label="房间类型" prop="roomTypeId">
+              <el-select
+                  v-model="submitData.roomTypeId"
+                  :clearable="true"
+                  placeholder="请选择-房间类型信息">
+                <el-option
+                    v-for="(item,index) in roomTypeOptions"
+                    :key="item.value"
+                    :label="item.text"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </div>
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="房间状态" prop="roomStatus">
               <el-select
                   v-model="submitData.roomStatus"
@@ -91,18 +108,6 @@
         </div>
         <div class="data-body-div">
           <div class="data-item-view">
-            <el-form-item label="房间类型" prop="roomType">
-              <el-input
-                  v-model="submitData.roomType"
-                  placeholder="请填写-房间类型"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
             <el-form-item label="价格" prop="unitPrice">
               <el-input
                   v-model="submitData.unitPrice"
@@ -166,23 +171,31 @@ export default {
   data() {
     return {
       //-----------------
+      roomTypeOptions: [],
       roomStatusOptions: [],
       //-----------------
       title: "新增",
       addVisible: false,
       submitData: {
+        roomTypeId: '',
         roomStatus: '',
         roomTitle: '',
         briefData: '',
         roomNo: '',
         roomImg: '',
         roomFloor: '',
-        roomType: '',
         unitPrice: '',
         roomArea: '',
         bedNum: '',
       },
       validatorRules: {
+        roomTypeId: [
+          {
+            required: true,
+            message: '请选择-房间类型',
+            trigger: 'change'
+          }
+        ],
         roomStatus: [
           {
             required: true,
@@ -222,13 +235,6 @@ export default {
           {
             required: true,
             message: '请规范填写-房间楼层',
-            trigger: 'blur'
-          }
-        ],
-        roomType: [
-          {
-            required: true,
-            message: '请规范填写-房间类型',
             trigger: 'blur'
           }
         ],
@@ -326,7 +332,6 @@ export default {
         roomNo: '',
         roomImg: '',
         roomFloor: '',
-        roomType: '',
         unitPrice: '',
         roomArea: '',
         bedNum: '',

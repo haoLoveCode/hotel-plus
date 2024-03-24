@@ -15,7 +15,13 @@ import java.io.*;
 @Data
 public class RoomDataAddReq implements Serializable {
 
-    private static final long serialVersionUID = -744572324667666539L;
+    private static final long serialVersionUID = 370018351044084170L;
+
+    /**
+     * 房间类型ID
+     */
+    @NotEmpty(message = "房间类型ID->不可为空")
+    private String roomTypeId;
 
     /**
      * 房间展示标题
@@ -52,12 +58,6 @@ public class RoomDataAddReq implements Serializable {
      */
     @NotEmpty(message = "房间楼层->不可为空")
     private Integer roomFloor;
-
-    /**
-     * 房间类型
-     */
-    @NotEmpty(message = "房间类型->不可为空")
-    private String roomType;
 
     /**
      * 价格

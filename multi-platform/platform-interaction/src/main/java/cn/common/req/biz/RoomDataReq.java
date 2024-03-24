@@ -3,7 +3,6 @@ package cn.common.req.biz;
 import lombok.Data;
 import pro.skywalking.req.base.BasePageReq;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * 房间信息分页查询请求封装类
@@ -14,12 +13,17 @@ import java.math.BigDecimal;
 @Data
 public class RoomDataReq extends BasePageReq implements Serializable {
 
-    private static final long serialVersionUID = -757665233258020303L;
+    private static final long serialVersionUID = -980738483757317697L;
 
     /**
      * 业务主键ID->"roomDataId"
      */
     private String roomDataId;
+
+    /**
+     * 房间类型ID
+     */
+    private String roomTypeId;
 
     /**
      * 房间展示标题
@@ -50,11 +54,6 @@ public class RoomDataReq extends BasePageReq implements Serializable {
      * 房间楼层
      */
     private Integer roomFloor;
-
-    /**
-     * 房间类型
-     */
-    private String roomType;
 
     /**
      * 价格

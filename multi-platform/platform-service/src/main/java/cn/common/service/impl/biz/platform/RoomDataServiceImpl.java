@@ -222,6 +222,10 @@ public class RoomDataServiceImpl implements RoomDataService {
     private void setCriteria(LambdaQueryWrapper<RoomData> wrapper,
                         RoomDataReq req){
 
+        if(!CheckParam.isNull(req.getRoomTypeId())){
+            wrapper.like(RoomData::getRoomTypeId,req.getRoomTypeId());
+        }
+
         if(!CheckParam.isNull(req.getRoomTitle())){
             wrapper.like(RoomData::getRoomTitle,req.getRoomTitle());
         }
@@ -244,10 +248,6 @@ public class RoomDataServiceImpl implements RoomDataService {
 
         if(!CheckParam.isNull(req.getRoomFloor())){
             wrapper.like(RoomData::getRoomFloor,req.getRoomFloor());
-        }
-
-        if(!CheckParam.isNull(req.getRoomType())){
-            wrapper.like(RoomData::getRoomType,req.getRoomType());
         }
 
         if(!CheckParam.isNull(req.getUnitPrice())){
@@ -305,6 +305,10 @@ public class RoomDataServiceImpl implements RoomDataService {
     private void setPageCriteria(LambdaQueryWrapper<RoomData> pageWrapper,
                         RoomDataReq pageReq){
 
+        if(!CheckParam.isNull(pageReq.getRoomTypeId())){
+            pageWrapper.like(RoomData::getRoomTypeId,pageReq.getRoomTypeId());
+        }
+
         if(!CheckParam.isNull(pageReq.getRoomTitle())){
             pageWrapper.like(RoomData::getRoomTitle,pageReq.getRoomTitle());
         }
@@ -327,10 +331,6 @@ public class RoomDataServiceImpl implements RoomDataService {
 
         if(!CheckParam.isNull(pageReq.getRoomFloor())){
             pageWrapper.like(RoomData::getRoomFloor,pageReq.getRoomFloor());
-        }
-
-        if(!CheckParam.isNull(pageReq.getRoomType())){
-            pageWrapper.like(RoomData::getRoomType,pageReq.getRoomType());
         }
 
         if(!CheckParam.isNull(pageReq.getUnitPrice())){
@@ -375,6 +375,9 @@ public class RoomDataServiceImpl implements RoomDataService {
      */
     private void setNeedUpdateItem(RoomData entity,
         RoomDataUpdateReq updateReq){
+        if(!CheckParam.isNull(updateReq.getRoomTypeId())){
+            entity.setRoomTypeId(updateReq.getRoomTypeId());
+        }
         if(!CheckParam.isNull(updateReq.getRoomTitle())){
             entity.setRoomTitle(updateReq.getRoomTitle());
         }
@@ -392,9 +395,6 @@ public class RoomDataServiceImpl implements RoomDataService {
         }
         if(!CheckParam.isNull(updateReq.getRoomFloor())){
             entity.setRoomFloor(updateReq.getRoomFloor());
-        }
-        if(!CheckParam.isNull(updateReq.getRoomType())){
-            entity.setRoomType(updateReq.getRoomType());
         }
         if(!CheckParam.isNull(updateReq.getUnitPrice())){
             entity.setUnitPrice(updateReq.getUnitPrice());
