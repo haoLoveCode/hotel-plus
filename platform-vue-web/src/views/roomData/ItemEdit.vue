@@ -37,7 +37,7 @@
                   :clearable="true"
                   placeholder="请选择-房间状态信息">
                 <el-option
-                    v-for="(item,index) in roomStatusOptions"
+                    v-for="(item,index) in itemStatusOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -164,16 +164,40 @@
 import Api from "@/services";
 import baseUtils from '@/utils/baseUtils'
 import UploadImg from "@/components/UploadImg";
+import Editor from '@/components/editor/Editor';
 export default {
   components: {
-    UploadImg: UploadImg
+    UploadImg: UploadImg,
+    Editor: Editor,
   },
   name: "ItemEdit",
   data() {
     return {
       //-----------------
+      editorContent:'',
       roomTypeOptions: [],
-      roomStatusOptions: [],
+      itemStatusOptions: [
+        {
+          'text':'闲置',
+          'value': 1
+        },
+        {
+          'text':'已预订',
+          'value': 2
+        },
+        {
+          'text':'维护中',
+          'value': 3
+        },
+        {
+          'text':'已入住',
+          'value': 4
+        },
+        {
+          'text':'已退住',
+          'value': 5
+        },
+      ],
       //-----------------
       title: "编辑",
       editVisible: false,
@@ -306,6 +330,63 @@ export default {
         this.$message.error(error.message || error.msg || "服务器异常");
       }
     },
+    //处理展示主图
+    async setMainImgUrl(data) {
+      if (!data) {
+        return;
+      }
+      let mainImg = data.mainImg
+      if (!mainImg) {
+        return;
+      }
+      let mainImgUid = baseUtils.randomString()
+      this.mainImgList = this.$isNull(this.mainImgList) ?
+          new Array() : this.mainImgList
+      if (this.$isNull(mainImg)) {
+        return;
+      }
+      let item = {
+        status: 'success',
+        name: mainImg,
+        percentage: 100,
+        uid: mainImgUid,
+        raw: {
+          uid: mainImgUid
+        },
+        url: this.handleImageUrl(mainImg)
+      }
+      this.mainImgList.push(item)
+    },
+    //处理展示详情图片
+    async setItemImgUrl(data) {
+      if (!data) {
+        return;
+      }
+      console.log('setSaleItemImgUrl:' + JSON.stringify(data))
+      let imgList = data.imgList
+      if (!imgList || imgList.length === 0) {
+        return;
+      }
+      console.log('imgList:' + JSON.stringify(imgList))
+      console.log(' this.imgList:' + JSON.stringify(this.imgList))
+      this.imgList = this.$isNull(this.imgList) ?
+          new Array() : this.imgList
+      imgList.map((item) => {
+        let imgUid = baseUtils.randomString()
+        let imgItem = {
+          status: 'success',
+          name: item,
+          percentage: 100,
+          uid: imgUid,
+          raw: {
+            uid: imgUid
+          },
+          url: this.handleImageUrl(item)
+        }
+        this.imgList.push(imgItem)
+      })
+      console.log(' this.imgList:' + JSON.stringify(this.imgList))
+    },
     //处理展示
     async showEdit(data) {
       console.log('data:' + JSON.stringify(data))
@@ -318,6 +399,8 @@ export default {
       this.editVisible = true;
     },
     async setOtherData(data) {
+      await this.setItemImgUrl(data);
+      await this.setMainImgUrl(data);
       await this.queryRoomType();
     },
     //处理初始化

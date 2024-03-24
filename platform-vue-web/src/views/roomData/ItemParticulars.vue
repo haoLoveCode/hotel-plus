@@ -25,7 +25,7 @@
               房间状态:
             </div>
             <div class="descriptions-value">
-              {{handleTypeByValue(particularsData.roomStatus,roomStatusOptions)}}
+              {{handleTypeByValue(particularsData.roomStatus,itemStatusOptions)}}
             </div>
           </div>
         </div>
@@ -137,7 +137,28 @@ export default {
     return {
       //-----------------
       roomTypeOptions: [],
-      roomStatusOptions: [],
+      itemStatusOptions: [
+        {
+          'text':'闲置',
+          'value': 1
+        },
+        {
+          'text':'已预订',
+          'value': 2
+        },
+        {
+          'text':'维护中',
+          'value': 3
+        },
+        {
+          'text':'已入住',
+          'value': 4
+        },
+        {
+          'text':'已退住',
+          'value': 5
+        },
+      ],
       //-----------------
       authUserOptions: [],
       particularsVisible: false,

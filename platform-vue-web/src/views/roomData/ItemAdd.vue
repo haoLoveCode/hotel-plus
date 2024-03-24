@@ -35,7 +35,7 @@
                   :clearable="true"
                   placeholder="请选择-房间状态信息">
                 <el-option
-                    v-for="(item,index) in roomStatusOptions"
+                    v-for="(item,index) in itemStatusOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -54,25 +54,15 @@
             </el-form-item>
           </div>
         </div>
-        <div class="data-body-div">
+        <div class="text-area-view">
           <div class="data-item-view">
             <el-form-item label="房间展示标题" prop="roomTitle">
               <el-input
+                  type="textarea"
+                  :rows="3"
                   v-model="submitData.roomTitle"
                   placeholder="请填写-房间展示标题"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="房间简介" prop="briefData">
-              <el-input
-                  v-model="submitData.briefData"
-                  placeholder="请填写-房间简介"
-                  maxlength="10"
+                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
@@ -126,10 +116,10 @@
         <div class="editor-div">
           <Editor @change="getEditorContent" :value="editorContent" :isClear="true"></Editor>
         </div>
-        <el-divider content-position="center">上传商品图片</el-divider>
+        <el-divider content-position="center">上传房间图片</el-divider>
         <div class="add-body-div">
           <div class="add-item-view">
-            <el-form-item label="商品图片:">
+            <el-form-item label="房间图片:">
               <div class="upload-item-view">
                 <UploadImg
                     class="upload-item"
@@ -145,18 +135,18 @@
             </el-form-item>
           </div>
         </div>
-        <el-divider content-position="center">上传商品详情图片</el-divider>
+        <el-divider content-position="center">上传房间详情图片</el-divider>
         <div class="add-body-div">
           <div class="add-item-view">
-            <el-form-item label="商品详情图片:">
+            <el-form-item label="房间详情图片:">
               <div class="upload-item-view">
                 <UploadImg
                     class="upload-item"
                     ref="salesItemImgRef"
                     :uploadApi="uploadUrl"
                     :fileList="imgList"
-                    @subBack="uploadSalesImgSuccess"
-                    @handleFileDelete="handleSalesImgDelete"
+                    @subBack="uploadRoomImgSuccess"
+                    @handleFileDelete="handleRoomImgDelete"
                     :limit="5"
                     :headers="uploadHeaders"
                 />
@@ -185,16 +175,40 @@
 import Api from "@/services";
 import baseUtils from '@/utils/baseUtils'
 import UploadImg from "@/components/UploadImg";
+import Editor from '@/components/editor/Editor';
 export default {
   components: {
-    UploadImg: UploadImg
+    UploadImg: UploadImg,
+    Editor: Editor,
   },
   name: "ItemAdd",
   data() {
     return {
       //-----------------
+      editorContent:'',
       roomTypeOptions: [],
-      roomStatusOptions: [],
+      itemStatusOptions: [
+        {
+          'text':'闲置',
+          'value': 1
+        },
+        {
+          'text':'已预订',
+          'value': 2
+        },
+        {
+          'text':'维护中',
+          'value': 3
+        },
+        {
+          'text':'已入住',
+          'value': 4
+        },
+        {
+          'text':'已退住',
+          'value': 5
+        },
+      ],
       //-----------------
       title: "新增",
       addVisible: false,
@@ -303,7 +317,7 @@ export default {
       console.log('editorContent : ' + this.editorContent)
     },
     // 上传图片回调
-    uploadSalesImgSuccess(fileName, file) {
+    uploadRoomImgSuccess(fileName, file) {
       if (this.$isNull(fileName)) {
         return
       }
@@ -329,7 +343,7 @@ export default {
       this.imgList.push(fileNameItem);
       console.log('上传成功后的文件集合:' + JSON.stringify(this.imgList))
     },
-    async handleSalesImgDelete(fileName) {
+    async handleRoomImgDelete(fileName) {
       console.log('删除文件fileName:' + fileName);
       if (this.$isNull(fileName)) {
         return
@@ -432,6 +446,63 @@ export default {
         this.$message.error(error.message || error.msg || "服务器异常");
       }
     },
+    //处理展示主图
+    async setMainImgUrl(data) {
+      if (!data) {
+        return;
+      }
+      let mainImg = data.mainImg
+      if (!mainImg) {
+        return;
+      }
+      let mainImgUid = baseUtils.randomString()
+      this.mainImgList = this.$isNull(this.mainImgList) ?
+          new Array() : this.mainImgList
+      if (this.$isNull(mainImg)) {
+        return;
+      }
+      let item = {
+        status: 'success',
+        name: mainImg,
+        percentage: 100,
+        uid: mainImgUid,
+        raw: {
+          uid: mainImgUid
+        },
+        url: this.handleImageUrl(mainImg)
+      }
+      this.mainImgList.push(item)
+    },
+    //处理展示详情图片
+    async setItemImgUrl(data) {
+      if (!data) {
+        return;
+      }
+      console.log('setSaleItemImgUrl:' + JSON.stringify(data))
+      let imgList = data.imgList
+      if (!imgList || imgList.length === 0) {
+        return;
+      }
+      console.log('imgList:' + JSON.stringify(imgList))
+      console.log(' this.imgList:' + JSON.stringify(this.imgList))
+      this.imgList = this.$isNull(this.imgList) ?
+          new Array() : this.imgList
+      imgList.map((item) => {
+        let imgUid = baseUtils.randomString()
+        let imgItem = {
+          status: 'success',
+          name: item,
+          percentage: 100,
+          uid: imgUid,
+          raw: {
+            uid: imgUid
+          },
+          url: this.handleImageUrl(item)
+        }
+        this.imgList.push(imgItem)
+      })
+      console.log(' this.imgList:' + JSON.stringify(this.imgList))
+    },
     //处理展示
     async showAdd(data) {
       console.log('data:' + JSON.stringify(data))
@@ -442,6 +513,8 @@ export default {
       this.addVisible = true;
     },
     async setOtherData(data) {
+      await this.setItemImgUrl(data);
+      await this.setMainImgUrl(data);
       await this.queryRoomType();
     },
     //处理初始化

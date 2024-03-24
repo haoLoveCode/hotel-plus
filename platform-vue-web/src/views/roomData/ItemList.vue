@@ -42,7 +42,7 @@
                     :clearable="true"
                     placeholder="请选择-房间状态信息">
                   <el-option
-                      v-for="(item,index) in roomStatusOptions"
+                      v-for="(item,index) in itemStatusOptions"
                       :key="item.value"
                       :label="item.text"
                       :value="item.value">
@@ -242,7 +242,7 @@
           width="200"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.roomStatus,roomStatusOptions)}}</el-tag>
+          <el-tag size="medium">{{handleTypeByValue(scope.row.roomStatus,itemStatusOptions)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -459,7 +459,28 @@
       return {
         //-----------------
         roomTypeOptions: [],
-        roomStatusOptions: [],
+        itemStatusOptions: [
+          {
+            'text':'闲置',
+            'value': 1
+          },
+          {
+            'text':'已预订',
+            'value': 2
+          },
+          {
+            'text':'维护中',
+            'value': 3
+          },
+          {
+            'text':'已入住',
+            'value': 4
+          },
+          {
+            'text':'已退住',
+            'value': 5
+          },
+        ],
         roomDataOptions: [],
         //-----------------
         richTextVisible: false,
