@@ -157,7 +157,7 @@ export default {
       roomDataOptions: [],
       bookingStatusOptions: [],
       pickerOptions:this.$commonOptions.pickerOptions,
-      timeFormat:'yyyy-MM-dd', //时间格式
+      timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
       //-----------------
       title: "编辑",
       editVisible: false,

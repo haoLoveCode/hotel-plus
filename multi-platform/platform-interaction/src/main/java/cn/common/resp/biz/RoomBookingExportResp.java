@@ -67,6 +67,8 @@ public class RoomBookingExportResp implements Serializable {
      */
     @NotEmpty(message = "预订时间->不可为空")
     @ExcelProperty(value = "预订时间")
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
     private LocalDateTime bookingTime;
 
     /**
@@ -74,6 +76,8 @@ public class RoomBookingExportResp implements Serializable {
      */
     @NotEmpty(message = "入住开始时间->不可为空")
     @ExcelProperty(value = "入住开始时间")
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
     private LocalDateTime checkInBegin;
 
     /**
@@ -81,8 +85,8 @@ public class RoomBookingExportResp implements Serializable {
      */
     @NotEmpty(message = "入住结束时间->不可为空")
     @ExcelProperty(value = "入住结束时间")
-    @JSONField(format = PlatformConstant.TIME_HOUR_TO_SECONDS_FORMAT)
-    @DateTimeFormat(pattern = PlatformConstant.TIME_HOUR_TO_SECONDS_FORMAT)
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
     private LocalDateTime checkInEnd;
 
     /**

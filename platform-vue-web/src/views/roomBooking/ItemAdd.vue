@@ -172,7 +172,7 @@ export default {
         },
       ],
       pickerOptions:this.$commonOptions.pickerOptions,
-      timeFormat:'yyyy-MM-dd', //时间格式
+      timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
       //-----------------
       title: "新增",
       addVisible: false,

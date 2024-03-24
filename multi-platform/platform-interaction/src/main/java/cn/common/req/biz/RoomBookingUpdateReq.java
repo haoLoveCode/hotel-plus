@@ -65,20 +65,24 @@ public class RoomBookingUpdateReq implements Serializable {
      * 预订时间
      */
     @NotEmpty(message = "预订时间->不可为空")
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
     private LocalDateTime bookingTime;
 
     /**
      * 入住开始时间
      */
     @NotEmpty(message = "入住开始时间->不可为空")
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
     private LocalDateTime checkInBegin;
 
     /**
      * 入住结束时间
      */
     @NotEmpty(message = "入住结束时间->不可为空")
-    @JSONField(format = PlatformConstant.TIME_HOUR_TO_SECONDS_FORMAT)
-    @DateTimeFormat(pattern = PlatformConstant.TIME_HOUR_TO_SECONDS_FORMAT)
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
     private LocalDateTime checkInEnd;
 
     /**
