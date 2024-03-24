@@ -8,7 +8,7 @@
       active-text-color="#409EFF"
     >
       <img src="~@static/icons/main-logo.svg"/>
-      <span class="platform-title">通用ElementUI</span>
+      <span class="platform-title">酒店后台业务管理系统</span>
     </el-menu>
   </div>
 </template>

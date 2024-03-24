@@ -4,7 +4,7 @@ if [ -z $1 ]; then
   exit
 fi
 
-PROJRCT_NAME=multiport-platform
+PROJRCT_NAME=hotel-plus
 
 #项目打包的位置
 BUILD_PATH=/opt/$PROJRCT_NAME/multi-platform/

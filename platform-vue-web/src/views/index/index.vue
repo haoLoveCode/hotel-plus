@@ -1,7 +1,7 @@
 <template>
   <div class="page-view">
     <el-divider content-position="center">系统信息</el-divider>
-    <div class="app-title-view">欢迎来到通用ElementUI,当前登录用户:{{userData.userName}},当前登陆IP地址:{{userData.currentIp}}</div>
+    <div class="app-title-view">欢迎来到酒店后台业务管理系统,当前登录用户:{{userData.userName}},当前登陆IP地址:{{userData.currentIp}}</div>
     <div class="platform-text-view" v-if="$showMoreStatus">
       {{platformItemText}}
     </div>

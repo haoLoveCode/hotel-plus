@@ -44,7 +44,7 @@
             label-width="0px"
             class="login-form"
         >
-          <h3 class="title-view">通用ElementUI</h3>
+          <h3 class="title-view">酒店后台业务管理系统</h3>
           <el-form-item prop="userName">
             <span class="svg-container">
               <i class="user-name-icon"></i>

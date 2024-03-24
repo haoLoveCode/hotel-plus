@@ -1,5 +1,5 @@
 # platform-vue-web #
-## 通用ElementUI
+## 酒店后台业务管理系统
 ### 概述
 
 
