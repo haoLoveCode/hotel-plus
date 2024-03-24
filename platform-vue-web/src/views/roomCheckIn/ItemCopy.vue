@@ -75,14 +75,14 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button
-        @click="handleCancel"
-        size="mini">
+          @click="handleCancel"
+          size="mini">
         取 消
       </el-button>
       <el-button
-        type="primary"
-        @click="handleSubmit"
-        size="mini">
+          type="primary"
+          @click="handleSubmit"
+          size="mini">
         提 交
       </el-button>
     </span>

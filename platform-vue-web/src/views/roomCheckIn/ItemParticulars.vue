@@ -1,9 +1,9 @@
 <template>
   <el-dialog
-    title=""
-    width="45%"
-    :center="true"
-    :visible.sync="particularsVisible">
+      title=""
+      width="45%"
+      :center="true"
+      :visible.sync="particularsVisible">
     <div class="particulars-view">
       <div class="descriptions-title-view">
         客房入住信息详情
@@ -56,8 +56,8 @@
     </el-dialog>
     <span slot="footer" class="dialog-footer">
       <el-button
-        @click="handleCancel"
-        size="mini">
+          @click="handleCancel"
+          size="mini">
         关闭
       </el-button>
     </span>
@@ -182,7 +182,7 @@ export default {
         return '';
       }
       let result =
-        optionList.find(item => item.value == value);
+          optionList.find(item => item.value == value);
       //console.log('result:'+JSON.stringify(result))
       if (!this.$isNull(result)) {
         return result.text
