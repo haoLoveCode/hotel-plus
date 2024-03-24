@@ -20,7 +20,7 @@
                   :clearable="true"
                   placeholder="请选择-预定人信息">
                 <el-option
-                    v-for="(item,index) in subscriberOptions"
+                    v-for="(item,index) in authAppUserOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -28,10 +28,8 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
-            <el-form-item label="房间" prop="roomDataId">
+            <el-form-item label="房间信息" prop="roomDataId">
               <el-select
                   v-model="submitData.roomDataId"
                   :clearable="true"
@@ -45,8 +43,6 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="预定状态" prop="bookingStatus">
               <el-select
@@ -74,20 +70,6 @@
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="房间编号" prop="roomNo">
-              <el-input
-                  v-model="submitData.roomNo"
-                  placeholder="请填写-房间编号"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="备注信息" prop="remark">
               <el-input
@@ -102,36 +84,43 @@
         <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="预订时间" prop="bookingTime">
-              <el-input
+              <el-date-picker
                   v-model="submitData.bookingTime"
-                  placeholder="请填写-预订时间"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+                  type="datetime"
+                  placeholder="请选择-预订时间"
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </el-form-item>
           </div>
         </div>
         <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="入住开始时间" prop="checkInBegin">
-              <el-input
+              <el-date-picker
                   v-model="submitData.checkInBegin"
+                  type="datetime"
                   placeholder="请填写-入住开始时间"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="入住结束时间" prop="checkInEnd">
-              <el-input
+              <el-date-picker
                   v-model="submitData.checkInEnd"
+                  type="datetime"
                   placeholder="请填写-入住结束时间"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </el-form-item>
           </div>
         </div>
@@ -164,9 +153,11 @@ export default {
   data() {
     return {
       //-----------------
-      subscriberOptions: [],
+      authAppUserOptions: [],
       roomDataOptions: [],
       bookingStatusOptions: [],
+      pickerOptions:this.$commonOptions.pickerOptions,
+      timeFormat:'yyyy-MM-dd', //时间格式
       //-----------------
       title: "新增",
       addVisible: false,
@@ -175,7 +166,6 @@ export default {
         roomDataId: '',
         bookingStatus: '',
         bookingNo: '',
-        roomNo: '',
         remark: '',
         bookingTime: '',
         checkInBegin: '',
@@ -210,13 +200,6 @@ export default {
             trigger: 'blur'
           }
         ],
-        roomNo: [
-          {
-            required: true,
-            message: '请规范填写-房间编号',
-            trigger: 'blur'
-          }
-        ],
         remark: [
           {
             required: true,
@@ -227,28 +210,66 @@ export default {
         bookingTime: [
           {
             required: true,
-            message: '请规范填写-预订时间',
-            trigger: 'blur'
+            message: '请选择-预订时间',
+            trigger: 'change'
           }
         ],
         checkInBegin: [
           {
             required: true,
-            message: '请规范填写-入住开始时间',
-            trigger: 'blur'
+            message: '请选择-入住开始时间',
+            trigger: 'change'
           }
         ],
         checkInEnd: [
           {
             required: true,
-            message: '请规范填写-入住结束时间',
-            trigger: 'blur'
+            message: '请选择-入住结束时间',
+            trigger: 'change'
           }
         ],
       }
     };
   },
   methods: {
+    async queryRoomData() {
+      const loading = this.$loading({
+        lock: true,
+        text: "正在请求。。。",
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      });
+      try {
+        Api.queryRoomData({}).then((res) => {
+          if (res.success) {
+            console.log('res:' + JSON.stringify(res))
+            if (this.$isNull(res)) {
+              return;
+            }
+            let data = res.data
+            if (this.$isNull(data)) {
+              return;
+            }
+            this.roomDataOptions = new Array();
+            data.map((item) => {
+              let options = {
+                'text': item.roomDataName,
+                'value': item.roomDataId
+              }
+              this.roomDataOptions.push(options)
+            })
+            console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
+            loading.close();
+          } else {
+            loading.close();
+            this.$message.error('服务器异常');
+          }
+        });
+      } catch (error) {
+        loading.close();
+        this.$message.error(error.message || error.msg || "服务器异常");
+      }
+    },
     //处理展示
     async showAdd(data) {
       console.log('data:' + JSON.stringify(data))
@@ -259,7 +280,8 @@ export default {
       this.addVisible = true;
     },
     async setOtherData(data) {
-
+      await this.queryRoomData();
+      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
     },
     //处理初始化
     async init(data) {
@@ -275,8 +297,10 @@ export default {
     clearAll() {
       console.log('触发清除所有')
       this.submitData = {
+        subscriberId: '',
+        roomDataId: '',
+        bookingStatus: '',
         bookingNo: '',
-        roomNo: '',
         remark: '',
         bookingTime: '',
         checkInBegin: '',

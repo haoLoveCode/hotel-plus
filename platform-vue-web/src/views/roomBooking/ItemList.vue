@@ -27,7 +27,7 @@
                     :clearable="true"
                     placeholder="请选择-预定人信息">
                   <el-option
-                      v-for="(item,index) in subscriberOptions"
+                      v-for="(item,index) in authAppUserOptions"
                       :key="item.value"
                       :label="item.text"
                       :value="item.value">
@@ -72,16 +72,6 @@
                 <el-input
                     v-model="searchData.bookingNo"
                     placeholder="请填写-预订单号"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="房间编号">
-                <el-input
-                    v-model="searchData.roomNo"
-                    placeholder="请填写-房间编号"
                     maxlength="10"
                     show-word-limit>
                 </el-input>
@@ -226,7 +216,7 @@
           width="200"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.subscriberId,subscriberOptions)}}</el-tag>
+          <el-tag size="medium">{{handleTypeByValue(scope.row.subscriberId,authAppUserOptions)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -254,13 +244,6 @@
       <el-table-column
           prop="bookingNo"
           label="预订单号"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="roomNo"
-          label="房间编号"
           header-align="center"
           align="center"
       >
@@ -450,7 +433,7 @@
     data() {
       return {
         //-----------------
-        subscriberOptions: [],
+        authAppUserOptions: [],
         roomDataOptions: [],
         bookingStatusOptions: [],
         roomBookingOptions: [],
@@ -477,7 +460,6 @@
           roomDataId: '',
           bookingStatus: '',
           bookingNo: '',
-          roomNo: '',
           remark: '',
           bookingTime: '',
           checkInBegin: '',
@@ -489,6 +471,44 @@
       this.init();
     },
     methods: {
+      async queryRoomData() {
+        const loading = this.$loading({
+          lock: true,
+          text: "正在请求。。。",
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.8)'
+        });
+        try {
+          Api.queryRoomData({}).then((res) => {
+            if (res.success) {
+              console.log('res:' + JSON.stringify(res))
+              if (this.$isNull(res)) {
+                return;
+              }
+              let data = res.data
+              if (this.$isNull(data)) {
+                return;
+              }
+              this.roomDataOptions = new Array();
+              data.map((item) => {
+                let options = {
+                  'text': item.roomDataName,
+                  'value': item.roomDataId
+                }
+                this.roomDataOptions.push(options)
+              })
+              console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
+              loading.close();
+            } else {
+              loading.close();
+              this.$message.error('服务器异常');
+            }
+          });
+        } catch (error) {
+          loading.close();
+          this.$message.error(error.message || error.msg || "服务器异常");
+        }
+      },
       async showRichText(richText) {
         console.log(richText)
         this.richText = richText
@@ -559,7 +579,6 @@
           roomDataId: '',
           bookingStatus: '',
           bookingNo: '',
-          roomNo: '',
           remark: '',
           bookingTime: '',
           checkInBegin: '',
@@ -745,6 +764,8 @@
       },
       // 初始化数据
       async init() {
+        await this.queryRoomData();
+        this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
         this.authUserOptions = await this.$bizConstants.authUserOptions()
         //await this.queryRoomBooking();
         this.queryPageList();

@@ -159,9 +159,18 @@ export default {
     clearAll() {
       console.log('触发清除所有')
       this.submitData = {
+        <#if idOptionsList?? && (idOptionsList?size > 0) >
+        <#list idOptionsList as idOptionsItem>
+        ${idOptionsItem.camelCaseName}: '',
+        </#list>
+        <#else>
+        </#if>
+        <#if columnList?? && (columnList?size > 0) >
         <#list columnList as column>
         ${column.camelCaseName}: '',
         </#list>
+        <#else>
+        </#if>
       }
     },
     handleCancel() {

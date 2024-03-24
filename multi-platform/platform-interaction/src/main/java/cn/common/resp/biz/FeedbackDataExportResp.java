@@ -22,7 +22,7 @@ import java.io.*;
 @ColumnWidth(25)
 public class FeedbackDataExportResp implements Serializable {
 
-    private static final long serialVersionUID = 311039673848236917L;
+    private static final long serialVersionUID = 880464154156524596L;
 
     /**
      * 内容标题

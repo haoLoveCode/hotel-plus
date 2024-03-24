@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 public class FeedbackDataReq extends BasePageReq implements Serializable {
 
-    private static final long serialVersionUID = 740039037096701557L;
+    private static final long serialVersionUID = 870026873249475265L;
 
     /**
      * 业务主键ID->"feedbackDataId"

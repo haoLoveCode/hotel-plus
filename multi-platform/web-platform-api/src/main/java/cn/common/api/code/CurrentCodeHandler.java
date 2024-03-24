@@ -83,7 +83,7 @@ public class CurrentCodeHandler {
                 return;
             }
             //设置是否生成前端和后台代码
-            CodeHandler.setCreateVue(true);
+            CodeHandler.setCreateVue(false);
             CodeHandler.setCreateJava(true);
             //设置前端项目代码路径
             CodeHandler.setVuePath(VUE_PATH);

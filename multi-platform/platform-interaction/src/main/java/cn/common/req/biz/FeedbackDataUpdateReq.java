@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 public class FeedbackDataUpdateReq implements Serializable {
 
-    private static final long serialVersionUID = -575056984821276982L;
+    private static final long serialVersionUID = -562439535332655138L;
 
     /**
      * 主键ID->ID

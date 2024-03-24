@@ -15,7 +15,7 @@ import java.io.*;
 @Data
 public class FeedbackDataAddReq implements Serializable {
 
-    private static final long serialVersionUID = -195117187092285762L;
+    private static final long serialVersionUID = -807009305190907522L;
 
     /**
      * 内容标题

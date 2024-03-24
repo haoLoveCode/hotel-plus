@@ -1,20 +1,42 @@
 <template>
   <el-dialog
-          title="新增${entityDesc}"
-          @close="handleCancel"
-          :center="true"
-          :visible.sync="copyVisible">
-    <div class="copy-body">
+      title="复制${entityDesc}"
+      :center="true"
+      @close="handleCancel"
+      :visible.sync="copyVisible">
+    <div class="data-body">
       <el-form
-        ref="submitForm"
-        :model="submitData"
-        :rules="validatorRules"
-        label-width="130px"
-        class="copy-body-form"
+          ref="submitForm"
+          :model="submitData"
+          :rules="validatorRules"
+          label-width="130px"
+          class="data-body-form"
       >
-      <#list columnList as column>
-        <div class="copy-body-div">
-          <div class="copy-item-view">
+        <#if idOptionsList?? && (idOptionsList?size > 0) >
+        <#list idOptionsList as idOptionsItem>
+        <div class="data-body-div">
+          <div class="data-item-view">
+            <el-form-item label="${idOptionsItem.columnNameDesc?replace('ID', '')}" prop="${idOptionsItem.camelCaseName}">
+              <el-select
+                  v-model="submitData.${idOptionsItem.camelCaseName}"
+                  :clearable="true"
+                  placeholder="请选择-${idOptionsItem.columnNameDesc?replace('ID', '')}信息">
+                <el-option
+                    v-for="(item,index) in ${idOptionsItem.camelCaseName?replace('Id', '')}Options"
+                    :key="item.value"
+                    :label="item.text"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </div>
+        </#list>
+        </#if>
+        <#if columnList?? && (columnList?size > 0) >
+        <#list columnList as column>
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="${column.columnNameDesc}" prop="${column.camelCaseName}">
               <el-input
                   v-model="submitData.${column.camelCaseName}"
@@ -25,7 +47,8 @@
             </el-form-item>
           </div>
         </div>
-      </#list>
+        </#list>
+        </#if>
       </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -43,6 +66,7 @@
     </span>
   </el-dialog>
 </template>
+
 <script>
 import Api from "@/services";
 import baseUtils from '@/utils/baseUtils'
@@ -51,29 +75,58 @@ export default {
   components: {
     UploadImg: UploadImg
   },
-  name: "ItemCopy",
+  name: "ItemEdit",
   data() {
     return {
       //-----------------
-
+      <#if idOptionsList?? && (idOptionsList?size > 0) >
+      <#list idOptionsList as idOptionsItem>
+      ${idOptionsItem.camelCaseName?replace('Id', '')}Options: [],
+      </#list>
+      <#else>
+      </#if>
       //-----------------
-      title: "新增",
+      title: "编辑",
       copyVisible: false,
       submitData: {
+        <#if idOptionsList?? && (idOptionsList?size > 0) >
+        <#list idOptionsList as idOptionsItem>
+        ${idOptionsItem.camelCaseName}: '',
+        </#list>
+        <#else>
+        </#if>
+        <#if columnList?? && (columnList?size > 0) >
         <#list columnList as column>
         ${column.camelCaseName}: '',
         </#list>
+        <#else>
+        </#if>
       },
       validatorRules: {
+        <#if idOptionsList?? && (idOptionsList?size > 0) >
+        <#list idOptionsList as idOptionsItem>
+        ${idOptionsItem.camelCaseName}: [
+          {
+            required: true,
+            message: '请选择-${idOptionsItem.columnNameDesc?replace('ID', '')}',
+            trigger: 'change'
+          }
+        ],
+        </#list>
+        <#else>
+        </#if>
+        <#if columnList?? && (columnList?size > 0) >
         <#list columnList as column>
         ${column.camelCaseName}: [
           {
             required: true,
-            message: '请规范填写${column.columnNameDesc}',
+            message: '请规范填写-${column.columnNameDesc}',
             trigger: 'blur'
           }
         ],
         </#list>
+        <#else>
+        </#if>
       }
     };
   },
@@ -106,9 +159,18 @@ export default {
     clearAll() {
       console.log('触发清除所有')
       this.submitData = {
+        <#if idOptionsList?? && (idOptionsList?size > 0) >
+        <#list idOptionsList as idOptionsItem>
+        ${idOptionsItem.camelCaseName}: '',
+        </#list>
+        <#else>
+        </#if>
+        <#if columnList?? && (columnList?size > 0) >
         <#list columnList as column>
         ${column.camelCaseName}: '',
         </#list>
+        <#else>
+        </#if>
       }
     },
     handleCancel() {
@@ -157,27 +219,27 @@ export default {
 </script>
 <#noparse>
 <style scoped lang="scss">
-.copy-body {
+.data-body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
   align-items: center;
-  .copy-body-form {
+  .data-body-form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-content: center;
     align-items: flex-start;
     width: 100%;
-    .copy-body-div {
+    .data-body-div {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-content: center;
       align-items: center;
       width: auto;
-      .copy-item-view {
+      .data-item-view {
 
       }
       .upload-item-view {
@@ -188,7 +250,8 @@ export default {
     }
     .text-area-view {
       width: 100%;
-      .copy-item-view {
+      .data-item-view {
+
       }
     }
     .dynamic-body-div {

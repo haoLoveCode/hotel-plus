@@ -17,7 +17,7 @@ import java.io.Serializable;
 @TableName("feedback_data")
 public class FeedbackData extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 271792562808862637L;
+    private static final long serialVersionUID = -298980318539961612L;
 
     /**
      * 业务主键ID

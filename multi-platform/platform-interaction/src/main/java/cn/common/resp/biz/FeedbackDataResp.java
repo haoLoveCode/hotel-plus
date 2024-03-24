@@ -15,7 +15,7 @@ import java.io.*;
 @Data
 public class FeedbackDataResp extends BaseResp implements Serializable {
 
-    private static final long serialVersionUID = -330613718756204508L;
+    private static final long serialVersionUID = -800101981631564038L;
 
     /**
      * 业务主键ID->"feedbackDataId"
