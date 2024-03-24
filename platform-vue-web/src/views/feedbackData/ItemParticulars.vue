@@ -12,27 +12,7 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
-              提交人:
-            </div>
-            <div class="descriptions-value">
-              {{handleTypeByValue(particularsData.submitterId,submitterOptions)}}
-            </div>
-          </div>
-        </div>
-        <div class="descriptions-item">
-          <div class="descriptions-item-view">
-            <div class="descriptions-title">
-              处理状态:
-            </div>
-            <div class="descriptions-value">
-              {{handleTypeByValue(particularsData.handleStatus,handleStatusOptions)}}
-            </div>
-          </div>
-        </div>
-        <div class="descriptions-item">
-          <div class="descriptions-item-view">
-            <div class="descriptions-title">
-              内容标题:
+              <el-tag size="medium">内容标题:</el-tag>
             </div>
             <div class="descriptions-value">
               {{particularsData.dataTitle}}
@@ -42,7 +22,7 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
-              内容:
+              <el-tag size="medium">内容:</el-tag>
             </div>
             <div class="descriptions-value">
               {{particularsData.dataValue}}
@@ -52,7 +32,27 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
-              备注:
+              <el-tag size="medium">提交人:</el-tag>
+            </div>
+            <div class="descriptions-value">
+              {{handleTypeByValue(particularsData.submitterId,authAppUserOptions)}}
+            </div>
+          </div>
+        </div>
+        <div class="descriptions-item">
+          <div class="descriptions-item-view">
+            <div class="descriptions-title">
+              <el-tag size="medium">处理状态:</el-tag>
+            </div>
+            <div class="descriptions-value">
+              {{handleTypeByValue(particularsData.handleStatus,handleOptions)}}
+            </div>
+          </div>
+        </div>
+        <div class="descriptions-item">
+          <div class="descriptions-item-view">
+            <div class="descriptions-title">
+              <el-tag size="medium">备注:</el-tag>
             </div>
             <div class="descriptions-value">
               {{particularsData.remarkData}}
@@ -86,8 +86,17 @@ export default {
   data() {
     return {
       //-----------------
-      submitterOptions: [],
-      handleStatusOptions: [],
+      authAppUserOptions:[],
+      handleOptions: [
+        {
+          'text':'已提交',
+          'value':1
+        },
+        {
+          'text':'已处理',
+          'value':2
+        },
+      ],
       //-----------------
       authUserOptions: [],
       particularsVisible: false,
@@ -134,6 +143,7 @@ export default {
       this.particularsVisible = true;
     },
     async init(data) {
+      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
       this.authUserOptions = await this.$bizConstants.authUserOptions()
       this.showParticulars(data);
     },

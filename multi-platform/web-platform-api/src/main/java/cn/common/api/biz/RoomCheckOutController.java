@@ -32,7 +32,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 客房退房信息前端控制器
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 @RestController
 @RequestMapping(value = "api/v1/roomCheckOut")
@@ -45,7 +45,7 @@ public class RoomCheckOutController extends BaseApiController {
     /**
      * 新增客房退房信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增客房退房信息Req
      */
     @PostMapping(value = "/addItem")
@@ -59,7 +59,7 @@ public class RoomCheckOutController extends BaseApiController {
     /**
      * 导出客房退房信息数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
     */
@@ -73,7 +73,7 @@ public class RoomCheckOutController extends BaseApiController {
     /**
      * 主键ID集合批量删除客房退房信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的客房退房信息信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -87,7 +87,7 @@ public class RoomCheckOutController extends BaseApiController {
     /**
      * 更新客房退房信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新客房退房信息请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -101,7 +101,7 @@ public class RoomCheckOutController extends BaseApiController {
     /**
      * 查询客房退房信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -116,7 +116,7 @@ public class RoomCheckOutController extends BaseApiController {
     /**
      * 查询单个客房退房信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -131,7 +131,7 @@ public class RoomCheckOutController extends BaseApiController {
     /**
      * 分页查询客房退房信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询客房退房信息Req
      * @return Pagination
      */

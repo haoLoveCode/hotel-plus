@@ -52,7 +52,7 @@ import java.util.Map;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 客户身份信息相关服务方法实现
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 @Service("guestIdentifyService")
 @Slf4j
@@ -79,7 +79,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 导出客户身份信息数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
      */
@@ -128,7 +128,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 新增客户身份信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增客户身份信息Req
      */
     @Override
@@ -153,7 +153,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 批量删除客户身份信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的客户身份信息信息
      */
     @Override
@@ -172,7 +172,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 查询客户身份信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -193,7 +193,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 查询单个客户身份信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -214,7 +214,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 设置查询条件
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param wrapper 查询条件
      * @param req 查询参数
      * @return
@@ -242,7 +242,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 分页查询客户身份信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询客户身份信息Req
      * @return Pagination
      */
@@ -273,7 +273,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 设置分页条件
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageWrapper 查询条件
      * @param pageReq 查询参数
      * @return
@@ -301,7 +301,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 更新客户身份信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新客户身份信息请求参数
      */
     @Override
@@ -321,7 +321,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     /**
      * 设置需要更新的字段
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新参数
      * @param entity 实体
      */

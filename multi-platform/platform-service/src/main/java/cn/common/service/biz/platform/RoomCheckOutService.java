@@ -13,14 +13,14 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 客房退房信息相关服务
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 public interface RoomCheckOutService {
 
     /**
      * 导出客房退房信息数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
      */
@@ -29,7 +29,7 @@ public interface RoomCheckOutService {
     /**
      * 新增客房退房信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增Req
      */
     void addItem(RoomCheckOutAddReq addReq);
@@ -37,7 +37,7 @@ public interface RoomCheckOutService {
     /**
      * 批量删除客房退房信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的客房退房信息信息
      */
     void batchDeleteItem(BaseDeleteReq req);
@@ -45,7 +45,7 @@ public interface RoomCheckOutService {
     /**
      * 查询客房退房信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -54,7 +54,7 @@ public interface RoomCheckOutService {
     /**
      * 查询单个客房退房信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -63,7 +63,7 @@ public interface RoomCheckOutService {
     /**
      * 分页查询客房退房信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询客房退房信息Req
      * @return Pagination
      */
@@ -73,7 +73,7 @@ public interface RoomCheckOutService {
     /**
      * 更新客房退房信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新客房退房信息请求参数
      */
     void updateItem(RoomCheckOutUpdateReq updateReq);

@@ -1,10 +1,9 @@
 package cn.common.req.biz;
 
-import pro.skywalking.validation.NotEmpty;
 import lombok.Data;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.io.*;
+import pro.skywalking.validation.NotEmpty;
+
+import java.io.Serializable;
 
 /**
  * 投诉建议信息新增Req

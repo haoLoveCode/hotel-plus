@@ -32,7 +32,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 房间类型信息前端控制器
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 @RestController
 @RequestMapping(value = "api/v1/roomType")
@@ -45,7 +45,7 @@ public class RoomTypeController extends BaseApiController {
     /**
      * 新增房间类型信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增房间类型信息Req
      */
     @PostMapping(value = "/addItem")
@@ -59,7 +59,7 @@ public class RoomTypeController extends BaseApiController {
     /**
      * 导出房间类型信息数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
     */
@@ -73,7 +73,7 @@ public class RoomTypeController extends BaseApiController {
     /**
      * 主键ID集合批量删除房间类型信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的房间类型信息信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -87,7 +87,7 @@ public class RoomTypeController extends BaseApiController {
     /**
      * 更新房间类型信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新房间类型信息请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -101,7 +101,7 @@ public class RoomTypeController extends BaseApiController {
     /**
      * 查询房间类型信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -116,7 +116,7 @@ public class RoomTypeController extends BaseApiController {
     /**
      * 查询单个房间类型信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -131,7 +131,7 @@ public class RoomTypeController extends BaseApiController {
     /**
      * 分页查询房间类型信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询房间类型信息Req
      * @return Pagination
      */

@@ -1,26 +1,53 @@
 <template>
-  <el-dialog
-      title="编辑投诉建议信息"
-      :center="true"
-      @close="handleCancel"
-      :visible.sync="editVisible">
-    <div class="data-body">
+  <el-dialog title="编辑投诉建议信息"
+             :center="true"
+             @close="handleCancel"
+             :visible.sync="editVisible">
+    <div class="update-body">
       <el-form
           ref="submitForm"
           :model="submitData"
           :rules="validatorRules"
           label-width="130px"
-          class="data-body-form"
+          class="update-body-form"
       >
-        <div class="data-body-div">
-          <div class="data-item-view">
+        <div class="text-area-view">
+          <div class="update-item-view">
+            <el-form-item label="内容标题" prop="dataTitle">
+              <el-input
+                  type="textarea"
+                  :rows="5"
+                  v-model="submitData.dataTitle"
+                  placeholder="请填写-内容标题"
+                  maxlength="200"
+                  show-word-limit>
+              </el-input>
+            </el-form-item>
+          </div>
+        </div>
+        <div class="text-area-view">
+          <div class="update-item-view">
+            <el-form-item label="内容" prop="dataValue">
+              <el-input
+                  type="textarea"
+                  :rows="5"
+                  v-model="submitData.dataValue"
+                  placeholder="请填写-内容"
+                  maxlength="200"
+                  show-word-limit>
+              </el-input>
+            </el-form-item>
+          </div>
+        </div>
+        <div class="update-body-div">
+          <div class="update-item-view">
             <el-form-item label="提交人" prop="submitterId">
               <el-select
                   v-model="submitData.submitterId"
                   :clearable="true"
-                  placeholder="请选择-提交人信息">
+                  placeholder="请选择提交人">
                 <el-option
-                    v-for="(item,index) in submitterOptions"
+                    v-for="item in authAppUserOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -28,16 +55,14 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
+          <div class="update-item-view">
             <el-form-item label="处理状态" prop="handleStatus">
               <el-select
                   v-model="submitData.handleStatus"
                   :clearable="true"
-                  placeholder="请选择-处理状态信息">
+                  placeholder="请选择处理状态">
                 <el-option
-                    v-for="(item,index) in handleStatusOptions"
+                    v-for="item in handleOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -46,37 +71,15 @@
             </el-form-item>
           </div>
         </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="内容标题" prop="dataTitle">
-              <el-input
-                  v-model="submitData.dataTitle"
-                  placeholder="请填写-内容标题"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="内容" prop="dataValue">
-              <el-input
-                  v-model="submitData.dataValue"
-                  placeholder="请填写-内容"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
+        <div class="text-area-view">
+          <div class="update-item-view">
             <el-form-item label="备注" prop="remarkData">
               <el-input
+                  type="textarea"
+                  :rows="5"
                   v-model="submitData.remarkData"
                   placeholder="请填写-备注"
-                  maxlength="10"
+                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
@@ -112,51 +115,60 @@ export default {
   data() {
     return {
       //-----------------
-      submitterOptions: [],
-      handleStatusOptions: [],
+      authAppUserOptions:[],
+      handleOptions: [
+        {
+          'text':'已提交',
+          'value':1
+        },
+        {
+          'text':'已处理',
+          'value':2
+        },
+      ],
       //-----------------
       title: "编辑",
       editVisible: false,
       submitData: {
-        submitterId: '',
-        handleStatus: '',
         dataTitle: '',
         dataValue: '',
+        submitterId: '',
+        handleStatus: '',
         remarkData: '',
       },
       validatorRules: {
-        submitterId: [
-          {
-            required: true,
-            message: '请选择-提交人',
-            trigger: 'change'
-          }
-        ],
-        handleStatus: [
-          {
-            required: true,
-            message: '请选择-处理状态',
-            trigger: 'change'
-          }
-        ],
         dataTitle: [
           {
             required: true,
-            message: '请规范填写-内容标题',
+            message: '请规范填写内容标题',
             trigger: 'blur'
           }
         ],
         dataValue: [
           {
             required: true,
-            message: '请规范填写-内容',
+            message: '请规范填写内容',
             trigger: 'blur'
+          }
+        ],
+        submitterId: [
+          {
+            required: true,
+            message: '请选择提交人',
+            trigger: 'change'
+          }
+        ],
+        handleStatus: [
+          {
+            required: true,
+            message: '请选择处理状态',
+            trigger: 'change'
           }
         ],
         remarkData: [
           {
             required: true,
-            message: '请规范填写-备注',
+            message: '请规范填写备注',
             trigger: 'blur'
           }
         ],
@@ -165,22 +177,22 @@ export default {
   },
   methods: {
     //处理展示
-    async showEdit(data) {
+    showEdit(data) {
       console.log('data:' + JSON.stringify(data))
       if (data) {
         this.submitData = {
           ...data
         }
       }
-      await this.init(data);
+      this.init();
       this.editVisible = true;
     },
-    async setOtherData(data) {
-
+    async setOtherData() {
+      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
     },
     //处理初始化
-    async init(data) {
-      await this.setOtherData(data);
+    async init() {
+      await this.setOtherData();
       const loading = this.$loading({
         lock: true,
         text: "正在请求。。。",
@@ -194,6 +206,8 @@ export default {
       this.submitData = {
         dataTitle: '',
         dataValue: '',
+        submitterId: '',
+        handleStatus: '',
         remarkData: '',
       }
     },
@@ -242,27 +256,27 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.data-body {
+.update-body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
   align-items: center;
-  .data-body-form {
+  .update-body-form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-content: center;
     align-items: flex-start;
     width: 100%;
-    .data-body-div {
+    .update-body-div {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-content: center;
       align-items: center;
       width: auto;
-      .data-item-view {
+      .update-item-view {
 
       }
       .upload-item-view {
@@ -273,7 +287,7 @@ export default {
     }
     .text-area-view {
       width: 100%;
-      .data-item-view {
+      .update-item-view {
 
       }
     }

@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 房间信息相关服务方法实现
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 @Service("roomDataService")
 @Slf4j
@@ -82,7 +82,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 导出房间信息数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
      */
@@ -131,7 +131,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 新增房间信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增房间信息Req
      */
     @Override
@@ -176,7 +176,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 批量删除房间信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的房间信息信息
      */
     @Override
@@ -196,7 +196,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 查询房间信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -230,7 +230,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 查询单个房间信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -257,7 +257,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 设置查询条件
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param wrapper 查询条件
      * @param req 查询参数
      * @return
@@ -309,7 +309,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 分页查询房间信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询房间信息Req
      * @return Pagination
      */
@@ -350,7 +350,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 设置分页条件
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageWrapper 查询条件
      * @param pageReq 查询参数
      * @return
@@ -402,7 +402,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 更新房间信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新房间信息请求参数
      */
     @Override
@@ -446,7 +446,7 @@ public class RoomDataServiceImpl implements RoomDataService {
     /**
      * 设置需要更新的字段
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新参数
      * @param entity 实体
      */

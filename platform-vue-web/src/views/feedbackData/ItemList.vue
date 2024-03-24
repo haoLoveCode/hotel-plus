@@ -3,83 +3,61 @@
     <div class="page-search-view">
       <el-form :inline="true" ref="pageForm">
         <div class="search-param-view">
-          <div class="search-item-view">
-            <el-form-item label="投诉建议信息">
-              <el-select
-                  v-model="searchData.feedbackDataId"
-                  :clearable="true"
-                  @change="handleFeedbackDataChange"
-                  placeholder="请选择投诉建议信息">
-                <el-option
-                    v-for="(item,index) in feedbackDataOptions"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-          <div class="search-view">
-            <div class="search-item-view">
-              <el-form-item label="提交人">
-                <el-select
-                    v-model="searchData.submitterId"
-                    :clearable="true"
-                    placeholder="请选择-提交人信息">
-                  <el-option
-                      v-for="(item,index) in submitterOptions"
-                      :key="item.value"
-                      :label="item.text"
-                      :value="item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="处理状态">
-                <el-select
-                    v-model="searchData.handleStatus"
-                    :clearable="true"
-                    placeholder="请选择-处理状态信息">
-                  <el-option
-                      v-for="(item,index) in handleStatusOptions"
-                      :key="item.value"
-                      :label="item.text"
-                      :value="item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </div>
-          </div>
           <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="内容标题">
                 <el-input
                     v-model="searchData.dataTitle"
-                    placeholder="请填写-内容标题"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
+                    placeholder="内容标题"
+                ></el-input>
               </el-form-item>
             </div>
             <div class="search-item-view">
               <el-form-item label="内容">
                 <el-input
                     v-model="searchData.dataValue"
-                    placeholder="请填写-内容"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
+                    placeholder="内容"
+                ></el-input>
+              </el-form-item>
+            </div>
+            <div class="search-item-view">
+              <el-form-item label="提交人">
+                <el-select
+                    v-model="searchData.submitterId"
+                    :clearable="true"
+                    placeholder="请选择提交人">
+                  <el-option
+                      v-for="item in authAppUserOptions"
+                      :key="item.value"
+                      :label="item.text"
+                      :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+          </div>
+          <div class="search-view">
+            <div class="search-item-view">
+              <el-form-item label="处理状态">
+                <el-select
+                    v-model="searchData.handleStatus"
+                    :clearable="true"
+                    placeholder="请选择处理状态">
+                  <el-option
+                      v-for="item in handleOptions"
+                      :key="item.value"
+                      :label="item.text"
+                      :value="item.value">
+                  </el-option>
+                </el-select>
               </el-form-item>
             </div>
             <div class="search-item-view">
               <el-form-item label="备注">
                 <el-input
                     v-model="searchData.remarkData"
-                    placeholder="请填写-备注"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
+                    placeholder="备注"
+                ></el-input>
               </el-form-item>
             </div>
           </div>
@@ -174,46 +152,44 @@
         </template>
       </el-table-column>
       <el-table-column
-          prop="submitterId"
-          label="提交人"
-          header-align="center"
-          align="center"
-          width="200"
+        prop="dataTitle"
+        label="内容标题"
+        header-align="center"
+        align="center"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="dataValue"
+        label="内容"
+        header-align="center"
+        align="center"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="submitterId"
+        label="提交人"
+        header-align="center"
+        align="center"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.submitterId,submitterOptions)}}</el-tag>
+          {{handleTypeByValue(scope.row.submitterId,authAppUserOptions)}}
         </template>
       </el-table-column>
       <el-table-column
-          prop="handleStatus"
-          label="处理状态"
-          header-align="center"
-          align="center"
-          width="200"
+        prop="handleStatus"
+        label="处理状态"
+        header-align="center"
+        align="center"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.handleStatus,handleStatusOptions)}}</el-tag>
+          <el-tag size="medium">{{handleTypeByValue(scope.row.handleStatus,handleOptions)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
-          prop="dataTitle"
-          label="内容标题"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="dataValue"
-          label="内容"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="remarkData"
-          label="备注"
-          header-align="center"
-          align="center"
+        prop="remarkData"
+        label="备注"
+        header-align="center"
+        align="center"
       >
       </el-table-column>
       <el-table-column
@@ -373,10 +349,19 @@
     data() {
       return {
         //-----------------
-        submitterOptions: [],
-        handleStatusOptions: [],
-        feedbackDataOptions: [],
+        authAppUserOptions:[],
+        handleOptions: [
+          {
+            'text':'已提交',
+            'value':1
+          },
+          {
+            'text':'已处理',
+            'value':2
+          },
+        ],
         //-----------------
+        feedbackDataOptions: [],
         richTextVisible: false,
         richText: ``,
         authUserOptions: [],
@@ -395,10 +380,10 @@
         multipleSelection: [],
         dataList: [],
         searchData: {
-          submitterId: '',
-          handleStatus: '',
           dataTitle: '',
           dataValue: '',
+          submitterId: '',
+          handleStatus: '',
           remarkData: '',
         },
       };
@@ -473,10 +458,10 @@
       // 重置控件
       resetSearchForm() {
         this.searchData = {
-          submitterId: '',
-          handleStatus: '',
           dataTitle: '',
           dataValue: '',
+          submitterId: '',
+          handleStatus: '',
           remarkData: '',
         };
         this.queryPageList();
@@ -660,6 +645,7 @@
       // 初始化数据
       async init() {
         this.authUserOptions = await this.$bizConstants.authUserOptions()
+        this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
         //await this.queryFeedbackData();
         this.queryPageList();
       },

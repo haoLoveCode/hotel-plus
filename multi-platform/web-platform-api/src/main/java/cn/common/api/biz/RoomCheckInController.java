@@ -32,7 +32,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 客房入住信息前端控制器
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 @RestController
 @RequestMapping(value = "api/v1/roomCheckIn")
@@ -45,7 +45,7 @@ public class RoomCheckInController extends BaseApiController {
     /**
      * 新增客房入住信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增客房入住信息Req
      */
     @PostMapping(value = "/addItem")
@@ -59,7 +59,7 @@ public class RoomCheckInController extends BaseApiController {
     /**
      * 导出客房入住信息数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
     */
@@ -73,7 +73,7 @@ public class RoomCheckInController extends BaseApiController {
     /**
      * 主键ID集合批量删除客房入住信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的客房入住信息信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -87,7 +87,7 @@ public class RoomCheckInController extends BaseApiController {
     /**
      * 更新客房入住信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新客房入住信息请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -101,7 +101,7 @@ public class RoomCheckInController extends BaseApiController {
     /**
      * 查询客房入住信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -116,7 +116,7 @@ public class RoomCheckInController extends BaseApiController {
     /**
      * 查询单个客房入住信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -131,7 +131,7 @@ public class RoomCheckInController extends BaseApiController {
     /**
      * 分页查询客房入住信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询客房入住信息Req
      * @return Pagination
      */

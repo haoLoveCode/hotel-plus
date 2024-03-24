@@ -13,14 +13,14 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 房间信息相关服务
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 public interface RoomDataService {
 
     /**
      * 导出房间信息数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
      */
@@ -29,7 +29,7 @@ public interface RoomDataService {
     /**
      * 新增房间信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增Req
      */
     void addItem(RoomDataAddReq addReq);
@@ -37,7 +37,7 @@ public interface RoomDataService {
     /**
      * 批量删除房间信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的房间信息信息
      */
     void batchDeleteItem(BaseDeleteReq req);
@@ -45,7 +45,7 @@ public interface RoomDataService {
     /**
      * 查询房间信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -54,7 +54,7 @@ public interface RoomDataService {
     /**
      * 查询单个房间信息信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -63,7 +63,7 @@ public interface RoomDataService {
     /**
      * 分页查询房间信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询房间信息Req
      * @return Pagination
      */
@@ -73,7 +73,7 @@ public interface RoomDataService {
     /**
      * 更新房间信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新房间信息请求参数
      */
     void updateItem(RoomDataUpdateReq updateReq);

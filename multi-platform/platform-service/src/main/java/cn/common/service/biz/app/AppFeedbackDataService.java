@@ -1,4 +1,4 @@
-package cn.common.service.biz.platform;
+package cn.common.service.biz.app;
 
 
 import cn.common.req.biz.FeedbackDataAddReq;
@@ -7,6 +7,7 @@ import cn.common.req.biz.FeedbackDataUpdateReq;
 import cn.common.resp.biz.FeedbackDataResp;
 import pro.skywalking.req.base.BaseDeleteReq;
 import pro.skywalking.resp.page.Pagination;
+
 import java.util.List;
 
 /**
@@ -15,16 +16,7 @@ import java.util.List;
  * @Description: 投诉建议信息相关服务
  * @date 2024/3/24
  */
-public interface FeedbackDataService {
-
-    /**
-     * 导出投诉建议信息数据
-     * @author: Singer
-     * @date 2024/3/24
-     * @param pageReq
-     * @return java.util.List
-     */
-    void exportData(FeedbackDataReq pageReq);
+public interface AppFeedbackDataService {
 
     /**
      * 新增投诉建议信息
@@ -35,15 +27,15 @@ public interface FeedbackDataService {
     void addItem(FeedbackDataAddReq addReq);
 
     /**
-     * 批量删除投诉建议信息信息
+     * 批量删除投诉建议信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的投诉建议信息信息
+     * @param req 需要被删除的投诉建议信息
      */
     void batchDeleteItem(BaseDeleteReq req);
 
     /**
-     * 查询投诉建议信息信息
+     * 查询投诉建议信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -52,7 +44,7 @@ public interface FeedbackDataService {
     List<FeedbackDataResp> queryFeedbackData(FeedbackDataReq req);
 
     /**
-     * 查询单个投诉建议信息信息
+     * 查询单个投诉建议信息
      * @author: Singer
      * @date 2024/3/24
      * @param

@@ -52,7 +52,7 @@ import java.util.Map;
  * @author Singer
  * @packageName ${basePackageName}.service
  * @Description: ${entityDesc}相关服务方法实现
- * @date 2024/1/25
+ * @date 2024/3/24
  */
 @Service("${camelCaseEntityName}Service")
 @Slf4j
@@ -79,7 +79,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 导出${entityDesc}数据
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param pageReq
      * @return java.util.List
      */
@@ -128,7 +128,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 新增${entityDesc}
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param addReq 新增${entityDesc}Req
      */
     @Override
@@ -153,7 +153,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 批量删除${entityDesc}信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param req 需要被删除的${entityDesc}信息
      */
     @Override
@@ -172,7 +172,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 查询${entityDesc}信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -193,7 +193,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 查询单个${entityDesc}信息
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param
      * @return java.util.List
      */
@@ -214,7 +214,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 设置查询条件
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param wrapper 查询条件
      * @param req 查询参数
      * @return
@@ -237,7 +237,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 分页查询${entityDesc}
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param  pageReq 分页查询${entityDesc}Req
      * @return Pagination
      */
@@ -268,7 +268,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 更新${entityDesc}
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新${entityDesc}请求参数
      */
     @Override
@@ -288,7 +288,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 设置需要更新的字段
      * @author: Singer
-     * @date 2024/1/25
+     * @date 2024/3/24
      * @param updateReq 更新参数
      * @param entity 实体
      */
