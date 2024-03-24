@@ -768,6 +768,141 @@ const globalServices = {
         responseType: 'blob',
     },
     //---------------客户身份信息----end-------------------
+    //---------------房间预订信息----start-------------------
+    /*分页查询房间预订信息*/
+    queryRoomBookingByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomBooking/queryByPage`,
+        needToken:true,
+    },
+    /*查询房间预订信息*/
+    queryRoomBooking: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomBooking/queryRoomBooking`,
+        needToken:true,
+    },
+    /*查询单个房间预订信息*/
+    queryOneRoomBooking: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomBooking/queryOneRoomBooking`,
+        needToken:true,
+    },
+    /*新增房间预订信息*/
+    addRoomBookingItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomBooking/addItem`,
+        needToken:true,
+    },
+    /*编辑房间预订信息*/
+    editRoomBookingItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/roomBooking/updateItem`,
+        needToken:true,
+    },
+    /*批量删除房间预订信息*/
+    batchDeleteRoomBooking: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomBooking/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出房间预订信息*/
+    exportRoomBookingItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomBooking/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------房间预订信息----end-------------------
+    //---------------客房入住信息----start-------------------
+    /*分页查询客房入住信息*/
+    queryRoomCheckInByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckIn/queryByPage`,
+        needToken:true,
+    },
+    /*查询客房入住信息*/
+    queryRoomCheckIn: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckIn/queryRoomCheckIn`,
+        needToken:true,
+    },
+    /*查询单个客房入住信息*/
+    queryOneRoomCheckIn: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckIn/queryOneRoomCheckIn`,
+        needToken:true,
+    },
+    /*新增客房入住信息*/
+    addRoomCheckInItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckIn/addItem`,
+        needToken:true,
+    },
+    /*编辑客房入住信息*/
+    editRoomCheckInItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/roomCheckIn/updateItem`,
+        needToken:true,
+    },
+    /*批量删除客房入住信息*/
+    batchDeleteRoomCheckIn: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckIn/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出客房入住信息*/
+    exportRoomCheckInItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckIn/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------客房入住信息----end-------------------
+    //---------------客房退房信息----start-------------------
+    /*分页查询客房退房信息*/
+    queryRoomCheckOutByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckOut/queryByPage`,
+        needToken:true,
+    },
+    /*查询客房退房信息*/
+    queryRoomCheckOut: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckOut/queryRoomCheckOut`,
+        needToken:true,
+    },
+    /*查询单个客房退房信息*/
+    queryOneRoomCheckOut: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckOut/queryOneRoomCheckOut`,
+        needToken:true,
+    },
+    /*新增客房退房信息*/
+    addRoomCheckOutItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckOut/addItem`,
+        needToken:true,
+    },
+    /*编辑客房退房信息*/
+    editRoomCheckOutItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/roomCheckOut/updateItem`,
+        needToken:true,
+    },
+    /*批量删除客房退房信息*/
+    batchDeleteRoomCheckOut: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckOut/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出客房退房信息*/
+    exportRoomCheckOutItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomCheckOut/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------客房退房信息----end-------------------
 
 };
 export default globalServices;
