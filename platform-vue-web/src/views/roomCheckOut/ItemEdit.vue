@@ -48,35 +48,6 @@
         </div>
         <div class="data-body-div">
           <div class="data-item-view">
-            <el-form-item label="房间" prop="roomDataId">
-              <el-select
-                  v-model="submitData.roomDataId"
-                  :clearable="true"
-                  placeholder="请选择-房间信息">
-                <el-option
-                    v-for="(item,index) in roomDataOptions"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="房间编号" prop="roomNo">
-              <el-input
-                  v-model="submitData.roomNo"
-                  placeholder="请填写-房间编号"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
             <el-form-item label="退房时间" prop="checkOutTime">
               <el-input
                   v-model="submitData.checkOutTime"
@@ -131,15 +102,12 @@ export default {
       //-----------------
       roomBookingOptions: [],
       guestentifyOptions: [],
-      roomDataOptions: [],
       //-----------------
       title: "编辑",
       editVisible: false,
       submitData: {
         roomBookingId: '',
         guestIdentifyId: '',
-        roomDataId: '',
-        roomNo: '',
         checkOutTime: '',
         remark: '',
       },
@@ -156,20 +124,6 @@ export default {
             required: true,
             message: '请选择-客户身份信息',
             trigger: 'change'
-          }
-        ],
-        roomDataId: [
-          {
-            required: true,
-            message: '请选择-房间',
-            trigger: 'change'
-          }
-        ],
-        roomNo: [
-          {
-            required: true,
-            message: '请规范填写-房间编号',
-            trigger: 'blur'
           }
         ],
         checkOutTime: [
@@ -218,7 +172,8 @@ export default {
     clearAll() {
       console.log('触发清除所有')
       this.submitData = {
-        roomNo: '',
+        roomBookingId: '',
+        guestIdentifyId: '',
         checkOutTime: '',
         remark: '',
       }

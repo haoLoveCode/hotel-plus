@@ -1,9 +1,9 @@
 package cn.common.service.biz.platform;
 
 
-import cn.common.req.biz.openBiz.roomCheckIn.RoomCheckInAddReq;
-import cn.common.req.biz.openBiz.roomCheckIn.RoomCheckInReq;
-import cn.common.req.biz.openBiz.roomCheckIn.RoomCheckInUpdateReq;
+import cn.common.req.biz.RoomCheckInAddReq;
+import cn.common.req.biz.RoomCheckInReq;
+import cn.common.req.biz.RoomCheckInUpdateReq;
 import cn.common.resp.biz.RoomCheckInResp;
 import pro.skywalking.req.base.BaseDeleteReq;
 import pro.skywalking.resp.page.Pagination;

@@ -50,33 +50,8 @@
                 </el-select>
               </el-form-item>
             </div>
-            <div class="search-item-view">
-              <el-form-item label="房间">
-                <el-select
-                    v-model="searchData.roomDataId"
-                    :clearable="true"
-                    placeholder="请选择-房间信息">
-                  <el-option
-                      v-for="(item,index) in roomDataOptions"
-                      :key="item.value"
-                      :label="item.text"
-                      :value="item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </div>
           </div>
           <div class="search-view">
-            <div class="search-item-view">
-              <el-form-item label="房间编号">
-                <el-input
-                    v-model="searchData.roomNo"
-                    placeholder="请填写-房间编号"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
             <div class="search-item-view">
               <el-form-item label="退房时间">
                 <el-input
@@ -209,24 +184,6 @@
         <template v-slot="scope">
           <el-tag size="medium">{{handleTypeByValue(scope.row.guestIdentifyId,guestentifyOptions)}}</el-tag>
         </template>
-      </el-table-column>
-      <el-table-column
-          prop="roomDataId"
-          label="房间"
-          header-align="center"
-          align="center"
-          width="200"
-      >
-        <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.roomDataId,roomDataOptions)}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="roomNo"
-          label="房间编号"
-          header-align="center"
-          align="center"
-      >
       </el-table-column>
       <el-table-column
           prop="checkOutTime"
@@ -401,7 +358,6 @@
         //-----------------
         roomBookingOptions: [],
         guestentifyOptions: [],
-        roomDataOptions: [],
         roomCheckOutOptions: [],
         //-----------------
         richTextVisible: false,
@@ -424,8 +380,6 @@
         searchData: {
           roomBookingId: '',
           guestIdentifyId: '',
-          roomDataId: '',
-          roomNo: '',
           checkOutTime: '',
           remark: '',
         },
@@ -503,8 +457,6 @@
         this.searchData = {
           roomBookingId: '',
           guestIdentifyId: '',
-          roomDataId: '',
-          roomNo: '',
           checkOutTime: '',
           remark: '',
         };

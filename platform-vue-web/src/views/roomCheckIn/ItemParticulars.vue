@@ -32,16 +32,6 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
-              房间:
-            </div>
-            <div class="descriptions-value">
-              {{handleTypeByValue(particularsData.roomDataId,roomDataOptions)}}
-            </div>
-          </div>
-        </div>
-        <div class="descriptions-item">
-          <div class="descriptions-item-view">
-            <div class="descriptions-title">
               备注信息:
             </div>
             <div class="descriptions-value">
@@ -88,7 +78,6 @@ export default {
       //-----------------
       roomBookingOptions: [],
       guestentifyOptions: [],
-      roomDataOptions: [],
       //-----------------
       authUserOptions: [],
       particularsVisible: false,

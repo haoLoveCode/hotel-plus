@@ -18,7 +18,7 @@ import java.io.*;
 @Data
 public class RoomCheckOutResp extends BaseResp implements Serializable {
 
-    private static final long serialVersionUID = -885353100358420908L;
+    private static final long serialVersionUID = -939629922392648569L;
 
     /**
      * 业务主键ID->"roomCheckOutId"
@@ -34,16 +34,6 @@ public class RoomCheckOutResp extends BaseResp implements Serializable {
      * 客户身份信息ID
      */
     private String guestIdentifyId;
-
-    /**
-     * 房间ID
-     */
-    private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    private String roomNo;
 
     /**
      * 退房时间

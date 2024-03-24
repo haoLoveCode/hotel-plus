@@ -1,14 +1,15 @@
 package cn.common.service.impl.biz.platform;
 
-import cn.common.req.biz.openBiz.roomCheckOut.RoomCheckOutAddReq;
-import cn.common.req.biz.openBiz.roomCheckOut.RoomCheckOutReq;
-import cn.common.req.biz.openBiz.roomCheckOut.RoomCheckOutUpdateReq;
+import cn.common.req.biz.RoomCheckOutAddReq;
+import cn.common.req.biz.RoomCheckOutReq;
+import cn.common.req.biz.RoomCheckOutUpdateReq;
 import cn.common.resp.biz.RoomCheckOutResp;
 import cn.common.resp.biz.RoomCheckOutExportResp;
 import cn.common.service.biz.platform.RoomCheckOutService;
 import cn.common.repository.entity.biz.RoomCheckOut;
 import cn.common.repository.repository.biz.RoomCheckOutRepository;
 import cn.common.service.platform.AuthUserService;
+import cn.hutool.extra.validation.ValidationUtil;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
@@ -25,6 +26,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import pro.skywalking.utils.SnowflakeIdWorker;
 import com.google.common.collect.Lists;
 import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.Page;
@@ -34,7 +36,7 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -228,14 +230,6 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
             wrapper.like(RoomCheckOut::getGuestIdentifyId,req.getGuestIdentifyId());
         }
 
-        if(!CheckParam.isNull(req.getRoomDataId())){
-            wrapper.like(RoomCheckOut::getRoomDataId,req.getRoomDataId());
-        }
-
-        if(!CheckParam.isNull(req.getRoomNo())){
-            wrapper.like(RoomCheckOut::getRoomNo,req.getRoomNo());
-        }
-
         if(!CheckParam.isNull(req.getCheckOutTime())){
             wrapper.like(RoomCheckOut::getCheckOutTime,req.getCheckOutTime());
         }
@@ -295,14 +289,6 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
             pageWrapper.like(RoomCheckOut::getGuestIdentifyId,pageReq.getGuestIdentifyId());
         }
 
-        if(!CheckParam.isNull(pageReq.getRoomDataId())){
-            pageWrapper.like(RoomCheckOut::getRoomDataId,pageReq.getRoomDataId());
-        }
-
-        if(!CheckParam.isNull(pageReq.getRoomNo())){
-            pageWrapper.like(RoomCheckOut::getRoomNo,pageReq.getRoomNo());
-        }
-
         if(!CheckParam.isNull(pageReq.getCheckOutTime())){
             pageWrapper.like(RoomCheckOut::getCheckOutTime,pageReq.getCheckOutTime());
         }
@@ -346,12 +332,6 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
         }
         if(!CheckParam.isNull(updateReq.getGuestIdentifyId())){
             entity.setGuestIdentifyId(updateReq.getGuestIdentifyId());
-        }
-        if(!CheckParam.isNull(updateReq.getRoomDataId())){
-            entity.setRoomDataId(updateReq.getRoomDataId());
-        }
-        if(!CheckParam.isNull(updateReq.getRoomNo())){
-            entity.setRoomNo(updateReq.getRoomNo());
         }
         if(!CheckParam.isNull(updateReq.getCheckOutTime())){
             entity.setCheckOutTime(updateReq.getCheckOutTime());

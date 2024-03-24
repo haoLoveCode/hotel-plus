@@ -1,4 +1,4 @@
-package cn.common.req.biz.openBiz.roomCheckIn;
+package cn.common.req.biz;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 public class RoomCheckInReq extends BasePageReq implements Serializable {
 
-    private static final long serialVersionUID = 853318025354090954L;
+    private static final long serialVersionUID = 100570981596765887L;
 
     /**
      * 业务主键ID->"roomCheckInId"
@@ -33,16 +33,6 @@ public class RoomCheckInReq extends BasePageReq implements Serializable {
      * 客户身份信息ID
      */
     private String guestIdentifyId;
-
-    /**
-     * 房间ID
-     */
-    private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    private String roomNo;
 
     /**
      * 备注信息

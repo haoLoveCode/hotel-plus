@@ -543,7 +543,7 @@
               this.roomBookingOptions = new Array();
               data.map((item) => {
                 let options = {
-                  'text': item.roomBookingName,
+                  'text': item.bookingNo,
                   'value': item.roomBookingId
                 }
                 this.roomBookingOptions.push(options)

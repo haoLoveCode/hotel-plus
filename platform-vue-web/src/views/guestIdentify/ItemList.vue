@@ -399,7 +399,7 @@
               this.guestIdentifyOptions = new Array();
               data.map((item) => {
                 let options = {
-                  'text': item.guestIdentifyName,
+                  'text': item.realName,
                   'value': item.guestIdentifyId
                 }
                 this.guestIdentifyOptions.push(options)

@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @TableName("room_check_in")
 public class RoomCheckIn extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -934214237324799920L;
+    private static final long serialVersionUID = 850535287469773109L;
 
     /**
      * 业务主键ID
@@ -37,16 +37,6 @@ public class RoomCheckIn extends BaseEntity implements Serializable {
      * 客户身份信息ID
      */
     private String guestIdentifyId;
-
-    /**
-     * 房间ID
-     */
-    private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    private String roomNo;
 
     /**
      * 备注信息
