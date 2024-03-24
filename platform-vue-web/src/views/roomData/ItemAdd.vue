@@ -28,8 +28,6 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="房间状态" prop="roomStatus">
               <el-select
@@ -43,6 +41,16 @@
                     :value="item.value">
                 </el-option>
               </el-select>
+            </el-form-item>
+          </div>
+          <div class="data-item-view">
+            <el-form-item label="房间编号" prop="roomNo">
+              <el-input
+                  v-model="submitData.roomNo"
+                  placeholder="请填写-房间编号"
+                  maxlength="10"
+                  show-word-limit>
+              </el-input>
             </el-form-item>
           </div>
         </div>
@@ -72,30 +80,6 @@
         </div>
         <div class="data-body-div">
           <div class="data-item-view">
-            <el-form-item label="房间编号" prop="roomNo">
-              <el-input
-                  v-model="submitData.roomNo"
-                  placeholder="请填写-房间编号"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="房间图片" prop="roomImg">
-              <el-input
-                  v-model="submitData.roomImg"
-                  placeholder="请填写-房间图片"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
             <el-form-item label="房间楼层" prop="roomFloor">
               <el-input
                   v-model="submitData.roomFloor"
@@ -105,8 +89,6 @@
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="价格" prop="unitPrice">
               <el-input
@@ -117,8 +99,6 @@
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="房间面积" prop="roomArea">
               <el-input
@@ -139,6 +119,48 @@
                   maxlength="10"
                   show-word-limit>
               </el-input>
+            </el-form-item>
+          </div>
+        </div>
+        <el-divider content-position="center">请填写详情介绍</el-divider>
+        <div class="editor-div">
+          <Editor @change="getEditorContent" :value="editorContent" :isClear="true"></Editor>
+        </div>
+        <el-divider content-position="center">上传商品图片</el-divider>
+        <div class="add-body-div">
+          <div class="add-item-view">
+            <el-form-item label="商品图片:">
+              <div class="upload-item-view">
+                <UploadImg
+                    class="upload-item"
+                    ref="uploadMainImgRef"
+                    :uploadApi="uploadUrl"
+                    :fileList="mainImgList"
+                    @subBack="uploadMainImgSuccess"
+                    @handleFileDelete="handleMainImgDelete"
+                    :limit="1"
+                    :headers="uploadHeaders"
+                />
+              </div>
+            </el-form-item>
+          </div>
+        </div>
+        <el-divider content-position="center">上传商品详情图片</el-divider>
+        <div class="add-body-div">
+          <div class="add-item-view">
+            <el-form-item label="商品详情图片:">
+              <div class="upload-item-view">
+                <UploadImg
+                    class="upload-item"
+                    ref="salesItemImgRef"
+                    :uploadApi="uploadUrl"
+                    :fileList="imgList"
+                    @subBack="uploadSalesImgSuccess"
+                    @handleFileDelete="handleSalesImgDelete"
+                    :limit="5"
+                    :headers="uploadHeaders"
+                />
+              </div>
             </el-form-item>
           </div>
         </div>
@@ -182,11 +204,19 @@ export default {
         roomTitle: '',
         briefData: '',
         roomNo: '',
-        roomImg: '',
+        mainImg: '',
         roomFloor: '',
         unitPrice: '',
         roomArea: '',
         bedNum: '',
+        imgList:[],
+      },
+      mainImgList:[],
+      imgList:[],
+      uploadUrl: process.env.BASE_API + `/api/platformFile/uploadFile`,
+      deleteFileUrl: process.env.BASE_API + `/api/platformFile/deleteFileByFileName`,
+      uploadHeaders: {
+        token: localStorage.getItem('token') || ''
       },
       validatorRules: {
         roomTypeId: [
@@ -224,7 +254,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        roomImg: [
+        mainImg: [
           {
             required: true,
             message: '请规范填写-房间图片',
@@ -242,6 +272,7 @@ export default {
           {
             required: true,
             message: '请规范填写-价格',
+            pattern: new RegExp(baseUtils.numberPattern(), "g"),
             trigger: 'blur'
           }
         ],
@@ -249,6 +280,7 @@ export default {
           {
             required: true,
             message: '请规范填写-房间面积',
+            pattern: new RegExp(baseUtils.numberPattern(), "g"),
             trigger: 'blur'
           }
         ],
@@ -256,6 +288,7 @@ export default {
           {
             required: true,
             message: '请规范填写-床位数量',
+            pattern: new RegExp(baseUtils.numberPattern(), "g"),
             trigger: 'blur'
           }
         ],
@@ -263,6 +296,104 @@ export default {
     };
   },
   methods: {
+    //拿到富文本内容
+    getEditorContent(textValue) {
+      this.editorContent = textValue
+      console.log('textValue : ' + textValue)
+      console.log('editorContent : ' + this.editorContent)
+    },
+    // 上传图片回调
+    uploadSalesImgSuccess(fileName, file) {
+      if (this.$isNull(fileName)) {
+        return
+      }
+      if (fileName.length === 0) {
+        return;
+      }
+      if (this.$isNull(file)) {
+        return
+      }
+      //随机数
+      let uuId = baseUtils.randomString();
+      //文件名称
+      let fileNameItem = {
+        status: 'success',
+        name: fileName,
+        percentage: 100,
+        uid: uuId,
+        raw: {
+          uid: uuId
+        },
+        url: this.handleImageUrl(fileName)
+      }
+      this.imgList.push(fileNameItem);
+      console.log('上传成功后的文件集合:' + JSON.stringify(this.imgList))
+    },
+    async handleSalesImgDelete(fileName) {
+      console.log('删除文件fileName:' + fileName);
+      if (this.$isNull(fileName)) {
+        return
+      }
+      const index = this.imgList.findIndex((item) => {
+        return item.name == fileName
+      })
+      this.imgList.splice(index, 1);
+      const res = await Api.deleteFileApi({
+        name: fileName
+      });
+      console.log('删除文件结果:' + JSON.stringify(res))
+      if (res.success) {
+        console.log('删除成功')
+      }
+      console.log('删除后的文件集合:' + this.imgList);
+    },
+    // 上传图片回调
+    uploadMainImgSuccess(fileName, file) {
+      if (this.$isNull(fileName)) {
+        return
+      }
+      if (fileName.length === 0) {
+        return;
+      }
+      if (this.$isNull(file)) {
+        return
+      }
+      //随机数
+      let uuId = baseUtils.randomString();
+      //文件名称
+      let fileNameItem = {
+        status: 'success',
+        name: fileName,
+        percentage: 100,
+        uid: uuId,
+        raw: {
+          uid: uuId
+        },
+        url: this.handleImageUrl(fileName)
+      }
+      this.mainImgList.push(fileNameItem);
+      this.submitData.mainImg = fileName
+      console.log('上传成功后的文件集合:' + JSON.stringify(this.mainImgList))
+    },
+    async handleMainImgDelete(fileName) {
+      console.log('删除文件fileName:' + fileName);
+      if (this.$isNull(fileName)) {
+        return
+      }
+      const index = this.mainImgList.findIndex((item) => {
+        return item.name == fileName
+      })
+      this.mainImgList.splice(index, 1);
+      const res = await Api.deleteFileApi({
+        name: fileName
+      });
+      console.log('删除文件结果:' + JSON.stringify(res))
+      if (res.success) {
+        console.log('删除成功')
+      }
+      console.log('删除后的文件集合:' + this.mainImgList);
+      this.submitData.mainImg = '';
+    },
     async queryRoomType() {
       const loading = this.$loading({
         lock: true,
@@ -330,19 +461,44 @@ export default {
         roomTitle: '',
         briefData: '',
         roomNo: '',
-        roomImg: '',
+        mainImg: '',
         roomFloor: '',
         unitPrice: '',
         roomArea: '',
         bedNum: '',
+        imgList:[],
+      }
+      this.editorContent = '';
+      this.mainImgList = [];
+      this.imgList = [];
+      //清除图片
+      if (this.$baseUtils.isNull(this.$refs.uploadMainImgRef)) {
+        this.$refs.uploadMainImgRef.clearFiles()
+      }
+      //清除图片
+      if (this.$baseUtils.isNull(this.$refs.salesItemImgRef)) {
+        this.$refs.salesItemImgRef.clearFiles()
       }
     },
     handleCancel() {
       this.addVisible = false
       this.clearAll();
     },
+    //提交之前的处理措施
+    async beforeSubmit(){
+      let imgList = this.imgList;
+      console.log('imgList:'+JSON.stringify(imgList))
+      if (!imgList || imgList.length === 0) {
+        return;
+      }
+      this.submitData.imgList = new Array();
+      imgList.map((item) => {
+        this.submitData.imgList.push(item.name);
+      })
+    },
     //处理提交
-    handleSubmit() {
+    async handleSubmit() {
+      await this.beforeSubmit();
       this.$refs.submitForm.validate((valid) => {
         const params = {};
         if (valid) {

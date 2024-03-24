@@ -5,6 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.*;
+import java.util.List;
 
 /**
  * 房间信息新增Req
@@ -45,7 +46,7 @@ public class RoomDataAddReq implements Serializable {
      * 房间图片
      */
     @NotEmpty(message = "房间图片->不可为空")
-    private String roomImg;
+    private String mainImg;
 
     /**
      * 房间状态
@@ -76,5 +77,11 @@ public class RoomDataAddReq implements Serializable {
      */
     @NotEmpty(message = "床位数量->不可为空")
     private Integer bedNum;
+
+    /**
+     * 图片信息
+     */
+    @NotEmpty(message = "图片信息->不可为空")
+    private List<String> imgList;
 
 }

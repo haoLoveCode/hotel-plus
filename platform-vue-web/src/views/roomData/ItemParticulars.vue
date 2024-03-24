@@ -65,7 +65,7 @@
               房间图片:
             </div>
             <div class="descriptions-value">
-              {{particularsData.roomImg}}
+              {{particularsData.mainImg}}
             </div>
           </div>
         </div>

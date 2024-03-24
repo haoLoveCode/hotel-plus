@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 public class RoomImgUpdateReq implements Serializable {
 
-    private static final long serialVersionUID = -392399764284130916L;
+    private static final long serialVersionUID = -250150154483273799L;
 
     /**
      * 主键ID->ID
@@ -27,12 +27,6 @@ public class RoomImgUpdateReq implements Serializable {
      */
     @NotEmpty(message = "业务主键ID->不可为空")
     private String roomImgId;
-
-    /**
-     * 业务主键ID
-     */
-    @NotEmpty(message = "业务主键ID->不可为空")
-    private String salesItemImgId;
 
     /**
      * 房间信息ID

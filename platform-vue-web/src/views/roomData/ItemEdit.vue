@@ -84,9 +84,9 @@
         </div>
         <div class="data-body-div">
           <div class="data-item-view">
-            <el-form-item label="房间图片" prop="roomImg">
+            <el-form-item label="房间图片" prop="mainImg">
               <el-input
-                  v-model="submitData.roomImg"
+                  v-model="submitData.mainImg"
                   placeholder="请填写-房间图片"
                   maxlength="10"
                   show-word-limit>
@@ -183,11 +183,12 @@ export default {
         roomTitle: '',
         briefData: '',
         roomNo: '',
-        roomImg: '',
+        mainImg: '',
         roomFloor: '',
         unitPrice: '',
         roomArea: '',
         bedNum: '',
+        imgList:[],
       },
       validatorRules: {
         roomTypeId: [
@@ -225,7 +226,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        roomImg: [
+        mainImg: [
           {
             required: true,
             message: '请规范填写-房间图片',
@@ -243,6 +244,7 @@ export default {
           {
             required: true,
             message: '请规范填写-价格',
+            pattern: new RegExp(baseUtils.numberPattern(), "g"),
             trigger: 'blur'
           }
         ],
@@ -250,6 +252,7 @@ export default {
           {
             required: true,
             message: '请规范填写-房间面积',
+            pattern: new RegExp(baseUtils.numberPattern(), "g"),
             trigger: 'blur'
           }
         ],
@@ -257,6 +260,7 @@ export default {
           {
             required: true,
             message: '请规范填写-床位数量',
+            pattern: new RegExp(baseUtils.numberPattern(), "g"),
             trigger: 'blur'
           }
         ],
@@ -333,19 +337,44 @@ export default {
         roomTitle: '',
         briefData: '',
         roomNo: '',
-        roomImg: '',
+        mainImg: '',
         roomFloor: '',
         unitPrice: '',
         roomArea: '',
         bedNum: '',
+        imgList:[],
+      }
+      this.editorContent = '';
+      this.mainImgList = [];
+      this.imgList = [];
+      //清除图片
+      if (this.$baseUtils.isNull(this.$refs.uploadMainImgRef)) {
+        this.$refs.uploadMainImgRef.clearFiles()
+      }
+      //清除图片
+      if (this.$baseUtils.isNull(this.$refs.salesItemImgRef)) {
+        this.$refs.salesItemImgRef.clearFiles()
       }
     },
     handleCancel() {
       this.editVisible = false
       this.clearAll();
     },
+    //提交之前的处理措施
+    async beforeSubmit(){
+      let imgList = this.imgList;
+      console.log('imgList:'+JSON.stringify(imgList))
+      if (!imgList || imgList.length === 0) {
+        return;
+      }
+      this.submitData.imgList = new Array();
+      imgList.map((item) => {
+        this.submitData.imgList.push(item.name);
+      })
+    },
     //处理提交
-    handleSubmit() {
+    async handleSubmit() {
+      await this.beforeSubmit();
       this.$refs.submitForm.validate((valid) => {
         const params = {};
         if (valid) {

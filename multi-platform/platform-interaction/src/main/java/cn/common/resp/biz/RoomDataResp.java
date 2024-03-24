@@ -5,6 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.*;
+import java.util.List;
 
 /**
  * 房间信息返回数据封装类
@@ -45,7 +46,7 @@ public class RoomDataResp extends BaseResp implements Serializable {
     /**
      * 房间图片
      */
-    private String roomImg;
+    private String mainImg;
 
     /**
      * 房间状态
@@ -71,5 +72,10 @@ public class RoomDataResp extends BaseResp implements Serializable {
      * 床位数量
      */
     private Integer bedNum;
+
+    /**
+     * 图片信息
+     */
+    private List<String> imgList;
 
 }

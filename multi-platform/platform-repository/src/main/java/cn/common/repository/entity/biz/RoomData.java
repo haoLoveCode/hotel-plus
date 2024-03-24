@@ -5,6 +5,7 @@ import lombok.Data;
 import pro.skywalking.entity.BaseEntity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 /**
@@ -47,7 +48,7 @@ public class RoomData extends BaseEntity implements Serializable {
     /**
      * 房间图片
      */
-    private String roomImg;
+    private String mainImg;
 
     /**
      * 房间状态

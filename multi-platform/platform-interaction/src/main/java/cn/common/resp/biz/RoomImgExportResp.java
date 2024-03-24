@@ -22,14 +22,7 @@ import java.io.*;
 @ColumnWidth(25)
 public class RoomImgExportResp implements Serializable {
 
-    private static final long serialVersionUID = 171287752825286618L;
-
-    /**
-     * 业务主键ID
-     */
-    @NotEmpty(message = "业务主键ID->不可为空")
-    @ExcelProperty(value = "业务主键ID")
-    private String salesItemImgId;
+    private static final long serialVersionUID = 914099224524618912L;
 
     /**
      * 房间信息ID

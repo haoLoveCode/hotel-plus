@@ -221,6 +221,7 @@ export default {
         mainImg: '',
         itemStatus: '',
         remarkData: '',
+        imgList:[],
       },
       mainImgList:[],
       imgList:[],

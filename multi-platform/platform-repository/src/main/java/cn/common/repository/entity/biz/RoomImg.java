@@ -17,17 +17,12 @@ import java.io.Serializable;
 @TableName("room_img")
 public class RoomImg extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -513648399688999777L;
+    private static final long serialVersionUID = -275022499621708972L;
 
     /**
      * 业务主键ID
      */
     private String roomImgId;
-
-    /**
-     * 业务主键ID
-     */
-    private String salesItemImgId;
 
     /**
      * 房间信息ID

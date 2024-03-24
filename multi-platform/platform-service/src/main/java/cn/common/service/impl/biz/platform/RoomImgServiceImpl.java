@@ -222,10 +222,6 @@ public class RoomImgServiceImpl implements RoomImgService {
     private void setCriteria(LambdaQueryWrapper<RoomImg> wrapper,
                         RoomImgReq req){
 
-        if(!CheckParam.isNull(req.getSalesItemImgId())){
-            wrapper.like(RoomImg::getSalesItemImgId,req.getSalesItemImgId());
-        }
-
         if(!CheckParam.isNull(req.getRoomDataId())){
             wrapper.like(RoomImg::getRoomDataId,req.getRoomDataId());
         }
@@ -277,10 +273,6 @@ public class RoomImgServiceImpl implements RoomImgService {
     private void setPageCriteria(LambdaQueryWrapper<RoomImg> pageWrapper,
                         RoomImgReq pageReq){
 
-        if(!CheckParam.isNull(pageReq.getSalesItemImgId())){
-            pageWrapper.like(RoomImg::getSalesItemImgId,pageReq.getSalesItemImgId());
-        }
-
         if(!CheckParam.isNull(pageReq.getRoomDataId())){
             pageWrapper.like(RoomImg::getRoomDataId,pageReq.getRoomDataId());
         }
@@ -319,9 +311,6 @@ public class RoomImgServiceImpl implements RoomImgService {
      */
     private void setNeedUpdateItem(RoomImg entity,
         RoomImgUpdateReq updateReq){
-        if(!CheckParam.isNull(updateReq.getSalesItemImgId())){
-            entity.setSalesItemImgId(updateReq.getSalesItemImgId());
-        }
         if(!CheckParam.isNull(updateReq.getRoomDataId())){
             entity.setRoomDataId(updateReq.getRoomDataId());
         }

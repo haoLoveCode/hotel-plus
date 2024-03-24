@@ -15,17 +15,12 @@ import java.io.*;
 @Data
 public class RoomImgResp extends BaseResp implements Serializable {
 
-    private static final long serialVersionUID = 394790655515683217L;
+    private static final long serialVersionUID = 475993637102820150L;
 
     /**
      * 业务主键ID->"roomImgId"
      */
     private String roomImgId;
-
-    /**
-     * 业务主键ID
-     */
-    private String salesItemImgId;
 
     /**
      * 房间信息ID

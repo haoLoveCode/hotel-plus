@@ -57,7 +57,7 @@ public class RoomDataExportResp implements Serializable {
      */
     @NotEmpty(message = "房间图片->不可为空")
     @ExcelProperty(value = "房间图片")
-    private String roomImg;
+    private String mainImg;
 
     /**
      * 房间状态

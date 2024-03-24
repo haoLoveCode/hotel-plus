@@ -3,6 +3,7 @@ package cn.common.req.biz;
 import lombok.Data;
 import pro.skywalking.req.base.BasePageReq;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 房间信息分页查询请求封装类
@@ -43,7 +44,7 @@ public class RoomDataReq extends BasePageReq implements Serializable {
     /**
      * 房间图片
      */
-    private String roomImg;
+    private String mainImg;
 
     /**
      * 房间状态

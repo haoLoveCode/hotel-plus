@@ -1,5 +1,8 @@
 package cn.common.service.impl.biz.platform;
 
+import cn.common.repository.entity.biz.RoomImg;
+import cn.common.repository.entity.biz.SalesItemImg;
+import cn.common.repository.repository.biz.RoomImgRepository;
 import cn.common.req.biz.RoomDataAddReq;
 import cn.common.req.biz.RoomDataReq;
 import cn.common.req.biz.RoomDataUpdateReq;
@@ -47,6 +50,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import com.google.common.collect.Maps;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Singer
@@ -60,6 +64,9 @@ public class RoomDataServiceImpl implements RoomDataService {
 
     @Resource
     private RoomDataRepository roomDataRepository;
+
+    @Resource
+    private RoomImgRepository roomImgRepository;
 
     @Resource
     private MapperFacade mapperFacade;
@@ -134,6 +141,11 @@ public class RoomDataServiceImpl implements RoomDataService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void addItem(RoomDataAddReq addReq){
+        List<String> imgList = addReq.getImgList();
+        if(CollectionUtils.isEmpty(imgList)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(),
+                    "图片信息不可为空");
+        }
         log.info(">>>>>>>>>>>>>>>>>新增房间信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
         String mainId = SnowflakeIdWorker.uniqueMainId();
         String authUserId = authUserService.currentAuthUserId();
@@ -148,6 +160,21 @@ public class RoomDataServiceImpl implements RoomDataService {
                 ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
         }
         roomDataRepository.insert(entity);
+        imgList.stream().forEach(item -> {
+            RoomImg img = new RoomImg();
+            img.setRoomImgId(mainId);
+            img.setRoomDataId(SnowflakeIdWorker.uniqueMainId());
+            img.setImgUrl(item);
+            try {
+                BaseUtil.setFieldValueNotNull(img);
+                img.setOperatorId(authUserId);
+            } catch (Exception e) {
+                log.error("新增房间图片信息->设置为空的属性失败 {} , {} ",e.getMessage(),e);
+                throw new BusinessException(ErrorCode.ERROR.getCode(),
+                        ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
+            }
+            roomImgRepository.insert(img);
+        });
     }
 
     /**
@@ -187,7 +214,20 @@ public class RoomDataServiceImpl implements RoomDataService {
         if(CollectionUtils.isEmpty(entityList)){
             return Lists.newArrayList();
         }
-        return mapperFacade.mapAsList(entityList,RoomDataResp.class);
+        List<String> roomDataIdList
+                = entityList.stream().map(item -> item.getRoomDataId()).distinct().collect(Collectors.toList());
+        List<RoomImg> roomImgList = roomImgRepository.selectList(new LambdaQueryWrapper<RoomImg>()
+                .in(RoomImg::getRoomDataId, roomDataIdList));
+        Map<String, List<RoomImg>> imgHashMap = roomImgList.stream()
+                .collect(Collectors.groupingBy(RoomImg::getRoomDataId));
+        List<RoomDataResp> respList = mapperFacade.mapAsList(entityList, RoomDataResp.class);
+        respList.stream().forEach(item -> {
+            List<RoomImg> imgList = imgHashMap.get(item.getRoomDataId());
+            if(!CollectionUtils.isEmpty(imgList)){
+                item.setImgList(imgList.stream().map(img -> img.getImgUrl()).collect(Collectors.toList()));
+            }
+        });
+        return respList;
     }
 
     /**
@@ -208,7 +248,13 @@ public class RoomDataServiceImpl implements RoomDataService {
         if(CheckParam.isNull(entity)){
             return new RoomDataResp();
         }
-        return mapperFacade.map(entity,RoomDataResp.class);
+        List<RoomImg> roomImgList = roomImgRepository.selectList(new LambdaQueryWrapper<RoomImg>()
+                .eq(RoomImg::getRoomDataId, entity.getRoomDataId()));
+        RoomDataResp resp = mapperFacade.map(entity, RoomDataResp.class);
+        if(!CollectionUtils.isEmpty(roomImgList)){
+            resp.setImgList(roomImgList.stream().map(img -> img.getImgUrl()).collect(Collectors.toList()));
+        }
+        return resp;
     }
 
     /**
@@ -238,8 +284,8 @@ public class RoomDataServiceImpl implements RoomDataService {
             wrapper.like(RoomData::getRoomNo,req.getRoomNo());
         }
 
-        if(!CheckParam.isNull(req.getRoomImg())){
-            wrapper.like(RoomData::getRoomImg,req.getRoomImg());
+        if(!CheckParam.isNull(req.getMainImg())){
+            wrapper.like(RoomData::getMainImg,req.getMainImg());
         }
 
         if(!CheckParam.isNull(req.getRoomStatus())){
@@ -284,12 +330,22 @@ public class RoomDataServiceImpl implements RoomDataService {
         if (CollectionUtils.isEmpty(pageList)) {
             return PageBuilder.buildPageResult(page,new ArrayList<>());
         }
+        List<String> roomDataIdList
+                = pageList.stream().map(item -> item.getRoomDataId()).distinct().collect(Collectors.toList());
+        List<RoomImg> roomImgList = roomImgRepository.selectList(new LambdaQueryWrapper<RoomImg>()
+                .in(RoomImg::getRoomDataId, roomDataIdList));
+        Map<String, List<RoomImg>> imgHashMap = roomImgList.stream()
+                .collect(Collectors.groupingBy(RoomImg::getRoomDataId));
         List<RoomDataResp> respList =
             mapperFacade.mapAsList(pageList, RoomDataResp.class);
         Integer startIndex = (pageReq.getItemsPerPage() * pageReq.getCurrentPage()) - pageReq.getItemsPerPage() + 1;
         AtomicInteger idBeginIndex = new AtomicInteger(startIndex);
         respList.stream().forEach(item -> {
             item.setId(Integer.valueOf(idBeginIndex.getAndIncrement()).longValue());
+            List<RoomImg> imgList = imgHashMap.get(item.getRoomDataId());
+            if(!CollectionUtils.isEmpty(imgList)){
+                item.setImgList(imgList.stream().map(img -> img.getImgUrl()).collect(Collectors.toList()));
+            }
         });
         return PageBuilder.buildPageResult(page,respList);
     }
@@ -321,8 +377,8 @@ public class RoomDataServiceImpl implements RoomDataService {
             pageWrapper.like(RoomData::getRoomNo,pageReq.getRoomNo());
         }
 
-        if(!CheckParam.isNull(pageReq.getRoomImg())){
-            pageWrapper.like(RoomData::getRoomImg,pageReq.getRoomImg());
+        if(!CheckParam.isNull(pageReq.getMainImg())){
+            pageWrapper.like(RoomData::getMainImg,pageReq.getMainImg());
         }
 
         if(!CheckParam.isNull(pageReq.getRoomStatus())){
@@ -356,7 +412,13 @@ public class RoomDataServiceImpl implements RoomDataService {
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void updateItem(RoomDataUpdateReq updateReq){
         log.info(">>>>>>>>>>>>>>>>>更新房间信息请求参数 {} <<<<<<<<<<<<<<<<", JSON.toJSONString(updateReq));
+        List<String> imgList = updateReq.getImgList();
+        if(CollectionUtils.isEmpty(imgList)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(),
+                    "图片信息不可为空");
+        }
         String mainId = updateReq.getRoomDataId();
+        String authUserId = authUserService.currentAuthUserId();
         RoomData result = roomDataRepository.selectOne(new LambdaQueryWrapper<RoomData>()
                     .eq(RoomData::getRoomDataId,mainId));
         if (CheckParam.isNull(result)) {
@@ -364,6 +426,24 @@ public class RoomDataServiceImpl implements RoomDataService {
         }
         setNeedUpdateItem(result,updateReq);
         roomDataRepository.updateById(result);
+        //删除原来的图片
+        roomImgRepository.delete(new LambdaQueryWrapper<RoomImg>()
+                .eq(RoomImg::getRoomDataId,mainId));
+        imgList.stream().forEach(item -> {
+            RoomImg img = new RoomImg();
+            img.setRoomDataId(mainId);
+            img.setRoomImgId(SnowflakeIdWorker.uniqueMainId());
+            img.setImgUrl(item);
+            try {
+                BaseUtil.setFieldValueNotNull(img);
+                img.setOperatorId(authUserId);
+            } catch (Exception e) {
+                log.error("新增房间图片信息->设置为空的属性失败 {} , {} ",e.getMessage(),e);
+                throw new BusinessException(ErrorCode.ERROR.getCode(),
+                        ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
+            }
+            roomImgRepository.insert(img);
+        });
     }
 
     /**
@@ -387,8 +467,8 @@ public class RoomDataServiceImpl implements RoomDataService {
         if(!CheckParam.isNull(updateReq.getRoomNo())){
             entity.setRoomNo(updateReq.getRoomNo());
         }
-        if(!CheckParam.isNull(updateReq.getRoomImg())){
-            entity.setRoomImg(updateReq.getRoomImg());
+        if(!CheckParam.isNull(updateReq.getMainImg())){
+            entity.setMainImg(updateReq.getMainImg());
         }
         if(!CheckParam.isNull(updateReq.getRoomStatus())){
             entity.setRoomStatus(updateReq.getRoomStatus());

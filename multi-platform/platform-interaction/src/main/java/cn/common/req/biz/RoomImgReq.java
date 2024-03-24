@@ -13,17 +13,12 @@ import java.io.Serializable;
 @Data
 public class RoomImgReq extends BasePageReq implements Serializable {
 
-    private static final long serialVersionUID = -467407249397583042L;
+    private static final long serialVersionUID = 504116201272580679L;
 
     /**
      * 业务主键ID->"roomImgId"
      */
     private String roomImgId;
-
-    /**
-     * 业务主键ID
-     */
-    private String salesItemImgId;
 
     /**
      * 房间信息ID

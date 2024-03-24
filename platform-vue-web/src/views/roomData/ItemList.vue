@@ -85,7 +85,7 @@
             <div class="search-item-view">
               <el-form-item label="房间图片">
                 <el-input
-                    v-model="searchData.roomImg"
+                    v-model="searchData.mainImg"
                     placeholder="请填写-房间图片"
                     maxlength="10"
                     show-word-limit>
@@ -267,7 +267,7 @@
       >
       </el-table-column>
       <el-table-column
-          prop="roomImg"
+          prop="mainImg"
           label="房间图片"
           header-align="center"
           align="center"
@@ -485,7 +485,7 @@
           roomTitle: '',
           briefData: '',
           roomNo: '',
-          roomImg: '',
+          mainImg: '',
           roomFloor: '',
           unitPrice: '',
           roomArea: '',
@@ -606,7 +606,7 @@
           roomTitle: '',
           briefData: '',
           roomNo: '',
-          roomImg: '',
+          mainImg: '',
           roomFloor: '',
           unitPrice: '',
           roomArea: '',

@@ -15,13 +15,7 @@ import java.io.*;
 @Data
 public class RoomImgAddReq implements Serializable {
 
-    private static final long serialVersionUID = -421272228751875744L;
-
-    /**
-     * 业务主键ID
-     */
-    @NotEmpty(message = "业务主键ID->不可为空")
-    private String salesItemImgId;
+    private static final long serialVersionUID = 646896933124617154L;
 
     /**
      * 房间信息ID
