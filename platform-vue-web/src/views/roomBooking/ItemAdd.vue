@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-      title="新增房间预订信息"
+      title="房间预订登记"
       :center="true"
       @close="handleCancel"
       :visible.sync="addVisible">
@@ -71,18 +71,6 @@
             </el-form-item>
           </div>
           <div class="data-item-view">
-            <el-form-item label="备注信息" prop="remark">
-              <el-input
-                  v-model="submitData.remark"
-                  placeholder="请填写-备注信息"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
             <el-form-item label="预订时间" prop="bookingTime">
               <el-date-picker
                   v-model="submitData.bookingTime"
@@ -124,6 +112,20 @@
             </el-form-item>
           </div>
         </div>
+        <div class="text-area-view">
+          <div class="data-item-view">
+            <el-form-item label="备注信息" prop="remark">
+              <el-input
+                  type="textarea"
+                  :rows="3"
+                  v-model="submitData.remark"
+                  placeholder="请填写-备注信息"
+                  maxlength="200"
+                  show-word-limit>
+              </el-input>
+            </el-form-item>
+          </div>
+        </div>
       </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -155,7 +157,20 @@ export default {
       //-----------------
       authAppUserOptions: [],
       roomDataOptions: [],
-      bookingStatusOptions: [],
+      bookingStatusOptions: [
+        {
+          'text':'预定成功',
+          'value': 1
+        },
+        {
+          'text':'已取消',
+          'value': 2
+        },
+        {
+          'text':'已完成',
+          'value': 3
+        },
+      ],
       pickerOptions:this.$commonOptions.pickerOptions,
       timeFormat:'yyyy-MM-dd', //时间格式
       //-----------------
@@ -253,7 +268,7 @@ export default {
             this.roomDataOptions = new Array();
             data.map((item) => {
               let options = {
-                'text': item.roomDataName,
+                'text': item.roomTitle,
                 'value': item.roomDataId
               }
               this.roomDataOptions.push(options)

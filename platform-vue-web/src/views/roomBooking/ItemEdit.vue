@@ -253,7 +253,7 @@ export default {
             this.roomDataOptions = new Array();
             data.map((item) => {
               let options = {
-                'text': item.roomDataName,
+                'text': item.roomTitle,
                 'value': item.roomDataId
               }
               this.roomDataOptions.push(options)
