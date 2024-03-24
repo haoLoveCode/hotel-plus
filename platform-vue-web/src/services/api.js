@@ -678,6 +678,51 @@ const globalServices = {
         responseType: 'blob',
     },
     //---------------房间信息----end-------------------
+    //---------------客户身份信息----start-------------------
+    /*分页查询客户身份信息*/
+    queryGuestIdentifyByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/guestIdentify/queryByPage`,
+        needToken:true,
+    },
+    /*查询客户身份信息*/
+    queryGuestIdentify: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/guestIdentify/queryGuestIdentify`,
+        needToken:true,
+    },
+    /*查询单个客户身份信息*/
+    queryOneGuestIdentify: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/guestIdentify/queryOneGuestIdentify`,
+        needToken:true,
+    },
+    /*新增客户身份信息*/
+    addGuestIdentifyItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/guestIdentify/addItem`,
+        needToken:true,
+    },
+    /*编辑客户身份信息*/
+    editGuestIdentifyItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/guestIdentify/updateItem`,
+        needToken:true,
+    },
+    /*批量删除客户身份信息*/
+    batchDeleteGuestIdentify: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/guestIdentify/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出客户身份信息*/
+    exportGuestIdentifyItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/guestIdentify/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------客户身份信息----end-------------------
 
 };
 export default globalServices;
