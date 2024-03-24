@@ -1,18 +1,25 @@
 package cn.common.service.impl.biz.app;
 
+import cn.common.enums.RoomStatusEnum;
+import cn.common.repository.entity.biz.RoomBooking;
 import cn.common.repository.entity.biz.RoomCheckIn;
+import cn.common.repository.entity.biz.RoomData;
+import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.repository.repository.biz.RoomCheckInRepository;
+import cn.common.repository.repository.biz.RoomDataRepository;
 import cn.common.req.biz.RoomCheckInAddReq;
 import cn.common.req.biz.RoomCheckInReq;
 import cn.common.req.biz.RoomCheckInUpdateReq;
 import cn.common.resp.biz.RoomCheckInResp;
 import cn.common.service.biz.app.AppRoomCheckInService;
+import cn.common.service.biz.app.AppRoomDataService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -51,6 +58,15 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
     private RoomCheckInRepository roomCheckInRepository;
 
     @Resource
+    private AppRoomDataService appRoomDataService;
+
+    @Resource
+    private RoomBookingRepository roomBookingRepository;
+
+    @Resource
+    private RoomDataRepository roomDataRepository;
+
+    @Resource
     private MapperFacade mapperFacade;
 
     @Resource
@@ -77,6 +93,16 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addItem(RoomCheckInAddReq addReq) {
         log.info(">>>>>>>>>>>>>>>>>新增客房入住信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
+        String roomBookingId = addReq.getRoomBookingId();
+
+        RoomData roomData = appRoomDataService.queryRoomByBookingUd(roomBookingId);
+        if(CheckParam.isNull(roomData)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
+        }
+        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.CHECKED_IN.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被预定，不可入住");
+        }
+
         String mainId = SnowflakeIdWorker.uniqueMainId();
         String authUserId = authUserService.currentAuthUserId();
         RoomCheckIn entity = mapperFacade.map(addReq, RoomCheckIn.class);
@@ -90,6 +116,10 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
                     ErrorCode.ERROR.getMessage() + StrUtil.COLON + e.getMessage() + StrUtil.COLON + e);
         }
         roomCheckInRepository.insert(entity);
+
+        //更新房间状态信息为已入住
+        roomData.setRoomStatus(RoomStatusEnum.BOOKED.getCode());
+        roomDataRepository.updateById(roomData);
     }
 
     /**

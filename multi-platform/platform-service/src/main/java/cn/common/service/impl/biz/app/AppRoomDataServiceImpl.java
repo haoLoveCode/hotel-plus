@@ -1,5 +1,6 @@
 package cn.common.service.impl.biz.app;
 
+import cn.common.repository.entity.biz.RoomBooking;
 import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.entity.biz.RoomImg;
 import cn.common.repository.repository.biz.RoomDataRepository;
@@ -20,6 +21,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -79,6 +81,24 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
 
     @Resource
     private HttpServletRequest request;
+
+
+    /**
+      *
+      * @description: 根据房间预定ID查询房间信息
+      * @author: create by singer - Singer email:singer-coder@qq.com
+      * @date 2024/3/24
+      * @param roomBookingId 房间预定ID
+      * @return cn.common.repository.entity.biz.RoomData
+      */
+    public RoomData queryRoomByBookingUd(String roomBookingId){
+        MPJLambdaWrapper<RoomData> roomWrapper = new MPJLambdaWrapper<>();
+        roomWrapper.leftJoin(RoomBooking.class,RoomBooking::getRoomBookingId,RoomData::getRoomDataId);
+        roomWrapper.selectAll(RoomData.class);
+        roomWrapper.eq(RoomBooking::getRoomBookingId,roomBookingId);
+        RoomData roomData = roomDataRepository.selectJoinOne(RoomData.class, roomWrapper);
+        return roomData;
+    }
 
     /**
      * 新增房间信息

@@ -1,12 +1,17 @@
 package cn.common.service.impl.biz.app;
 
+import cn.common.enums.RoomStatusEnum;
 import cn.common.repository.entity.biz.RoomCheckOut;
+import cn.common.repository.entity.biz.RoomData;
+import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.repository.repository.biz.RoomCheckOutRepository;
+import cn.common.repository.repository.biz.RoomDataRepository;
 import cn.common.req.biz.RoomCheckOutAddReq;
 import cn.common.req.biz.RoomCheckOutReq;
 import cn.common.req.biz.RoomCheckOutUpdateReq;
 import cn.common.resp.biz.RoomCheckOutResp;
 import cn.common.service.biz.app.AppRoomCheckOutService;
+import cn.common.service.biz.app.AppRoomDataService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
@@ -51,6 +56,15 @@ public class AppRoomCheckOutServiceImpl implements AppRoomCheckOutService {
     private RoomCheckOutRepository roomCheckOutRepository;
 
     @Resource
+    private AppRoomDataService appRoomDataService;
+
+    @Resource
+    private RoomBookingRepository roomBookingRepository;
+
+    @Resource
+    private RoomDataRepository roomDataRepository;
+
+    @Resource
     private MapperFacade mapperFacade;
 
     @Resource
@@ -76,6 +90,17 @@ public class AppRoomCheckOutServiceImpl implements AppRoomCheckOutService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addItem(RoomCheckOutAddReq addReq) {
         log.info(">>>>>>>>>>>>>>>>>新增客房退房信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
+
+        String roomBookingId = addReq.getRoomBookingId();
+
+        RoomData roomData = appRoomDataService.queryRoomByBookingUd(roomBookingId);
+        if(CheckParam.isNull(roomData)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
+        }
+        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.BOOKED.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被入住，不可退订");
+        }
+
         String mainId = SnowflakeIdWorker.uniqueMainId();
         String authUserId = authUserService.currentAuthUserId();
         RoomCheckOut entity = mapperFacade.map(addReq, RoomCheckOut.class);
@@ -89,6 +114,10 @@ public class AppRoomCheckOutServiceImpl implements AppRoomCheckOutService {
                     ErrorCode.ERROR.getMessage() + StrUtil.COLON + e.getMessage() + StrUtil.COLON + e);
         }
         roomCheckOutRepository.insert(entity);
+
+        //更新房间状态信息为维护中
+        roomData.setRoomStatus(RoomStatusEnum.MAINTAINED.getCode());
+        roomDataRepository.updateById(roomData);
     }
 
     /**

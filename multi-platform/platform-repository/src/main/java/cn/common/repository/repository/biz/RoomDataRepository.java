@@ -1,6 +1,7 @@
 package cn.common.repository.repository.biz;
 
 import cn.common.repository.entity.biz.RoomData;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.apache.ibatis.annotations.Mapper;
 import com.github.yulichang.base.MPJBaseMapper;
 
@@ -12,7 +13,6 @@ import com.github.yulichang.base.MPJBaseMapper;
  */
 @Mapper
 public interface RoomDataRepository extends MPJBaseMapper<RoomData> {
-
 
     /**
      * 根据业务主键批量删除房间信息
