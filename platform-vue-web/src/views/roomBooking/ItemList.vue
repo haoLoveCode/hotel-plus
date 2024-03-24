@@ -83,22 +83,28 @@
             </div>
             <div class="search-item-view">
               <el-form-item label="入住开始时间">
-                <el-input
+                <el-date-picker
                     v-model="searchData.checkInBegin"
+                    type="datetime"
                     placeholder="请填写-入住开始时间"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
+                    align="right"
+                    :value-format="timeFormat"
+                    :picker-options="pickerOptions"
+                >
+                </el-date-picker>
               </el-form-item>
             </div>
             <div class="search-item-view">
               <el-form-item label="入住结束时间">
-                <el-input
+                <el-date-picker
                     v-model="searchData.checkInEnd"
+                    type="datetime"
                     placeholder="请填写-入住结束时间"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
+                    align="right"
+                    :value-format="timeFormat"
+                    :picker-options="pickerOptions"
+                >
+                </el-date-picker>
               </el-form-item>
             </div>
           </div>

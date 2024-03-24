@@ -295,7 +295,7 @@ public class RoomBookingServiceImpl implements RoomBookingService {
                         RoomBookingReq pageReq){
 
         if(!CheckParam.isNull(pageReq.getSubscriberId())){
-            pageWrapper.like(RoomBooking::getSubscriberId,pageReq.getSubscriberId());
+            pageWrapper.eq(RoomBooking::getSubscriberId,pageReq.getSubscriberId());
         }
 
         if(!CheckParam.isNull(pageReq.getBookingNo())){
@@ -303,7 +303,7 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         }
 
         if(!CheckParam.isNull(pageReq.getRoomDataId())){
-            pageWrapper.like(RoomBooking::getRoomDataId,pageReq.getRoomDataId());
+            pageWrapper.eq(RoomBooking::getRoomDataId,pageReq.getRoomDataId());
         }
 
         if(!CheckParam.isNull(pageReq.getRemark())){
@@ -311,19 +311,19 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         }
 
         if(!CheckParam.isNull(pageReq.getBookingTime())){
-            pageWrapper.like(RoomBooking::getBookingTime,pageReq.getBookingTime());
+            pageWrapper.ge(RoomBooking::getBookingTime,pageReq.getBookingTime());
         }
 
         if(!CheckParam.isNull(pageReq.getCheckInBegin())){
-            pageWrapper.like(RoomBooking::getCheckInBegin,pageReq.getCheckInBegin());
+            pageWrapper.ge(RoomBooking::getCheckInBegin,pageReq.getCheckInBegin());
         }
 
         if(!CheckParam.isNull(pageReq.getCheckInEnd())){
-            pageWrapper.like(RoomBooking::getCheckInEnd,pageReq.getCheckInEnd());
+            pageWrapper.le(RoomBooking::getCheckInEnd,pageReq.getCheckInEnd());
         }
 
         if(!CheckParam.isNull(pageReq.getBookingStatus())){
-            pageWrapper.like(RoomBooking::getBookingStatus,pageReq.getBookingStatus());
+            pageWrapper.eq(RoomBooking::getBookingStatus,pageReq.getBookingStatus());
         }
     }
 
