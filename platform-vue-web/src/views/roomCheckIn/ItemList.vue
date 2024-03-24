@@ -3,22 +3,6 @@
     <div class="page-search-view">
       <el-form :inline="true" ref="pageForm">
         <div class="search-param-view">
-          <div class="search-item-view">
-            <el-form-item label="客房入住信息">
-              <el-select
-                  v-model="searchData.roomCheckInId"
-                  :clearable="true"
-                  @change="handleRoomCheckInChange"
-                  placeholder="请选择客房入住信息">
-                <el-option
-                    v-for="(item,index) in roomCheckInOptions"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
           <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="预定订单">
@@ -53,20 +37,23 @@
           </div>
           <div class="search-view">
             <div class="search-item-view">
+              <el-form-item label="入住时间">
+                <el-date-picker
+                    v-model="searchData.checkInTime"
+                    type="datetime"
+                    placeholder="请填写-入住时间"
+                    align="right"
+                    :value-format="timeFormat"
+                    :picker-options="pickerOptions"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </div>
+            <div class="search-item-view">
               <el-form-item label="备注信息">
                 <el-input
                     v-model="searchData.remark"
                     placeholder="请填写-备注信息"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="入住时间">
-                <el-input
-                    v-model="searchData.checkInTime"
-                    placeholder="请填写-入住时间"
                     maxlength="10"
                     show-word-limit>
                 </el-input>

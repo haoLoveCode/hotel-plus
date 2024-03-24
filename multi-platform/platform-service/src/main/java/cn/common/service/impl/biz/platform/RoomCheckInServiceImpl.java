@@ -282,11 +282,11 @@ public class RoomCheckInServiceImpl implements RoomCheckInService {
                         RoomCheckInReq pageReq){
 
         if(!CheckParam.isNull(pageReq.getRoomBookingId())){
-            pageWrapper.like(RoomCheckIn::getRoomBookingId,pageReq.getRoomBookingId());
+            pageWrapper.eq(RoomCheckIn::getRoomBookingId,pageReq.getRoomBookingId());
         }
 
         if(!CheckParam.isNull(pageReq.getGuestIdentifyId())){
-            pageWrapper.like(RoomCheckIn::getGuestIdentifyId,pageReq.getGuestIdentifyId());
+            pageWrapper.eq(RoomCheckIn::getGuestIdentifyId,pageReq.getGuestIdentifyId());
         }
 
         if(!CheckParam.isNull(pageReq.getRemark())){
@@ -294,7 +294,7 @@ public class RoomCheckInServiceImpl implements RoomCheckInService {
         }
 
         if(!CheckParam.isNull(pageReq.getCheckInTime())){
-            pageWrapper.like(RoomCheckIn::getCheckInTime,pageReq.getCheckInTime());
+            pageWrapper.ge(RoomCheckIn::getCheckInTime,pageReq.getCheckInTime());
         }
     }
 
