@@ -1,7 +1,10 @@
 package cn.common.service.impl.biz.app;
 
+import cn.common.enums.RoomStatusEnum;
 import cn.common.repository.entity.biz.RoomBooking;
+import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.repository.biz.RoomBookingRepository;
+import cn.common.repository.repository.biz.RoomDataRepository;
 import cn.common.req.biz.RoomBookingAddReq;
 import cn.common.req.biz.RoomBookingReq;
 import cn.common.req.biz.RoomBookingUpdateReq;
@@ -61,6 +64,9 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
     private RoomBookingRepository roomBookingRepository;
 
     @Resource
+    private RoomDataRepository roomDataRepository;
+
+    @Resource
     private MapperFacade mapperFacade;
 
     @Resource
@@ -85,6 +91,15 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void addItem(RoomBookingAddReq addReq){
         log.info(">>>>>>>>>>>>>>>>>新增房间预订信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
+        String roomDataId = addReq.getRoomDataId();
+        RoomData roomData = roomDataRepository.selectOne(new LambdaQueryWrapper<RoomData>()
+                .eq(RoomData::getRoomDataId,roomDataId));
+        if(CheckParam.isNull(roomData)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "房间不存在");
+        }
+        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.UNUSED.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "当前房间非闲置，不可预定");
+        }
         String mainId = SnowflakeIdWorker.uniqueMainId();
         String authAppUserId = authAppUserService.authAppUserId();
         RoomBooking entity = mapperFacade.map(addReq, RoomBooking.class);
@@ -99,6 +114,10 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
                 ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
         }
         roomBookingRepository.insert(entity);
+        
+        //更新房间状态
+        roomData.setRoomStatus(RoomStatusEnum.CHECKED_IN.getCode());
+        roomDataRepository.updateById(roomData);
     }
 
     /**
@@ -297,8 +316,28 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
         if (CheckParam.isNull(result)) {
             return;
         }
+        String roomDataId = updateReq.getRoomDataId();
+        RoomData roomData = roomDataRepository.selectOne(new LambdaQueryWrapper<RoomData>()
+                .eq(RoomData::getRoomDataId,roomDataId));
+        if(CheckParam.isNull(roomData)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "房间不存在");
+        }
+        //是否可以预定
+        Boolean canBeBooking = roomData.getRoomStatus().compareTo(RoomStatusEnum.UNUSED.getCode()) == 0 ?
+         Boolean.TRUE : Boolean.FALSE;
+        if(!canBeBooking && !StrUtil.equalsAnyIgnoreCase(roomDataId,result.getRoomDataId())){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "当前房间非闲置，不可预定");
+        }
         setNeedUpdateItem(result,updateReq);
         roomBookingRepository.updateById(result);
+
+        RoomData roomUpdateData = new RoomData();
+        roomUpdateData.setRoomDataId(result.getRoomDataId());
+        roomUpdateData.setRoomStatus(RoomStatusEnum.CHECKED_IN.getCode());
+        roomDataRepository.update(roomUpdateData,new LambdaQueryWrapper<RoomData>().eq(RoomData::getRoomDataId,roomDataId));
+
+        roomData.setRoomStatus(RoomStatusEnum.UNUSED.getCode());
+        roomDataRepository.updateById(roomData);
     }
 
     /**

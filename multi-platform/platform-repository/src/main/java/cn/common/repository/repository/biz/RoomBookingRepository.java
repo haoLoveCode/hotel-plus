@@ -1,8 +1,12 @@
 package cn.common.repository.repository.biz;
 
 import cn.common.repository.entity.biz.RoomBooking;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import com.github.yulichang.base.MPJBaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author Singer
@@ -12,6 +16,7 @@ import com.github.yulichang.base.MPJBaseMapper;
  */
 @Mapper
 public interface RoomBookingRepository extends MPJBaseMapper<RoomBooking> {
+
 
 
     /**
