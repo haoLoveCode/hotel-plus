@@ -23,38 +23,41 @@
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="身份证号" prop="identifyNo">
               <el-input
                   v-model="submitData.identifyNo"
                   placeholder="请填写-身份证号"
-                  maxlength="10"
+                  maxlength="25"
                   show-word-limit>
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="性别" prop="gender">
-              <el-input
+              <el-select
                   v-model="submitData.gender"
-                  placeholder="请填写-性别"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+                  :clearable="true"
+                  placeholder="请选择-性别">
+                <el-option
+                    v-for="item in authUserGenderOptions"
+                    :key="item.value"
+                    :label="item.text"
+                    :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </div>
         </div>
-        <div class="data-body-div">
+        <div class="text-area-view">
           <div class="data-item-view">
             <el-form-item label="备注信息" prop="remark">
               <el-input
+                  type="textarea"
+                  :rows="3"
                   v-model="submitData.remark"
                   placeholder="请填写-备注信息"
-                  maxlength="10"
+                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
@@ -90,6 +93,7 @@ export default {
   data() {
     return {
       //-----------------
+      authUserGenderOptions:this.$bizConstants.authUserGenderOptions,
       //-----------------
       title: "编辑",
       copyVisible: false,
@@ -117,8 +121,8 @@ export default {
         gender: [
           {
             required: true,
-            message: '请规范填写-性别',
-            trigger: 'blur'
+            message: '请选择-性别',
+            trigger: 'change'
           }
         ],
         remark: [

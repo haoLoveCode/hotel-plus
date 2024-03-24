@@ -28,19 +28,24 @@
               <el-input
                   v-model="submitData.identifyNo"
                   placeholder="请填写-身份证号"
-                  maxlength="10"
+                  maxlength="25"
                   show-word-limit>
               </el-input>
             </el-form-item>
           </div>
           <div class="data-item-view">
             <el-form-item label="性别" prop="gender">
-              <el-input
+              <el-select
                   v-model="submitData.gender"
-                  placeholder="请填写-性别"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+                  :clearable="true"
+                  placeholder="请选择-性别">
+                <el-option
+                    v-for="item in authUserGenderOptions"
+                    :key="item.value"
+                    :label="item.text"
+                    :value="item.value">
+                </el-option>
+              </el-select>
             </el-form-item>
           </div>
         </div>
@@ -87,6 +92,7 @@ export default {
   data() {
     return {
       //-----------------
+      authUserGenderOptions:this.$bizConstants.authUserGenderOptions,
       //-----------------
       title: "新增",
       addVisible: false,
@@ -114,8 +120,8 @@ export default {
         gender: [
           {
             required: true,
-            message: '请规范填写-性别',
-            trigger: 'blur'
+            message: '请选择-性别',
+            trigger: 'change'
           }
         ],
         remark: [

@@ -76,6 +76,7 @@ export default {
   data() {
     return {
       //-----------------
+      authUserGenderOptions:this.$bizConstants.authUserGenderOptions,
       //-----------------
       authUserOptions: [],
       particularsVisible: false,

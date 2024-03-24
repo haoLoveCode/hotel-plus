@@ -338,6 +338,7 @@
     data() {
       return {
         //-----------------
+        authUserGenderOptions:this.$bizConstants.authUserGenderOptions,
         guestIdentifyOptions: [],
         //-----------------
         richTextVisible: false,
