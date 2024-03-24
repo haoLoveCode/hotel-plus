@@ -213,7 +213,7 @@
                 查看
               </el-button>
             </div>
-            <div class="operation-button-view" v-if="isAuth('roomCheckIn:edit')">
+            <div class="operation-button-view" v-if="isAuth('roomCheckIn:edit') && false">
               <el-button
                   @click="handleUpdate(scope.row)"
                   icon="el-icon-edit"

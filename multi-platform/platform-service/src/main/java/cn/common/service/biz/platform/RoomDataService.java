@@ -1,6 +1,7 @@
 package cn.common.service.biz.platform;
 
 
+import cn.common.repository.entity.biz.RoomData;
 import cn.common.req.biz.openBiz.roomData.RoomDataAddReq;
 import cn.common.req.biz.openBiz.roomData.RoomDataReq;
 import cn.common.req.biz.openBiz.roomData.RoomDataUpdateReq;
@@ -16,6 +17,16 @@ import java.util.List;
  * @date 2024/3/24
  */
 public interface RoomDataService {
+
+    /**
+     *
+     * @description: 根据房间预定ID查询房间信息
+     * @author: create by singer - Singer email:singer-coder@qq.com
+     * @date 2024/3/24
+     * @param roomBookingId 房间预定ID
+     * @return cn.common.repository.entity.biz.RoomData
+     */
+    RoomData queryRoomByBookingUd(String roomBookingId);
 
     /**
      * 导出房间信息数据

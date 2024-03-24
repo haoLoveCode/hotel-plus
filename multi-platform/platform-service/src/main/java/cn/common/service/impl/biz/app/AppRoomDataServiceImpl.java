@@ -82,7 +82,6 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     @Resource
     private HttpServletRequest request;
 
-
     /**
       *
       * @description: 根据房间预定ID查询房间信息
