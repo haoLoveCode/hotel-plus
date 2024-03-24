@@ -678,6 +678,51 @@ const globalServices = {
         responseType: 'blob',
     },
     //---------------房间信息----end-------------------
+    //---------------房间图片信息----start-------------------
+    /*分页查询房间图片信息*/
+    queryRoomImgByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomImg/queryByPage`,
+        needToken:true,
+    },
+    /*查询房间图片信息*/
+    queryRoomImg: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomImg/queryRoomImg`,
+        needToken:true,
+    },
+    /*查询单个房间图片信息*/
+    queryOneRoomImg: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomImg/queryOneRoomImg`,
+        needToken:true,
+    },
+    /*新增房间图片信息*/
+    addRoomImgItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomImg/addItem`,
+        needToken:true,
+    },
+    /*编辑房间图片信息*/
+    editRoomImgItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/roomImg/updateItem`,
+        needToken:true,
+    },
+    /*批量删除房间图片信息*/
+    batchDeleteRoomImg: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomImg/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出房间图片信息*/
+    exportRoomImgItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomImg/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------房间图片信息----end-------------------
     //---------------客户身份信息----start-------------------
     /*分页查询客户身份信息*/
     queryGuestIdentifyByPage: {
