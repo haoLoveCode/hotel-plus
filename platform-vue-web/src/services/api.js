@@ -588,6 +588,51 @@ const globalServices = {
         needToken:true,
     },
     //---------------订单-收货地址关联信息----end-------------------
+    //---------------房间类型信息----start-------------------
+    /*分页查询房间类型信息*/
+    queryRoomTypeByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomType/queryByPage`,
+        needToken:true,
+    },
+    /*查询房间类型信息*/
+    queryRoomType: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomType/queryRoomType`,
+        needToken:true,
+    },
+    /*查询单个房间类型信息*/
+    queryOneRoomType: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomType/queryOneRoomType`,
+        needToken:true,
+    },
+    /*新增房间类型信息*/
+    addRoomTypeItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomType/addItem`,
+        needToken:true,
+    },
+    /*编辑房间类型信息*/
+    editRoomTypeItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/roomType/updateItem`,
+        needToken:true,
+    },
+    /*批量删除房间类型信息*/
+    batchDeleteRoomType: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomType/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出房间类型信息*/
+    exportRoomTypeItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomType/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------房间类型信息----end-------------------
 
 };
 export default globalServices;
