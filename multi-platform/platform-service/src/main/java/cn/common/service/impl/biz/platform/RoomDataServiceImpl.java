@@ -1,18 +1,31 @@
 package cn.common.service.impl.biz.platform;
 
+import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.entity.biz.RoomImg;
-import cn.common.repository.entity.biz.SalesItemImg;
+import cn.common.repository.repository.biz.RoomDataRepository;
 import cn.common.repository.repository.biz.RoomImgRepository;
 import cn.common.req.biz.RoomDataAddReq;
 import cn.common.req.biz.RoomDataReq;
 import cn.common.req.biz.RoomDataUpdateReq;
-import cn.common.resp.biz.RoomDataResp;
 import cn.common.resp.biz.RoomDataExportResp;
+import cn.common.resp.biz.RoomDataResp;
 import cn.common.service.biz.platform.RoomDataService;
-import cn.common.repository.entity.biz.RoomData;
-import cn.common.repository.repository.biz.RoomDataRepository;
 import cn.common.service.platform.AuthUserService;
-import cn.hutool.extra.validation.ValidationUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import ma.glasnost.orika.MapperFacade;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
@@ -24,32 +37,15 @@ import pro.skywalking.resp.page.Pagination;
 import pro.skywalking.utils.BaseUtil;
 import pro.skywalking.utils.CheckParam;
 import pro.skywalking.utils.SnowflakeIdWorker;
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import pro.skywalking.utils.SnowflakeIdWorker;
-import com.google.common.collect.Lists;
-import com.alibaba.fastjson2.JSON;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import com.google.common.collect.Maps;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -162,8 +158,8 @@ public class RoomDataServiceImpl implements RoomDataService {
         roomDataRepository.insert(entity);
         imgList.stream().forEach(item -> {
             RoomImg img = new RoomImg();
-            img.setRoomImgId(mainId);
-            img.setRoomDataId(SnowflakeIdWorker.uniqueMainId());
+            img.setRoomImgId(SnowflakeIdWorker.uniqueMainId());
+            img.setRoomDataId(mainId);
             img.setImgUrl(item);
             try {
                 BaseUtil.setFieldValueNotNull(img);
@@ -431,8 +427,8 @@ public class RoomDataServiceImpl implements RoomDataService {
                 .eq(RoomImg::getRoomDataId,mainId));
         imgList.stream().forEach(item -> {
             RoomImg img = new RoomImg();
-            img.setRoomDataId(mainId);
             img.setRoomImgId(SnowflakeIdWorker.uniqueMainId());
+            img.setRoomDataId(mainId);
             img.setImgUrl(item);
             try {
                 BaseUtil.setFieldValueNotNull(img);

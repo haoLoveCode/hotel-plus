@@ -112,7 +112,7 @@
             </el-form-item>
           </div>
         </div>
-        <el-divider content-position="center">请填写详情介绍</el-divider>
+        <el-divider content-position="center">请填写房间介绍</el-divider>
         <div class="editor-div">
           <Editor @change="getEditorContent" :value="editorContent" :isClear="true"></Editor>
         </div>
@@ -507,7 +507,7 @@ export default {
     async showAdd(data) {
       console.log('data:' + JSON.stringify(data))
       if (data) {
-
+        this.editorContent = data.briefData;
       }
       await this.init(data);
       this.addVisible = true;
@@ -575,6 +575,12 @@ export default {
       this.$refs.submitForm.validate((valid) => {
         const params = {};
         if (valid) {
+          console.log('this.editorContent:'+this.editorContent);
+          if (!this.$isNull(this.editorContent)) {
+            this.submitData.briefData = this.editorContent
+          } else {
+            this.$message.error('请填写详情内容');
+          }
           Object.assign(params, this.submitData);
           console.log("params", params);
         } else {
@@ -624,6 +630,10 @@ export default {
     align-content: center;
     align-items: flex-start;
     width: 100%;
+    .editor-div{
+      width: 100%;
+      height: auto;
+    }
     .data-body-div {
       display: flex;
       flex-direction: row;

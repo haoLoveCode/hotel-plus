@@ -28,8 +28,6 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="房间状态" prop="roomStatus">
               <el-select
@@ -45,32 +43,6 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="房间展示标题" prop="roomTitle">
-              <el-input
-                  v-model="submitData.roomTitle"
-                  placeholder="请填写-房间展示标题"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="房间简介" prop="briefData">
-              <el-input
-                  v-model="submitData.briefData"
-                  placeholder="请填写-房间简介"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="房间编号" prop="roomNo">
               <el-input
@@ -82,13 +54,15 @@
             </el-form-item>
           </div>
         </div>
-        <div class="data-body-div">
+        <div class="text-area-view">
           <div class="data-item-view">
-            <el-form-item label="房间图片" prop="mainImg">
+            <el-form-item label="房间展示标题" prop="roomTitle">
               <el-input
-                  v-model="submitData.mainImg"
-                  placeholder="请填写-房间图片"
-                  maxlength="10"
+                  type="textarea"
+                  :rows="3"
+                  v-model="submitData.roomTitle"
+                  placeholder="请填写-房间展示标题"
+                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
@@ -105,8 +79,6 @@
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="价格" prop="unitPrice">
               <el-input
@@ -117,8 +89,6 @@
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="房间面积" prop="roomArea">
               <el-input
@@ -139,6 +109,48 @@
                   maxlength="10"
                   show-word-limit>
               </el-input>
+            </el-form-item>
+          </div>
+        </div>
+        <el-divider content-position="center">请填写房间介绍</el-divider>
+        <div class="editor-div">
+          <Editor @change="getEditorContent" :value="editorContent" :isClear="true"></Editor>
+        </div>
+        <el-divider content-position="center">上传房间图片</el-divider>
+        <div class="add-body-div">
+          <div class="add-item-view">
+            <el-form-item label="房间图片:">
+              <div class="upload-item-view">
+                <UploadImg
+                    class="upload-item"
+                    ref="uploadMainImgRef"
+                    :uploadApi="uploadUrl"
+                    :fileList="mainImgList"
+                    @subBack="uploadMainImgSuccess"
+                    @handleFileDelete="handleMainImgDelete"
+                    :limit="1"
+                    :headers="uploadHeaders"
+                />
+              </div>
+            </el-form-item>
+          </div>
+        </div>
+        <el-divider content-position="center">上传房间详情图片</el-divider>
+        <div class="add-body-div">
+          <div class="add-item-view">
+            <el-form-item label="房间详情图片:">
+              <div class="upload-item-view">
+                <UploadImg
+                    class="upload-item"
+                    ref="salesItemImgRef"
+                    :uploadApi="uploadUrl"
+                    :fileList="imgList"
+                    @subBack="uploadRoomImgSuccess"
+                    @handleFileDelete="handleRoomImgDelete"
+                    :limit="5"
+                    :headers="uploadHeaders"
+                />
+              </div>
             </el-form-item>
           </div>
         </div>
@@ -213,6 +225,13 @@ export default {
         roomArea: '',
         bedNum: '',
         imgList:[],
+      },
+      mainImgList:[],
+      imgList:[],
+      uploadUrl: process.env.BASE_API + `/api/platformFile/uploadFile`,
+      deleteFileUrl: process.env.BASE_API + `/api/platformFile/deleteFileByFileName`,
+      uploadHeaders: {
+        token: localStorage.getItem('token') || ''
       },
       validatorRules: {
         roomTypeId: [
@@ -292,6 +311,104 @@ export default {
     };
   },
   methods: {
+    //拿到富文本内容
+    getEditorContent(textValue) {
+      this.editorContent = textValue
+      console.log('textValue : ' + textValue)
+      console.log('editorContent : ' + this.editorContent)
+    },
+    // 上传图片回调
+    uploadRoomImgSuccess(fileName, file) {
+      if (this.$isNull(fileName)) {
+        return
+      }
+      if (fileName.length === 0) {
+        return;
+      }
+      if (this.$isNull(file)) {
+        return
+      }
+      //随机数
+      let uuId = baseUtils.randomString();
+      //文件名称
+      let fileNameItem = {
+        status: 'success',
+        name: fileName,
+        percentage: 100,
+        uid: uuId,
+        raw: {
+          uid: uuId
+        },
+        url: this.handleImageUrl(fileName)
+      }
+      this.imgList.push(fileNameItem);
+      console.log('上传成功后的文件集合:' + JSON.stringify(this.imgList))
+    },
+    async handleRoomImgDelete(fileName) {
+      console.log('删除文件fileName:' + fileName);
+      if (this.$isNull(fileName)) {
+        return
+      }
+      const index = this.imgList.findIndex((item) => {
+        return item.name == fileName
+      })
+      this.imgList.splice(index, 1);
+      const res = await Api.deleteFileApi({
+        name: fileName
+      });
+      console.log('删除文件结果:' + JSON.stringify(res))
+      if (res.success) {
+        console.log('删除成功')
+      }
+      console.log('删除后的文件集合:' + this.imgList);
+    },
+    // 上传图片回调
+    uploadMainImgSuccess(fileName, file) {
+      if (this.$isNull(fileName)) {
+        return
+      }
+      if (fileName.length === 0) {
+        return;
+      }
+      if (this.$isNull(file)) {
+        return
+      }
+      //随机数
+      let uuId = baseUtils.randomString();
+      //文件名称
+      let fileNameItem = {
+        status: 'success',
+        name: fileName,
+        percentage: 100,
+        uid: uuId,
+        raw: {
+          uid: uuId
+        },
+        url: this.handleImageUrl(fileName)
+      }
+      this.mainImgList.push(fileNameItem);
+      this.submitData.mainImg = fileName
+      console.log('上传成功后的文件集合:' + JSON.stringify(this.mainImgList))
+    },
+    async handleMainImgDelete(fileName) {
+      console.log('删除文件fileName:' + fileName);
+      if (this.$isNull(fileName)) {
+        return
+      }
+      const index = this.mainImgList.findIndex((item) => {
+        return item.name == fileName
+      })
+      this.mainImgList.splice(index, 1);
+      const res = await Api.deleteFileApi({
+        name: fileName
+      });
+      console.log('删除文件结果:' + JSON.stringify(res))
+      if (res.success) {
+        console.log('删除成功')
+      }
+      console.log('删除后的文件集合:' + this.mainImgList);
+      this.submitData.mainImg = '';
+    },
     async queryRoomType() {
       const loading = this.$loading({
         lock: true,
@@ -394,6 +511,7 @@ export default {
         this.submitData = {
           ...data
         }
+        this.editorContent = data.briefData;
       }
       await this.init(data);
       this.copyVisible = true;
@@ -461,6 +579,11 @@ export default {
       this.$refs.submitForm.validate((valid) => {
         const params = {};
         if (valid) {
+          if (!this.$isNull(this.editorContent)) {
+            this.submitData.briefData = this.editorContent
+          } else {
+            this.$message.error('请填写详情内容');
+          }
           Object.assign(params, this.submitData);
           console.log("params", params);
         } else {
