@@ -28,16 +28,16 @@ public interface AppRoomBookingService {
     void addItem(RoomBookingAddReq addReq);
 
     /**
-     * 批量删除房间预订信息信息
+     * 批量删除房间预订信息
      *
-     * @param req 需要被删除的房间预订信息信息
+     * @param req 需要被删除的房间预订信息
      * @author: Singer
      * @date 2024/3/24
      */
     void batchDeleteItem(BaseDeleteReq req);
 
     /**
-     * 查询房间预订信息信息
+     * 查询房间预订信息
      *
      * @param
      * @return java.util.List
@@ -47,7 +47,7 @@ public interface AppRoomBookingService {
     List<RoomBookingResp> queryRoomBooking(RoomBookingReq req);
 
     /**
-     * 查询单个房间预订信息信息
+     * 查询单个房间预订信息
      *
      * @param
      * @return java.util.List

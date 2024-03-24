@@ -49,7 +49,7 @@ public class RoomImgController extends BaseApiController {
      * @param addReq 新增房间图片信息Req
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增房间图片信息信息")
+    @ApiLog(value = "新增房间图片信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid RoomImgAddReq addReq){
         roomImgService.addItem(addReq);
@@ -74,7 +74,7 @@ public class RoomImgController extends BaseApiController {
      * 主键ID集合批量删除房间图片信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间图片信息信息
+     * @param req 需要被删除的房间图片信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除房间图片信息")
@@ -91,7 +91,7 @@ public class RoomImgController extends BaseApiController {
      * @param updateReq 更新房间图片信息请求参数
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新房间图片信息信息")
+    @ApiLog(value = "更新房间图片信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid RoomImgUpdateReq updateReq){
         roomImgService.updateItem(updateReq);
@@ -99,14 +99,14 @@ public class RoomImgController extends BaseApiController {
     }
 
     /**
-     * 查询房间图片信息信息
+     * 查询房间图片信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryRoomImg")
-    @ApiLog(value = "查询房间图片信息信息")
+    @ApiLog(value = "查询房间图片信息")
     @NeedLogin()
     public ApiResponse<List<RoomImgResp>> queryRoomImg(
         @RequestBody @Valid RoomImgReq req){
@@ -114,14 +114,14 @@ public class RoomImgController extends BaseApiController {
     }
 
     /**
-     * 查询单个房间图片信息信息
+     * 查询单个房间图片信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryOneRoomImg")
-    @ApiLog(value = "查询房间图片信息信息")
+    @ApiLog(value = "查询房间图片信息")
     @NeedLogin()
     public ApiResponse<RoomImgResp> queryOneRoomImg(
         @RequestBody @Valid RoomImgReq req){
@@ -136,7 +136,7 @@ public class RoomImgController extends BaseApiController {
      * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询房间图片信息信息")
+    @ApiLog(value = "分页查询房间图片信息")
     @NeedLogin()
     public ApiResponse<Pagination<RoomImgResp>> queryByPage(
         @RequestBody @Valid RoomImgReq pageReq){

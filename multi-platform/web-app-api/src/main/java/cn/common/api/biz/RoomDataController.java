@@ -39,7 +39,7 @@ public class RoomDataController extends BaseApiController {
      * @param addReq 新增房间信息Req
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增房间信息信息")
+    @ApiLog(value = "新增房间信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid RoomDataAddReq addReq){
         roomDataService.addItem(addReq);
@@ -64,7 +64,7 @@ public class RoomDataController extends BaseApiController {
      * 主键ID集合批量删除房间信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间信息信息
+     * @param req 需要被删除的房间信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除房间信息")
@@ -81,7 +81,7 @@ public class RoomDataController extends BaseApiController {
      * @param updateReq 更新房间信息请求参数
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新房间信息信息")
+    @ApiLog(value = "更新房间信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid RoomDataUpdateReq updateReq){
         roomDataService.updateItem(updateReq);
@@ -89,14 +89,14 @@ public class RoomDataController extends BaseApiController {
     }
 
     /**
-     * 查询房间信息信息
+     * 查询房间信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryRoomData")
-    @ApiLog(value = "查询房间信息信息")
+    @ApiLog(value = "查询房间信息")
     @NeedLogin()
     public ApiResponse<List<RoomDataResp>> queryRoomData(
         @RequestBody @Valid RoomDataReq req){
@@ -104,14 +104,14 @@ public class RoomDataController extends BaseApiController {
     }
 
     /**
-     * 查询单个房间信息信息
+     * 查询单个房间信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryOneRoomData")
-    @ApiLog(value = "查询房间信息信息")
+    @ApiLog(value = "查询房间信息")
     @NeedLogin()
     public ApiResponse<RoomDataResp> queryOneRoomData(
         @RequestBody @Valid RoomDataReq req){
@@ -126,7 +126,7 @@ public class RoomDataController extends BaseApiController {
      * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询房间信息信息")
+    @ApiLog(value = "分页查询房间信息")
     @NeedLogin()
     public ApiResponse<Pagination<RoomDataResp>> queryByPage(
         @RequestBody @Valid RoomDataReq pageReq){

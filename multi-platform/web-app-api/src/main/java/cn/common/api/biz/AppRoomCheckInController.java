@@ -40,7 +40,7 @@ public class AppRoomCheckInController extends BaseApiController {
      * @date 2024/3/24
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增客房入住信息信息")
+    @ApiLog(value = "新增客房入住信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid RoomCheckInAddReq addReq) {
         appRoomCheckInService.addItem(addReq);
@@ -50,7 +50,7 @@ public class AppRoomCheckInController extends BaseApiController {
     /**
      * 主键ID集合批量删除客房入住信息
      *
-     * @param req 需要被删除的客房入住信息信息
+     * @param req 需要被删除的客房入住信息
      * @author: Singer
      * @date 2024/3/24
      */
@@ -70,7 +70,7 @@ public class AppRoomCheckInController extends BaseApiController {
      * @date 2024/3/24
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新客房入住信息信息")
+    @ApiLog(value = "更新客房入住信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid RoomCheckInUpdateReq updateReq) {
         appRoomCheckInService.updateItem(updateReq);
@@ -78,7 +78,7 @@ public class AppRoomCheckInController extends BaseApiController {
     }
 
     /**
-     * 查询客房入住信息信息
+     * 查询客房入住信息
      *
      * @param
      * @return java.util.List
@@ -86,7 +86,7 @@ public class AppRoomCheckInController extends BaseApiController {
      * @date 2024/3/24
      */
     @PostMapping(value = "/queryRoomCheckIn")
-    @ApiLog(value = "查询客房入住信息信息")
+    @ApiLog(value = "查询客房入住信息")
     @NeedLogin()
     public ApiResponse<List<RoomCheckInResp>> queryRoomCheckIn(
             @RequestBody @Valid RoomCheckInReq req) {
@@ -94,7 +94,7 @@ public class AppRoomCheckInController extends BaseApiController {
     }
 
     /**
-     * 查询单个客房入住信息信息
+     * 查询单个客房入住信息
      *
      * @param
      * @return java.util.List
@@ -102,7 +102,7 @@ public class AppRoomCheckInController extends BaseApiController {
      * @date 2024/3/24
      */
     @PostMapping(value = "/queryOneRoomCheckIn")
-    @ApiLog(value = "查询客房入住信息信息")
+    @ApiLog(value = "查询客房入住信息")
     @NeedLogin()
     public ApiResponse<RoomCheckInResp> queryOneRoomCheckIn(
             @RequestBody @Valid RoomCheckInReq req) {
@@ -118,7 +118,7 @@ public class AppRoomCheckInController extends BaseApiController {
      * @date 2024/3/24
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询客房入住信息信息")
+    @ApiLog(value = "分页查询客房入住信息")
     @NeedLogin()
     public ApiResponse<Pagination<RoomCheckInResp>> queryByPage(
             @RequestBody @Valid RoomCheckInReq pageReq) {

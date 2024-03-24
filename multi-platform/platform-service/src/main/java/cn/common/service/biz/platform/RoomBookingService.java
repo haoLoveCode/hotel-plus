@@ -35,15 +35,15 @@ public interface RoomBookingService {
     void addItem(RoomBookingAddReq addReq);
 
     /**
-     * 批量删除房间预订信息信息
+     * 批量删除房间预订信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间预订信息信息
+     * @param req 需要被删除的房间预订信息
      */
     void batchDeleteItem(BaseDeleteReq req);
 
     /**
-     * 查询房间预订信息信息
+     * 查询房间预订信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -52,7 +52,7 @@ public interface RoomBookingService {
     List<RoomBookingResp> queryRoomBooking(RoomBookingReq req);
 
     /**
-     * 查询单个房间预订信息信息
+     * 查询单个房间预订信息
      * @author: Singer
      * @date 2024/3/24
      * @param

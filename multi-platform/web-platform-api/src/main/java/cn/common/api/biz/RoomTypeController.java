@@ -49,7 +49,7 @@ public class RoomTypeController extends BaseApiController {
      * @param addReq 新增房间类型信息Req
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增房间类型信息信息")
+    @ApiLog(value = "新增房间类型信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid RoomTypeAddReq addReq){
         roomTypeService.addItem(addReq);
@@ -74,7 +74,7 @@ public class RoomTypeController extends BaseApiController {
      * 主键ID集合批量删除房间类型信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间类型信息信息
+     * @param req 需要被删除的房间类型信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除房间类型信息")
@@ -91,7 +91,7 @@ public class RoomTypeController extends BaseApiController {
      * @param updateReq 更新房间类型信息请求参数
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新房间类型信息信息")
+    @ApiLog(value = "更新房间类型信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid RoomTypeUpdateReq updateReq){
         roomTypeService.updateItem(updateReq);
@@ -99,14 +99,14 @@ public class RoomTypeController extends BaseApiController {
     }
 
     /**
-     * 查询房间类型信息信息
+     * 查询房间类型信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryRoomType")
-    @ApiLog(value = "查询房间类型信息信息")
+    @ApiLog(value = "查询房间类型信息")
     @NeedLogin()
     public ApiResponse<List<RoomTypeResp>> queryRoomType(
         @RequestBody @Valid RoomTypeReq req){
@@ -114,14 +114,14 @@ public class RoomTypeController extends BaseApiController {
     }
 
     /**
-     * 查询单个房间类型信息信息
+     * 查询单个房间类型信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryOneRoomType")
-    @ApiLog(value = "查询房间类型信息信息")
+    @ApiLog(value = "查询房间类型信息")
     @NeedLogin()
     public ApiResponse<RoomTypeResp> queryOneRoomType(
         @RequestBody @Valid RoomTypeReq req){
@@ -136,7 +136,7 @@ public class RoomTypeController extends BaseApiController {
      * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询房间类型信息信息")
+    @ApiLog(value = "分页查询房间类型信息")
     @NeedLogin()
     public ApiResponse<Pagination<RoomTypeResp>> queryByPage(
         @RequestBody @Valid RoomTypeReq pageReq){

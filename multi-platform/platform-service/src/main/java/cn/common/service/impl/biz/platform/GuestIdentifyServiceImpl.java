@@ -151,10 +151,10 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     }
 
     /**
-     * 批量删除客户身份信息信息
+     * 批量删除客户身份信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的客户身份信息信息
+     * @param req 需要被删除的客户身份信息
      */
     @Override
     public void batchDeleteItem(BaseDeleteReq req){
@@ -170,7 +170,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     }
 
     /**
-     * 查询客户身份信息信息
+     * 查询客户身份信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -191,7 +191,7 @@ public class GuestIdentifyServiceImpl implements GuestIdentifyService {
     }
 
     /**
-     * 查询单个客户身份信息信息
+     * 查询单个客户身份信息
      * @author: Singer
      * @date 2024/3/24
      * @param

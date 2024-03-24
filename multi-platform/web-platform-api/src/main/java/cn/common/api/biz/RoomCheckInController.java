@@ -49,7 +49,7 @@ public class RoomCheckInController extends BaseApiController {
      * @param addReq 新增客房入住信息Req
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增客房入住信息信息")
+    @ApiLog(value = "新增客房入住信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid RoomCheckInAddReq addReq){
         roomCheckInService.addItem(addReq);
@@ -74,7 +74,7 @@ public class RoomCheckInController extends BaseApiController {
      * 主键ID集合批量删除客房入住信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的客房入住信息信息
+     * @param req 需要被删除的客房入住信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除客房入住信息")
@@ -91,7 +91,7 @@ public class RoomCheckInController extends BaseApiController {
      * @param updateReq 更新客房入住信息请求参数
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新客房入住信息信息")
+    @ApiLog(value = "更新客房入住信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid RoomCheckInUpdateReq updateReq){
         roomCheckInService.updateItem(updateReq);
@@ -99,14 +99,14 @@ public class RoomCheckInController extends BaseApiController {
     }
 
     /**
-     * 查询客房入住信息信息
+     * 查询客房入住信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryRoomCheckIn")
-    @ApiLog(value = "查询客房入住信息信息")
+    @ApiLog(value = "查询客房入住信息")
     @NeedLogin()
     public ApiResponse<List<RoomCheckInResp>> queryRoomCheckIn(
         @RequestBody @Valid RoomCheckInReq req){
@@ -114,14 +114,14 @@ public class RoomCheckInController extends BaseApiController {
     }
 
     /**
-     * 查询单个客房入住信息信息
+     * 查询单个客房入住信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryOneRoomCheckIn")
-    @ApiLog(value = "查询客房入住信息信息")
+    @ApiLog(value = "查询客房入住信息")
     @NeedLogin()
     public ApiResponse<RoomCheckInResp> queryOneRoomCheckIn(
         @RequestBody @Valid RoomCheckInReq req){
@@ -136,7 +136,7 @@ public class RoomCheckInController extends BaseApiController {
      * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询客房入住信息信息")
+    @ApiLog(value = "分页查询客房入住信息")
     @NeedLogin()
     public ApiResponse<Pagination<RoomCheckInResp>> queryByPage(
         @RequestBody @Valid RoomCheckInReq pageReq){

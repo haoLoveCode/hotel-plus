@@ -39,7 +39,7 @@ public class RoomCheckOutController extends BaseApiController {
      * @param addReq 新增客房退房信息Req
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增客房退房信息信息")
+    @ApiLog(value = "新增客房退房信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid RoomCheckOutAddReq addReq){
         roomCheckOutService.addItem(addReq);
@@ -64,7 +64,7 @@ public class RoomCheckOutController extends BaseApiController {
      * 主键ID集合批量删除客房退房信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的客房退房信息信息
+     * @param req 需要被删除的客房退房信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除客房退房信息")
@@ -81,7 +81,7 @@ public class RoomCheckOutController extends BaseApiController {
      * @param updateReq 更新客房退房信息请求参数
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新客房退房信息信息")
+    @ApiLog(value = "更新客房退房信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid RoomCheckOutUpdateReq updateReq){
         roomCheckOutService.updateItem(updateReq);
@@ -89,14 +89,14 @@ public class RoomCheckOutController extends BaseApiController {
     }
 
     /**
-     * 查询客房退房信息信息
+     * 查询客房退房信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryRoomCheckOut")
-    @ApiLog(value = "查询客房退房信息信息")
+    @ApiLog(value = "查询客房退房信息")
     @NeedLogin()
     public ApiResponse<List<RoomCheckOutResp>> queryRoomCheckOut(
         @RequestBody @Valid RoomCheckOutReq req){
@@ -104,14 +104,14 @@ public class RoomCheckOutController extends BaseApiController {
     }
 
     /**
-     * 查询单个客房退房信息信息
+     * 查询单个客房退房信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryOneRoomCheckOut")
-    @ApiLog(value = "查询客房退房信息信息")
+    @ApiLog(value = "查询客房退房信息")
     @NeedLogin()
     public ApiResponse<RoomCheckOutResp> queryOneRoomCheckOut(
         @RequestBody @Valid RoomCheckOutReq req){
@@ -126,7 +126,7 @@ public class RoomCheckOutController extends BaseApiController {
      * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询客房退房信息信息")
+    @ApiLog(value = "分页查询客房退房信息")
     @NeedLogin()
     public ApiResponse<Pagination<RoomCheckOutResp>> queryByPage(
         @RequestBody @Valid RoomCheckOutReq pageReq){

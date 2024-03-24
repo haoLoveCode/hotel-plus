@@ -35,15 +35,15 @@ public interface RoomTypeService {
     void addItem(RoomTypeAddReq addReq);
 
     /**
-     * 批量删除房间类型信息信息
+     * 批量删除房间类型信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间类型信息信息
+     * @param req 需要被删除的房间类型信息
      */
     void batchDeleteItem(BaseDeleteReq req);
 
     /**
-     * 查询房间类型信息信息
+     * 查询房间类型信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -52,7 +52,7 @@ public interface RoomTypeService {
     List<RoomTypeResp> queryRoomType(RoomTypeReq req);
 
     /**
-     * 查询单个房间类型信息信息
+     * 查询单个房间类型信息
      * @author: Singer
      * @date 2024/3/24
      * @param

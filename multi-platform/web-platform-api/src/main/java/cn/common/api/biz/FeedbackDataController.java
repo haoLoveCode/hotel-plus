@@ -49,7 +49,7 @@ public class FeedbackDataController extends BaseApiController {
      * @param addReq 新增投诉建议信息Req
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增投诉建议信息信息")
+    @ApiLog(value = "新增投诉建议信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid FeedbackDataAddReq addReq){
         feedbackDataService.addItem(addReq);
@@ -74,7 +74,7 @@ public class FeedbackDataController extends BaseApiController {
      * 主键ID集合批量删除投诉建议信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的投诉建议信息信息
+     * @param req 需要被删除的投诉建议信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除投诉建议信息")
@@ -91,7 +91,7 @@ public class FeedbackDataController extends BaseApiController {
      * @param updateReq 更新投诉建议信息请求参数
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新投诉建议信息信息")
+    @ApiLog(value = "更新投诉建议信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid FeedbackDataUpdateReq updateReq){
         feedbackDataService.updateItem(updateReq);
@@ -99,14 +99,14 @@ public class FeedbackDataController extends BaseApiController {
     }
 
     /**
-     * 查询投诉建议信息信息
+     * 查询投诉建议信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryFeedbackData")
-    @ApiLog(value = "查询投诉建议信息信息")
+    @ApiLog(value = "查询投诉建议信息")
     @NeedLogin()
     public ApiResponse<List<FeedbackDataResp>> queryFeedbackData(
         @RequestBody @Valid FeedbackDataReq req){
@@ -114,14 +114,14 @@ public class FeedbackDataController extends BaseApiController {
     }
 
     /**
-     * 查询单个投诉建议信息信息
+     * 查询单个投诉建议信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryOneFeedbackData")
-    @ApiLog(value = "查询投诉建议信息信息")
+    @ApiLog(value = "查询投诉建议信息")
     @NeedLogin()
     public ApiResponse<FeedbackDataResp> queryOneFeedbackData(
         @RequestBody @Valid FeedbackDataReq req){
@@ -136,7 +136,7 @@ public class FeedbackDataController extends BaseApiController {
      * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询投诉建议信息信息")
+    @ApiLog(value = "分页查询投诉建议信息")
     @NeedLogin()
     public ApiResponse<Pagination<FeedbackDataResp>> queryByPage(
         @RequestBody @Valid FeedbackDataReq pageReq){

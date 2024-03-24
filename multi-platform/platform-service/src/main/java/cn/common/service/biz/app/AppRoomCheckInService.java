@@ -27,15 +27,15 @@ public interface AppRoomCheckInService {
     void addItem(RoomCheckInAddReq addReq);
 
     /**
-     * 批量删除客房入住信息信息
+     * 批量删除客房入住信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的客房入住信息信息
+     * @param req 需要被删除的客房入住信息
      */
     void batchDeleteItem(BaseDeleteReq req);
 
     /**
-     * 查询客房入住信息信息
+     * 查询客房入住信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -44,7 +44,7 @@ public interface AppRoomCheckInService {
     List<RoomCheckInResp> queryRoomCheckIn(RoomCheckInReq req);
 
     /**
-     * 查询单个客房入住信息信息
+     * 查询单个客房入住信息
      * @author: Singer
      * @date 2024/3/24
      * @param

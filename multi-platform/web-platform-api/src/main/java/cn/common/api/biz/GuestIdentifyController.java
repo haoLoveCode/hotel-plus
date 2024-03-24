@@ -49,7 +49,7 @@ public class GuestIdentifyController extends BaseApiController {
      * @param addReq 新增客户身份信息Req
      */
     @PostMapping(value = "/addItem")
-    @ApiLog(value = "新增客户身份信息信息")
+    @ApiLog(value = "新增客户身份信息")
     @NeedLogin()
     public ApiResponse addItem(@RequestBody @Valid GuestIdentifyAddReq addReq){
         guestIdentifyService.addItem(addReq);
@@ -74,7 +74,7 @@ public class GuestIdentifyController extends BaseApiController {
      * 主键ID集合批量删除客户身份信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的客户身份信息信息
+     * @param req 需要被删除的客户身份信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除客户身份信息")
@@ -91,7 +91,7 @@ public class GuestIdentifyController extends BaseApiController {
      * @param updateReq 更新客户身份信息请求参数
      */
     @PutMapping(value = "/updateItem")
-    @ApiLog(value = "更新客户身份信息信息")
+    @ApiLog(value = "更新客户身份信息")
     @NeedLogin()
     public ApiResponse updateItem(@RequestBody @Valid GuestIdentifyUpdateReq updateReq){
         guestIdentifyService.updateItem(updateReq);
@@ -99,14 +99,14 @@ public class GuestIdentifyController extends BaseApiController {
     }
 
     /**
-     * 查询客户身份信息信息
+     * 查询客户身份信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryGuestIdentify")
-    @ApiLog(value = "查询客户身份信息信息")
+    @ApiLog(value = "查询客户身份信息")
     @NeedLogin()
     public ApiResponse<List<GuestIdentifyResp>> queryGuestIdentify(
         @RequestBody @Valid GuestIdentifyReq req){
@@ -114,14 +114,14 @@ public class GuestIdentifyController extends BaseApiController {
     }
 
     /**
-     * 查询单个客户身份信息信息
+     * 查询单个客户身份信息
      * @author: Singer
      * @date 2024/3/24
      * @param
      * @return java.util.List
      */
     @PostMapping(value = "/queryOneGuestIdentify")
-    @ApiLog(value = "查询客户身份信息信息")
+    @ApiLog(value = "查询客户身份信息")
     @NeedLogin()
     public ApiResponse<GuestIdentifyResp> queryOneGuestIdentify(
         @RequestBody @Valid GuestIdentifyReq req){
@@ -136,7 +136,7 @@ public class GuestIdentifyController extends BaseApiController {
      * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
-    @ApiLog(value = "分页查询客户身份信息信息")
+    @ApiLog(value = "分页查询客户身份信息")
     @NeedLogin()
     public ApiResponse<Pagination<GuestIdentifyResp>> queryByPage(
         @RequestBody @Valid GuestIdentifyReq pageReq){

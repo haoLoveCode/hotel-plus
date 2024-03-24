@@ -35,15 +35,15 @@ public interface FeedbackDataService {
     void addItem(FeedbackDataAddReq addReq);
 
     /**
-     * 批量删除投诉建议信息信息
+     * 批量删除投诉建议信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的投诉建议信息信息
+     * @param req 需要被删除的投诉建议信息
      */
     void batchDeleteItem(BaseDeleteReq req);
 
     /**
-     * 查询投诉建议信息信息
+     * 查询投诉建议信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -52,7 +52,7 @@ public interface FeedbackDataService {
     List<FeedbackDataResp> queryFeedbackData(FeedbackDataReq req);
 
     /**
-     * 查询单个投诉建议信息信息
+     * 查询单个投诉建议信息
      * @author: Singer
      * @date 2024/3/24
      * @param

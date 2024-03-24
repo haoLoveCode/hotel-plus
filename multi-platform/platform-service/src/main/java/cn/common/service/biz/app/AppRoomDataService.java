@@ -28,16 +28,16 @@ public interface AppRoomDataService {
     void addItem(RoomDataAddReq addReq);
 
     /**
-     * 批量删除房间信息信息
+     * 批量删除房间信息
      *
-     * @param req 需要被删除的房间信息信息
+     * @param req 需要被删除的房间信息
      * @author: Singer
      * @date 2024/3/24
      */
     void batchDeleteItem(BaseDeleteReq req);
 
     /**
-     * 查询房间信息信息
+     * 查询房间信息
      *
      * @param
      * @return java.util.List
@@ -47,7 +47,7 @@ public interface AppRoomDataService {
     List<RoomDataResp> queryRoomData(RoomDataReq req);
 
     /**
-     * 查询单个房间信息信息
+     * 查询单个房间信息
      *
      * @param
      * @return java.util.List

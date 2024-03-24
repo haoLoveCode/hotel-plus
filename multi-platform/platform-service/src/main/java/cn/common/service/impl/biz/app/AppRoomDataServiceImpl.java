@@ -126,10 +126,10 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     }
 
     /**
-     * 批量删除房间信息信息
+     * 批量删除房间信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间信息信息
+     * @param req 需要被删除的房间信息
      */
     @Override
     public void batchDeleteItem(BaseDeleteReq req){
@@ -146,7 +146,7 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     }
 
     /**
-     * 查询房间信息信息
+     * 查询房间信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -180,7 +180,7 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     }
 
     /**
-     * 查询单个房间信息信息
+     * 查询单个房间信息
      * @author: Singer
      * @date 2024/3/24
      * @param

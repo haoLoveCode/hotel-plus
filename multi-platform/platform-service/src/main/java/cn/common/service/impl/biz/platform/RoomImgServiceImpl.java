@@ -148,10 +148,10 @@ public class RoomImgServiceImpl implements RoomImgService {
     }
 
     /**
-     * 批量删除房间图片信息信息
+     * 批量删除房间图片信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间图片信息信息
+     * @param req 需要被删除的房间图片信息
      */
     @Override
     public void batchDeleteItem(BaseDeleteReq req){
@@ -167,7 +167,7 @@ public class RoomImgServiceImpl implements RoomImgService {
     }
 
     /**
-     * 查询房间图片信息信息
+     * 查询房间图片信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -188,7 +188,7 @@ public class RoomImgServiceImpl implements RoomImgService {
     }
 
     /**
-     * 查询单个房间图片信息信息
+     * 查询单个房间图片信息
      * @author: Singer
      * @date 2024/3/24
      * @param

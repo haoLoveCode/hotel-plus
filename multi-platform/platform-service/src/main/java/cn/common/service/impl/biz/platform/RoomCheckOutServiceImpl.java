@@ -151,10 +151,10 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
     }
 
     /**
-     * 批量删除客房退房信息信息
+     * 批量删除客房退房信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的客房退房信息信息
+     * @param req 需要被删除的客房退房信息
      */
     @Override
     public void batchDeleteItem(BaseDeleteReq req){
@@ -170,7 +170,7 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
     }
 
     /**
-     * 查询客房退房信息信息
+     * 查询客房退房信息
      * @author: Singer
      * @date 2024/3/24
      * @param
@@ -191,7 +191,7 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
     }
 
     /**
-     * 查询单个客房退房信息信息
+     * 查询单个客房退房信息
      * @author: Singer
      * @date 2024/3/24
      * @param
