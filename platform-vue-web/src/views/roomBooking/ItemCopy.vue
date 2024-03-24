@@ -158,7 +158,20 @@ export default {
       //-----------------
       authAppUserOptions: [],
       roomDataOptions: [],
-      bookingStatusOptions: [],
+      bookingStatusOptions: [
+        {
+          'text':'预定成功',
+          'value': 1
+        },
+        {
+          'text':'已取消',
+          'value': 2
+        },
+        {
+          'text':'已完成',
+          'value': 3
+        },
+      ],
       pickerOptions:this.$bizConstants.pickerOptions,
       timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
       //-----------------

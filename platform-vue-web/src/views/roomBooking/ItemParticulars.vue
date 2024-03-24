@@ -125,7 +125,20 @@ export default {
       //-----------------
       authAppUserOptions: [],
       roomDataOptions: [],
-      bookingStatusOptions: [],
+      bookingStatusOptions: [
+        {
+          'text':'预定成功',
+          'value': 1
+        },
+        {
+          'text':'已取消',
+          'value': 2
+        },
+        {
+          'text':'已完成',
+          'value': 3
+        },
+      ],
       //-----------------
       authUserOptions: [],
       particularsVisible: false,

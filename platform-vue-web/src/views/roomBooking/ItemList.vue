@@ -49,8 +49,6 @@
                 </el-select>
               </el-form-item>
             </div>
-          </div>
-          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="预订单号">
                 <el-input
@@ -61,6 +59,8 @@
                 </el-input>
               </el-form-item>
             </div>
+          </div>
+          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="备注信息">
                 <el-input
@@ -419,7 +419,20 @@
         //-----------------
         authAppUserOptions: [],
         roomDataOptions: [],
-        bookingStatusOptions: [],
+        bookingStatusOptions: [
+          {
+            'text':'预定成功',
+            'value': 1
+          },
+          {
+            'text':'已取消',
+            'value': 2
+          },
+          {
+            'text':'已完成',
+            'value': 3
+          },
+        ],
         roomBookingOptions: [],
         //-----------------
         richTextVisible: false,

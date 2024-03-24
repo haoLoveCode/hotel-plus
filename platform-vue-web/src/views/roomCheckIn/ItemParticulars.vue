@@ -42,16 +42,6 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
-              房间编号:
-            </div>
-            <div class="descriptions-value">
-              {{particularsData.roomNo}}
-            </div>
-          </div>
-        </div>
-        <div class="descriptions-item">
-          <div class="descriptions-item-view">
-            <div class="descriptions-title">
               备注信息:
             </div>
             <div class="descriptions-value">
