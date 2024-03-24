@@ -903,6 +903,51 @@ const globalServices = {
         responseType: 'blob',
     },
     //---------------客房退房信息----end-------------------
+    //---------------投诉建议信息----start-------------------
+    /*分页查询投诉建议信息*/
+    queryFeedbackDataByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/feedbackData/queryByPage`,
+        needToken:true,
+    },
+    /*查询投诉建议信息*/
+    queryFeedbackData: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/feedbackData/queryFeedbackData`,
+        needToken:true,
+    },
+    /*查询单个投诉建议信息*/
+    queryOneFeedbackData: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/feedbackData/queryOneFeedbackData`,
+        needToken:true,
+    },
+    /*新增投诉建议信息*/
+    addFeedbackDataItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/feedbackData/addItem`,
+        needToken:true,
+    },
+    /*编辑投诉建议信息*/
+    editFeedbackDataItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/feedbackData/updateItem`,
+        needToken:true,
+    },
+    /*批量删除投诉建议信息*/
+    batchDeleteFeedbackData: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/feedbackData/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出投诉建议信息*/
+    exportFeedbackDataItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/feedbackData/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------投诉建议信息----end-------------------
 
 };
 export default globalServices;
