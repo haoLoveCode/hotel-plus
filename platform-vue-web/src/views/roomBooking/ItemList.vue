@@ -440,6 +440,8 @@
           },
         ],
         roomBookingOptions: [],
+        pickerOptions:this.$bizConstants.pickerOptions,
+        timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
         //-----------------
         richTextVisible: false,
         richText: ``,
