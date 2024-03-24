@@ -72,6 +72,16 @@
         <div class="descriptions-item">
           <div class="descriptions-item-view">
             <div class="descriptions-title">
+              房间详情图片:
+            </div>
+            <div class="descriptions-value">
+              <el-tag size="medium" @click="viewRoomImgDataList(particularsData)">点击查看</el-tag>
+            </div>
+          </div>
+        </div>
+        <div class="descriptions-item">
+          <div class="descriptions-item-view">
+            <div class="descriptions-title">
               房间楼层:
             </div>
             <div class="descriptions-value">
@@ -111,6 +121,46 @@
         </div>
       </div>
     </div>
+    <!--商品图片查看弹窗-->
+    <el-dialog
+        title="商品图片"
+        :visible.sync="roomImgListVisible"
+        width="80%">
+      <div class="table-view">
+        <el-table
+            :data="roomImgList"
+            border
+            :fit="true">
+          <el-table-column
+              prop="id"
+              label="编号"
+              header-align="center"
+              align="center"
+              width="50">
+          </el-table-column>
+          <el-table-column
+              prop="imgUrl"
+              label="图片名称"
+              header-align="center"
+              align="center"
+          >
+          </el-table-column>
+          <el-table-column
+              prop="imgUrl"
+              label="图片查看"
+              header-align="center"
+              align="center"
+          >
+            <template v-slot="scope">
+              <img v-if="scope.row.imgUrl" @click="handlePreView(handleImageUrl(scope.row.imgUrl))"
+                   :src="handleImageUrl(scope.row.imgUrl)"
+                   style="width: 30px;height: 30px;border-radius: 5px;"/>
+              <el-tag v-else size="medium">暂无</el-tag>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-dialog>
     <el-dialog append-to-body :visible.sync="previewVisible" title="图片预览">
       <img width="100%" :src="previewImageUrl" alt=""/>
     </el-dialog>
@@ -136,6 +186,8 @@ export default {
   data() {
     return {
       //-----------------
+      roomImgList: [],
+      roomImgListVisible: false,
       roomTypeOptions: [],
       itemStatusOptions: [
         {
@@ -169,6 +221,22 @@ export default {
     }
   },
   methods: {
+    //查看房间图片
+    async viewRoomImgDataList(data) {
+      let roomImgList = data.imgList;
+      if (!roomImgList || roomImgList.length == 0) {
+        this.$message.error('暂无图片');
+      }
+      this.roomImgList = new Array();
+      roomImgList.map((item, index) => {
+        console.log(`第${index}个元素为 ${item}`);
+        this.roomImgList.push({
+          imgUrl: item,
+          id: index + 1
+        })
+      });
+      this.roomImgListVisible = true;
+    },
     async queryRoomType() {
       const loading = this.$loading({
         lock: true,

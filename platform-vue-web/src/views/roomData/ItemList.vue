@@ -3,22 +3,6 @@
     <div class="page-search-view">
       <el-form :inline="true" ref="pageForm">
         <div class="search-param-view">
-          <div class="search-item-view">
-            <el-form-item label="房间信息">
-              <el-select
-                  v-model="searchData.roomDataId"
-                  :clearable="true"
-                  @change="handleRoomDataChange"
-                  placeholder="请选择房间信息">
-                <el-option
-                    v-for="(item,index) in roomDataOptions"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
           <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="房间类型">
@@ -50,8 +34,6 @@
                 </el-select>
               </el-form-item>
             </div>
-          </div>
-          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="房间展示标题">
                 <el-input
@@ -62,6 +44,8 @@
                 </el-input>
               </el-form-item>
             </div>
+          </div>
+          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="房间简介">
                 <el-input
@@ -77,16 +61,6 @@
                 <el-input
                     v-model="searchData.roomNo"
                     placeholder="请填写-房间编号"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="房间图片">
-                <el-input
-                    v-model="searchData.mainImg"
-                    placeholder="请填写-房间图片"
                     maxlength="10"
                     show-word-limit>
                 </el-input>
@@ -112,6 +86,8 @@
                 </el-input>
               </el-form-item>
             </div>
+          </div>
+          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="房间面积">
                 <el-input
@@ -250,6 +226,7 @@
           label="房间展示标题"
           header-align="center"
           align="center"
+          width="200"
       >
       </el-table-column>
       <el-table-column
@@ -257,7 +234,11 @@
           label="房间简介"
           header-align="center"
           align="center"
+          width="200"
       >
+        <template v-slot="scope">
+          <el-tag size="medium" @click="showRichText(scope.row.remarkData)">点击查看</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
           prop="roomNo"
@@ -272,6 +253,23 @@
           header-align="center"
           align="center"
       >
+        <template v-slot="scope">
+          <img v-if="scope.row.mainImg" @click="handlePreView(handleImageUrl(scope.row.mainImg))"
+               :src="handleImageUrl(scope.row.mainImg)"
+               style="width: 30px;height: 30px;border-radius: 5px;"/>
+          <el-tag v-else size="medium">暂无</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column
+          prop="imgList"
+          label="房间详情图片"
+          header-align="center"
+          align="center"
+          width="100"
+      >
+        <template v-slot="scope">
+          <el-tag size="medium" @click="viewRoomImgDataList(scope.row)">点击查看</el-tag>
+        </template>
       </el-table-column>
       <el-table-column
           prop="roomFloor"
@@ -395,6 +393,46 @@
       width="50%">
       <div v-html="richText"></div>
     </el-dialog>
+    <!--房间图片查看弹窗-->
+    <el-dialog
+        title="商品图片"
+        :visible.sync="roomImgListVisible"
+        width="80%">
+      <div class="table-view">
+        <el-table
+            :data="roomImgList"
+            border
+            :fit="true">
+          <el-table-column
+              prop="id"
+              label="编号"
+              header-align="center"
+              align="center"
+              width="50">
+          </el-table-column>
+          <el-table-column
+              prop="imgUrl"
+              label="图片名称"
+              header-align="center"
+              align="center"
+          >
+          </el-table-column>
+          <el-table-column
+              prop="imgUrl"
+              label="图片查看"
+              header-align="center"
+              align="center"
+          >
+            <template v-slot="scope">
+              <img v-if="scope.row.imgUrl" @click="handlePreView(handleImageUrl(scope.row.imgUrl))"
+                   :src="handleImageUrl(scope.row.imgUrl)"
+                   style="width: 30px;height: 30px;border-radius: 5px;"/>
+              <el-tag v-else size="medium">暂无</el-tag>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </el-dialog>
     <!--批量删除确认框-->
     <el-dialog
       title="提示"
@@ -458,6 +496,8 @@
     data() {
       return {
         //-----------------
+        roomImgList: [],
+        roomImgListVisible: false,
         roomTypeOptions: [],
         itemStatusOptions: [
           {
@@ -518,6 +558,22 @@
       this.init();
     },
     methods: {
+      //查看房间图片
+      async viewRoomImgDataList(data) {
+        let roomImgList = data.imgList;
+        if (!roomImgList || roomImgList.length == 0) {
+          this.$message.error('暂无图片');
+        }
+        this.roomImgList = new Array();
+        roomImgList.map((item, index) => {
+          console.log(`第${index}个元素为 ${item}`);
+          this.roomImgList.push({
+            imgUrl: item,
+            id: index + 1
+          })
+        });
+        this.roomImgListVisible = true;
+      },
       async queryRoomType() {
         const loading = this.$loading({
           lock: true,
