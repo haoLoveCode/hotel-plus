@@ -18,7 +18,7 @@ import java.io.*;
 @Data
 public class RoomBookingAddReq implements Serializable {
 
-    private static final long serialVersionUID = 194646303874639134L;
+    private static final long serialVersionUID = -937269933411790819L;
 
     /**
      * 预定人
@@ -37,12 +37,6 @@ public class RoomBookingAddReq implements Serializable {
      */
     @NotEmpty(message = "房间ID->不可为空")
     private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    @NotEmpty(message = "房间编号->不可为空")
-    private String roomNo;
 
     /**
      * 备注信息

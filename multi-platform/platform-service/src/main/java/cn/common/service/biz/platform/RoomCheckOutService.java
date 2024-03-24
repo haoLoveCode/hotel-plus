@@ -1,9 +1,9 @@
 package cn.common.service.biz.platform;
 
 
-import cn.common.req.biz.RoomCheckOutAddReq;
-import cn.common.req.biz.RoomCheckOutReq;
-import cn.common.req.biz.RoomCheckOutUpdateReq;
+import cn.common.req.biz.openBiz.roomCheckOut.RoomCheckOutAddReq;
+import cn.common.req.biz.openBiz.roomCheckOut.RoomCheckOutReq;
+import cn.common.req.biz.openBiz.roomCheckOut.RoomCheckOutUpdateReq;
 import cn.common.resp.biz.RoomCheckOutResp;
 import pro.skywalking.req.base.BaseDeleteReq;
 import pro.skywalking.resp.page.Pagination;

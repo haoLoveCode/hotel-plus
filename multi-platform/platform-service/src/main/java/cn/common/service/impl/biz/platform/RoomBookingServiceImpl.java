@@ -1,15 +1,29 @@
 package cn.common.service.impl.biz.platform;
 
+import cn.common.repository.entity.biz.RoomBooking;
+import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.req.biz.RoomBookingAddReq;
 import cn.common.req.biz.RoomBookingReq;
 import cn.common.req.biz.RoomBookingUpdateReq;
-import cn.common.resp.biz.RoomBookingResp;
 import cn.common.resp.biz.RoomBookingExportResp;
+import cn.common.resp.biz.RoomBookingResp;
 import cn.common.service.biz.platform.RoomBookingService;
-import cn.common.repository.entity.biz.RoomBooking;
-import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.service.platform.AuthUserService;
-import cn.hutool.extra.validation.ValidationUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import ma.glasnost.orika.MapperFacade;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
@@ -21,32 +35,15 @@ import pro.skywalking.resp.page.Pagination;
 import pro.skywalking.utils.BaseUtil;
 import pro.skywalking.utils.CheckParam;
 import pro.skywalking.utils.SnowflakeIdWorker;
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import pro.skywalking.utils.SnowflakeIdWorker;
-import com.google.common.collect.Lists;
-import com.alibaba.fastjson2.JSON;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import com.google.common.collect.Maps;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Singer
@@ -234,10 +231,6 @@ public class RoomBookingServiceImpl implements RoomBookingService {
             wrapper.like(RoomBooking::getRoomDataId,req.getRoomDataId());
         }
 
-        if(!CheckParam.isNull(req.getRoomNo())){
-            wrapper.like(RoomBooking::getRoomNo,req.getRoomNo());
-        }
-
         if(!CheckParam.isNull(req.getRemark())){
             wrapper.like(RoomBooking::getRemark,req.getRemark());
         }
@@ -313,10 +306,6 @@ public class RoomBookingServiceImpl implements RoomBookingService {
             pageWrapper.like(RoomBooking::getRoomDataId,pageReq.getRoomDataId());
         }
 
-        if(!CheckParam.isNull(pageReq.getRoomNo())){
-            pageWrapper.like(RoomBooking::getRoomNo,pageReq.getRoomNo());
-        }
-
         if(!CheckParam.isNull(pageReq.getRemark())){
             pageWrapper.like(RoomBooking::getRemark,pageReq.getRemark());
         }
@@ -375,9 +364,6 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         }
         if(!CheckParam.isNull(updateReq.getRoomDataId())){
             entity.setRoomDataId(updateReq.getRoomDataId());
-        }
-        if(!CheckParam.isNull(updateReq.getRoomNo())){
-            entity.setRoomNo(updateReq.getRoomNo());
         }
         if(!CheckParam.isNull(updateReq.getRemark())){
             entity.setRemark(updateReq.getRemark());

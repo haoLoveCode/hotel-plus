@@ -18,7 +18,7 @@ import java.io.*;
 @Data
 public class RoomBookingResp extends BaseResp implements Serializable {
 
-    private static final long serialVersionUID = 841455077763730932L;
+    private static final long serialVersionUID = -721447132669582886L;
 
     /**
      * 业务主键ID->"roomBookingId"
@@ -39,11 +39,6 @@ public class RoomBookingResp extends BaseResp implements Serializable {
      * 房间ID
      */
     private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    private String roomNo;
 
     /**
      * 备注信息

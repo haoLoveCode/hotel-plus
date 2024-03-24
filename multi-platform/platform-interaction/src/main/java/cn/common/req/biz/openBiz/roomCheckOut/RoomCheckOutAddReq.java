@@ -1,4 +1,4 @@
-package cn.common.req.biz;
+package cn.common.req.biz.openBiz.roomCheckOut;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,15 +10,15 @@ import java.time.LocalDateTime;
 import java.io.*;
 
 /**
- * 客房入住信息新增Req
- * @title: RoomCheckInAddReq.java
+ * 客房退房信息新增Req
+ * @title: RoomCheckOutAddReq.java
  * @author Singer
  * @date 2024-02-29 11:13
  */
 @Data
-public class RoomCheckInAddReq implements Serializable {
+public class RoomCheckOutAddReq implements Serializable {
 
-    private static final long serialVersionUID = -259940915154928270L;
+    private static final long serialVersionUID = 742675139950396368L;
 
     /**
      * 预定订单ID
@@ -45,17 +45,17 @@ public class RoomCheckInAddReq implements Serializable {
     private String roomNo;
 
     /**
+     * 退房时间
+     */
+    @NotEmpty(message = "退房时间->不可为空")
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
+    private LocalDateTime checkOutTime;
+
+    /**
      * 备注信息
      */
     @NotEmpty(message = "备注信息->不可为空")
     private String remark;
-
-    /**
-     * 入住时间
-     */
-    @NotEmpty(message = "入住时间->不可为空")
-    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
-    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
-    private LocalDateTime checkInTime;
 
 }

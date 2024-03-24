@@ -27,7 +27,7 @@
                     :clearable="true"
                     placeholder="请选择-预定人信息">
                   <el-option
-                      v-for="(item,index) in authAppUserOptions"
+                      v-for="(item,index) in subscriberOptions"
                       :key="item.value"
                       :label="item.text"
                       :value="item.value">
@@ -216,7 +216,7 @@
           width="200"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.subscriberId,authAppUserOptions)}}</el-tag>
+          <el-tag size="medium">{{handleTypeByValue(scope.row.subscriberId,subscriberOptions)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -433,7 +433,7 @@
     data() {
       return {
         //-----------------
-        authAppUserOptions: [],
+        subscriberOptions: [],
         roomDataOptions: [],
         bookingStatusOptions: [],
         roomBookingOptions: [],
@@ -471,44 +471,6 @@
       this.init();
     },
     methods: {
-      async queryRoomData() {
-        const loading = this.$loading({
-          lock: true,
-          text: "正在请求。。。",
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.8)'
-        });
-        try {
-          Api.queryRoomData({}).then((res) => {
-            if (res.success) {
-              console.log('res:' + JSON.stringify(res))
-              if (this.$isNull(res)) {
-                return;
-              }
-              let data = res.data
-              if (this.$isNull(data)) {
-                return;
-              }
-              this.roomDataOptions = new Array();
-              data.map((item) => {
-                let options = {
-                  'text': item.roomTitle,
-                  'value': item.roomDataId
-                }
-                this.roomDataOptions.push(options)
-              })
-              console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
-              loading.close();
-            } else {
-              loading.close();
-              this.$message.error('服务器异常');
-            }
-          });
-        } catch (error) {
-          loading.close();
-          this.$message.error(error.message || error.msg || "服务器异常");
-        }
-      },
       async showRichText(richText) {
         console.log(richText)
         this.richText = richText
@@ -764,8 +726,6 @@
       },
       // 初始化数据
       async init() {
-        await this.queryRoomData();
-        this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
         this.authUserOptions = await this.$bizConstants.authUserOptions()
         //await this.queryRoomBooking();
         this.queryPageList();

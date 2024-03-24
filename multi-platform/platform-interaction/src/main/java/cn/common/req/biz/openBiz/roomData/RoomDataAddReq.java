@@ -1,33 +1,22 @@
-package cn.common.req.biz;
+package cn.common.req.biz.openBiz.roomData;
 
 import pro.skywalking.validation.NotEmpty;
 import lombok.Data;
-import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.io.*;
 import java.util.List;
 
 /**
- * 房间信息请求数据封装类
- * @title: RoomDataUpdateReq.java
+ * 房间信息新增Req
+ * @title: RoomDataAddReq.java
  * @author Singer
  * @date 2024-02-29 11:13
  */
 @Data
-public class RoomDataUpdateReq implements Serializable {
+public class RoomDataAddReq implements Serializable {
 
-    private static final long serialVersionUID = -329878432681190919L;
-
-    /**
-     * 主键ID->ID
-     */
-    private Long id;
-
-    /**
-     * 业务主键ID->"roomDataId"
-     */
-    @NotEmpty(message = "业务主键ID->不可为空")
-    private String roomDataId;
+    private static final long serialVersionUID = 370018351044084170L;
 
     /**
      * 房间类型ID
@@ -94,6 +83,5 @@ public class RoomDataUpdateReq implements Serializable {
      */
     @NotEmpty(message = "图片信息->不可为空")
     private List<String> imgList;
-
 
 }

@@ -51,12 +51,12 @@ public class CurrentCodeHandler {
     /**
      * 数据表配置 多张表用逗号隔开
      */
-    public final static String TABLE_NAME = "feedback_data";
+    public final static String TABLE_NAME = "room_booking";
 
     /**
      * 表注释
      */
-    private final static String TABLE_DESC = "投诉建议信息";
+    private final static String TABLE_DESC = "房间预订信息";
 
     /**
      * VUE前端路径 需要填写绝对路径
@@ -83,7 +83,7 @@ public class CurrentCodeHandler {
                 return;
             }
             //设置是否生成前端和后台代码
-            CodeHandler.setCreateVue(false);
+            CodeHandler.setCreateVue(true);
             CodeHandler.setCreateJava(true);
             //设置前端项目代码路径
             CodeHandler.setVuePath(VUE_PATH);

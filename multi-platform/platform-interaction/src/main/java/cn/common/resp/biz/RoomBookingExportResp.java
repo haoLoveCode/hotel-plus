@@ -25,7 +25,7 @@ import java.io.*;
 @ColumnWidth(25)
 public class RoomBookingExportResp implements Serializable {
 
-    private static final long serialVersionUID = -814823662559706160L;
+    private static final long serialVersionUID = 250790028757424577L;
 
     /**
      * 预定人
@@ -47,13 +47,6 @@ public class RoomBookingExportResp implements Serializable {
     @NotEmpty(message = "房间ID->不可为空")
     @ExcelProperty(value = "房间ID")
     private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    @NotEmpty(message = "房间编号->不可为空")
-    @ExcelProperty(value = "房间编号")
-    private String roomNo;
 
     /**
      * 备注信息

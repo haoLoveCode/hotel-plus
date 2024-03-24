@@ -1,4 +1,4 @@
-package cn.common.req.biz;
+package cn.common.req.biz.openBiz.roomData;
 
 import lombok.Data;
 import pro.skywalking.req.base.BasePageReq;

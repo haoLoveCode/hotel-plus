@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 public class RoomBookingReq extends BasePageReq implements Serializable {
 
-    private static final long serialVersionUID = 422835643661827730L;
+    private static final long serialVersionUID = -935168699049208182L;
 
     /**
      * 业务主键ID->"roomBookingId"
@@ -38,11 +38,6 @@ public class RoomBookingReq extends BasePageReq implements Serializable {
      * 房间ID
      */
     private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    private String roomNo;
 
     /**
      * 备注信息

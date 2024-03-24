@@ -1,9 +1,9 @@
 package cn.common.api.biz;
 
 import cn.common.api.BaseApiController;
-import cn.common.req.biz.RoomDataAddReq;
-import cn.common.req.biz.RoomDataReq;
-import cn.common.req.biz.RoomDataUpdateReq;
+import cn.common.req.biz.openBiz.roomData.RoomDataAddReq;
+import cn.common.req.biz.openBiz.roomData.RoomDataReq;
+import cn.common.req.biz.openBiz.roomData.RoomDataUpdateReq;
 import cn.common.resp.biz.RoomDataResp;
 import cn.common.service.biz.platform.RoomDataService;
 import pro.skywalking.req.base.BaseDeleteReq;
@@ -12,21 +12,16 @@ import pro.skywalking.resp.page.Pagination;
 import pro.skywalking.anon.ApiLog;
 import pro.skywalking.interceptor.NeedLogin;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Singer

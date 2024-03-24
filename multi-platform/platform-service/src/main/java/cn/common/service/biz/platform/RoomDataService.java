@@ -1,9 +1,9 @@
 package cn.common.service.biz.platform;
 
 
-import cn.common.req.biz.RoomDataAddReq;
-import cn.common.req.biz.RoomDataReq;
-import cn.common.req.biz.RoomDataUpdateReq;
+import cn.common.req.biz.openBiz.roomData.RoomDataAddReq;
+import cn.common.req.biz.openBiz.roomData.RoomDataReq;
+import cn.common.req.biz.openBiz.roomData.RoomDataUpdateReq;
 import cn.common.resp.biz.RoomDataResp;
 import pro.skywalking.req.base.BaseDeleteReq;
 import pro.skywalking.resp.page.Pagination;

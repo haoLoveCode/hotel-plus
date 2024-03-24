@@ -20,7 +20,7 @@
                   :clearable="true"
                   placeholder="请选择-预定人信息">
                 <el-option
-                    v-for="(item,index) in authAppUserOptions"
+                    v-for="(item,index) in subscriberOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -77,6 +77,18 @@
         </div>
         <div class="data-body-div">
           <div class="data-item-view">
+            <el-form-item label="备注信息" prop="remark">
+              <el-input
+                  v-model="submitData.remark"
+                  placeholder="请填写-备注信息"
+                  maxlength="10"
+                  show-word-limit>
+              </el-input>
+            </el-form-item>
+          </div>
+        </div>
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="预订时间" prop="bookingTime">
               <el-input
                   v-model="submitData.bookingTime"
@@ -106,20 +118,6 @@
                   v-model="submitData.checkInEnd"
                   placeholder="请填写-入住结束时间"
                   maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="text-area-view">
-          <div class="data-item-view">
-            <el-form-item label="备注信息" prop="remark">
-              <el-input
-                  type="textarea"
-                  :rows="3"
-                  v-model="submitData.remark"
-                  placeholder="请填写-备注信息"
-                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
@@ -155,11 +153,9 @@ export default {
   data() {
     return {
       //-----------------
-      authAppUserOptions: [],
+      subscriberOptions: [],
       roomDataOptions: [],
       bookingStatusOptions: [],
-      pickerOptions:this.$commonOptions.pickerOptions,
-      timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
       //-----------------
       title: "编辑",
       copyVisible: false,
@@ -212,66 +208,28 @@ export default {
         bookingTime: [
           {
             required: true,
-            message: '请选择-预订时间',
-            trigger: 'change'
+            message: '请规范填写-预订时间',
+            trigger: 'blur'
           }
         ],
         checkInBegin: [
           {
             required: true,
-            message: '请选择-入住开始时间',
-            trigger: 'change'
+            message: '请规范填写-入住开始时间',
+            trigger: 'blur'
           }
         ],
         checkInEnd: [
           {
             required: true,
-            message: '请选择-入住结束时间',
-            trigger: 'change'
+            message: '请规范填写-入住结束时间',
+            trigger: 'blur'
           }
         ],
       }
     };
   },
   methods: {
-    async queryRoomData() {
-      const loading = this.$loading({
-        lock: true,
-        text: "正在请求。。。",
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)'
-      });
-      try {
-        Api.queryRoomData({}).then((res) => {
-          if (res.success) {
-            console.log('res:' + JSON.stringify(res))
-            if (this.$isNull(res)) {
-              return;
-            }
-            let data = res.data
-            if (this.$isNull(data)) {
-              return;
-            }
-            this.roomDataOptions = new Array();
-            data.map((item) => {
-              let options = {
-                'text': item.roomTitle,
-                'value': item.roomDataId
-              }
-              this.roomDataOptions.push(options)
-            })
-            console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
-            loading.close();
-          } else {
-            loading.close();
-            this.$message.error('服务器异常');
-          }
-        });
-      } catch (error) {
-        loading.close();
-        this.$message.error(error.message || error.msg || "服务器异常");
-      }
-    },
     //处理展示
     async showCopy(data) {
       console.log('data:' + JSON.stringify(data))
@@ -284,7 +242,7 @@ export default {
       this.copyVisible = true;
     },
     async setOtherData(data) {
-      await this.queryRoomData();
+
     },
     //处理初始化
     async init(data) {

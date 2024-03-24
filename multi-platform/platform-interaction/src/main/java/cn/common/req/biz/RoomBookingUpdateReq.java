@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Data
 public class RoomBookingUpdateReq implements Serializable {
 
-    private static final long serialVersionUID = -214111905236886723L;
+    private static final long serialVersionUID = 695761983259220726L;
 
     /**
      * 主键ID->ID
@@ -48,12 +48,6 @@ public class RoomBookingUpdateReq implements Serializable {
      */
     @NotEmpty(message = "房间ID->不可为空")
     private String roomDataId;
-
-    /**
-     * 房间编号
-     */
-    @NotEmpty(message = "房间编号->不可为空")
-    private String roomNo;
 
     /**
      * 备注信息

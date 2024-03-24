@@ -15,7 +15,7 @@
               预定人:
             </div>
             <div class="descriptions-value">
-              {{handleTypeByValue(particularsData.subscriberId,authAppUserOptions)}}
+              {{handleTypeByValue(particularsData.subscriberId,subscriberOptions)}}
             </div>
           </div>
         </div>
@@ -46,13 +46,6 @@
             </div>
             <div class="descriptions-value">
               {{particularsData.bookingNo}}
-            </div>
-          </div>
-        </div>
-        <div class="descriptions-item">
-          <div class="descriptions-item-view">
-            <div class="descriptions-title">
-              房间编号:
             </div>
           </div>
         </div>
@@ -123,7 +116,7 @@ export default {
   data() {
     return {
       //-----------------
-      authAppUserOptions: [],
+      subscriberOptions: [],
       roomDataOptions: [],
       bookingStatusOptions: [],
       //-----------------
@@ -136,44 +129,6 @@ export default {
     }
   },
   methods: {
-    async queryRoomData() {
-      const loading = this.$loading({
-        lock: true,
-        text: "正在请求。。。",
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)'
-      });
-      try {
-        Api.queryRoomData({}).then((res) => {
-          if (res.success) {
-            console.log('res:' + JSON.stringify(res))
-            if (this.$isNull(res)) {
-              return;
-            }
-            let data = res.data
-            if (this.$isNull(data)) {
-              return;
-            }
-            this.roomDataOptions = new Array();
-            data.map((item) => {
-              let options = {
-                'text': item.roomTitle,
-                'value': item.roomDataId
-              }
-              this.roomDataOptions.push(options)
-            })
-            console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
-            loading.close();
-          } else {
-            loading.close();
-            this.$message.error('服务器异常');
-          }
-        });
-      } catch (error) {
-        loading.close();
-        this.$message.error(error.message || error.msg || "服务器异常");
-      }
-    },
     handlePreView(url) {
       if (this.$isNull(url)) {
         return;
@@ -210,8 +165,6 @@ export default {
       this.particularsVisible = true;
     },
     async init(data) {
-      await this.queryRoomData();
-      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
       this.authUserOptions = await this.$bizConstants.authUserOptions()
       this.showParticulars(data);
     },
