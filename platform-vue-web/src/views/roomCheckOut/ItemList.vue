@@ -3,22 +3,6 @@
     <div class="page-search-view">
       <el-form :inline="true" ref="pageForm">
         <div class="search-param-view">
-          <div class="search-item-view">
-            <el-form-item label="客房退房信息">
-              <el-select
-                  v-model="searchData.roomCheckOutId"
-                  :clearable="true"
-                  @change="handleRoomCheckOutChange"
-                  placeholder="请选择客房退房信息">
-                <el-option
-                    v-for="(item,index) in roomCheckOutOptions"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
           <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="预定订单">
@@ -50,8 +34,6 @@
                 </el-select>
               </el-form-item>
             </div>
-          </div>
-          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="退房时间">
                 <el-input
@@ -62,6 +44,8 @@
                 </el-input>
               </el-form-item>
             </div>
+          </div>
+          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="备注信息">
                 <el-input
@@ -101,7 +85,7 @@
                   size="mini"
                   type="primary"
                   @click="handleAdd">
-                  新增
+                  客房退房登记
                 </el-button>
               </el-form-item>
             </div>

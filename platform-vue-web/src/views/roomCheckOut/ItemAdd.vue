@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-      title="新增客房退房信息"
+      title="客房退房登记"
       :center="true"
       @close="handleCancel"
       :visible.sync="addVisible">
