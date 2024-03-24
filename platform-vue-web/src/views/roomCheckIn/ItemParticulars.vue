@@ -25,7 +25,7 @@
               客户身份信息:
             </div>
             <div class="descriptions-value">
-              {{handleTypeByValue(particularsData.guestIdentifyId,guestentifyOptions)}}
+              {{handleTypeByValue(particularsData.guestIdentifyId,guestIdentifyOptions)}}
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default {
     return {
       //-----------------
       roomBookingOptions: [],
-      guestentifyOptions: [],
+      guestIdentifyOptions: [],
       //-----------------
       authUserOptions: [],
       particularsVisible: false,

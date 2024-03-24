@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-      title="新增客房入住信息"
+      title="客房入住登记"
       :center="true"
       @close="handleCancel"
       :visible.sync="addVisible">
@@ -35,7 +35,7 @@
                   :clearable="true"
                   placeholder="请选择-客户身份信息信息">
                 <el-option
-                    v-for="(item,index) in guestentifyOptions"
+                    v-for="(item,index) in guestIdentifyOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -101,7 +101,7 @@ export default {
     return {
       //-----------------
       roomBookingOptions: [],
-      guestentifyOptions: [],
+      guestIdentifyOptions: [],
       pickerOptions:this.$bizConstants.pickerOptions,
       timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
       //-----------------
