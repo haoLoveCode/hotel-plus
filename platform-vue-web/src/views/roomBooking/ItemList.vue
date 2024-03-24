@@ -146,7 +146,7 @@
                   size="mini"
                   type="primary"
                   @click="handleAdd">
-                  新增
+                  登记预定
                 </el-button>
               </el-form-item>
             </div>

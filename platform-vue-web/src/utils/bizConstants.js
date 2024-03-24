@@ -9,7 +9,30 @@ export const TOP_MENU_NODE = '0'
 export const LOGIN_PAGE = '/LoginPage'
 //腾讯地图KEY
 export const TC_MAP_KEY = 'BSVBZ-SMTKV-TUPPE-5QAL4-HBOSZ-WLFMS'
-
+//登录请求地址
+export const LOGIN_REQUEST_URL = '/authUserLogin'
+export const pickerOptions = {
+  shortcuts: [{
+    text: '今天',
+    onClick(picker) {
+      picker.$emit('pick', new Date());
+    }
+  }, {
+    text: '昨天',
+    onClick(picker) {
+      const date = new Date();
+      date.setTime(date.getTime() - 3600 * 1000 * 24);
+      picker.$emit('pick', date);
+    }
+  }, {
+    text: '一周前',
+    onClick(picker) {
+      const date = new Date();
+      date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+      picker.$emit('pick', date);
+    }
+  }]
+}
 //需要重新登陆的Code 由后端决定
 export const NEED_LOGIN_CODE = [
   '501',
@@ -19,8 +42,6 @@ export const NEED_LOGIN_CODE = [
   '0000013',
   '0000008',
 ]
-//登录请求地址
-export const LOGIN_REQUEST_URL = '/authUserLogin'
 //订单类型
 export const orderTypeOptions = [
   {
@@ -376,6 +397,7 @@ export default {
   tagColumns:tagColumns,
   panelOptions:panelOptions,
   itemStatusOptions:itemStatusOptions,
+  pickerOptions:pickerOptions,
   itemHotStatusOptions:itemHotStatusOptions,
   needAllStatusOptions:needAllStatusOptions,
   handleImageUrl:methodHandler.handleImageUrl,
