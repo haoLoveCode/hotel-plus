@@ -3,24 +3,6 @@
     <div class="page-search-view">
       <el-form :inline="true" ref="pageForm">
         <div class="search-param-view">
-          <div class="search-item-view">
-            <el-form-item label="房间类型信息">
-              <el-select
-                  v-model="searchData.roomTypeId"
-                  :clearable="true"
-                  @change="handleRoomTypeChange"
-                  placeholder="请选择房间类型信息">
-                <el-option
-                    v-for="(item,index) in roomTypeOptions"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-          <div class="search-view">
-          </div>
           <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="类型名称">
@@ -362,7 +344,7 @@
               this.roomTypeOptions = new Array();
               data.map((item) => {
                 let options = {
-                  'text': item.roomTypeName,
+                  'text': item.typeName,
                   'value': item.roomTypeId
                 }
                 this.roomTypeOptions.push(options)

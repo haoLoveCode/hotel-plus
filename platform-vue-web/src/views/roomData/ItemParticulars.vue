@@ -147,6 +147,44 @@ export default {
     }
   },
   methods: {
+    async queryRoomType() {
+      const loading = this.$loading({
+        lock: true,
+        text: "正在请求。。。",
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      });
+      try {
+        Api.queryRoomType({}).then((res) => {
+          if (res.success) {
+            console.log('res:' + JSON.stringify(res))
+            if (this.$isNull(res)) {
+              return;
+            }
+            let data = res.data
+            if (this.$isNull(data)) {
+              return;
+            }
+            this.roomTypeOptions = new Array();
+            data.map((item) => {
+              let options = {
+                'text': item.typeName,
+                'value': item.roomTypeId
+              }
+              this.roomTypeOptions.push(options)
+            })
+            console.log('this.roomTypeOptions:' + JSON.stringify(this.roomTypeOptions))
+            loading.close();
+          } else {
+            loading.close();
+            this.$message.error('服务器异常');
+          }
+        });
+      } catch (error) {
+        loading.close();
+        this.$message.error(error.message || error.msg || "服务器异常");
+      }
+    },
     handlePreView(url) {
       if (this.$isNull(url)) {
         return;
@@ -183,6 +221,7 @@ export default {
       this.particularsVisible = true;
     },
     async init(data) {
+      await this.queryRoomType();
       this.authUserOptions = await this.$bizConstants.authUserOptions()
       this.showParticulars(data);
     },

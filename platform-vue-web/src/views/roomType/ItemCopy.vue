@@ -12,25 +12,29 @@
           label-width="130px"
           class="data-body-form"
       >
-        <div class="data-body-div">
+        <div class="text-area-view">
           <div class="data-item-view">
             <el-form-item label="类型名称" prop="typeName">
               <el-input
+                  type="textarea"
+                  :rows="3"
                   v-model="submitData.typeName"
                   placeholder="请填写-类型名称"
-                  maxlength="10"
+                  maxlength="20"
                   show-word-limit>
               </el-input>
             </el-form-item>
           </div>
         </div>
-        <div class="data-body-div">
+        <div class="text-area-view">
           <div class="data-item-view">
             <el-form-item label="备注信息" prop="remarkData">
               <el-input
+                  type="textarea"
+                  :rows="3"
                   v-model="submitData.remarkData"
                   placeholder="请填写-备注信息"
-                  maxlength="10"
+                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
