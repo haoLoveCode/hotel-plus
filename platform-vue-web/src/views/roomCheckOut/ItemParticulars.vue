@@ -88,6 +88,82 @@ export default {
     }
   },
   methods: {
+    async queryGuestIdentify() {
+      const loading = this.$loading({
+        lock: true,
+        text: "正在请求。。。",
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      });
+      try {
+        Api.queryGuestIdentify({}).then((res) => {
+          if (res.success) {
+            console.log('res:' + JSON.stringify(res))
+            if (this.$isNull(res)) {
+              return;
+            }
+            let data = res.data
+            if (this.$isNull(data)) {
+              return;
+            }
+            this.guestIdentifyOptions = new Array();
+            data.map((item) => {
+              let options = {
+                'text': item.realName,
+                'value': item.guestIdentifyId
+              }
+              this.guestIdentifyOptions.push(options)
+            })
+            console.log('this.guestIdentifyOptions:' + JSON.stringify(this.guestIdentifyOptions))
+            loading.close();
+          } else {
+            loading.close();
+            this.$message.error('服务器异常');
+          }
+        });
+      } catch (error) {
+        loading.close();
+        this.$message.error(error.message || error.msg || "服务器异常");
+      }
+    },
+    async queryRoomBooking() {
+      const loading = this.$loading({
+        lock: true,
+        text: "正在请求。。。",
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      });
+      try {
+        Api.queryRoomBooking({}).then((res) => {
+          if (res.success) {
+            console.log('res:' + JSON.stringify(res))
+            if (this.$isNull(res)) {
+              return;
+            }
+            let data = res.data
+            if (this.$isNull(data)) {
+              return;
+            }
+            this.roomBookingOptions = new Array();
+            data.map((item) => {
+              let options = {
+                'text': item.bookingNo,
+                'value': item.roomBookingId
+              }
+              this.roomBookingOptions.push(options)
+            })
+            console.log('this.roomBookingOptions:' + JSON.stringify(this.roomBookingOptions))
+            loading.close();
+          } else {
+            loading.close();
+            this.$message.error('服务器异常');
+          }
+        });
+      } catch (error) {
+        loading.close();
+        this.$message.error(error.message || error.msg || "服务器异常");
+      }
+    },
     handlePreView(url) {
       if (this.$isNull(url)) {
         return;
@@ -124,7 +200,9 @@ export default {
       this.particularsVisible = true;
     },
     async init(data) {
-      this.authUserOptions = await this.$bizConstants.authUserOptions()
+      this.authUserOptions = await this.$bizConstants.authUserOptions();
+      await this.queryRoomBooking();
+      await this.queryGuestIdentify();
       this.showParticulars(data);
     },
     handleCancel() {

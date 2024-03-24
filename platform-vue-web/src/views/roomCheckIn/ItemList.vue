@@ -34,8 +34,6 @@
                 </el-select>
               </el-form-item>
             </div>
-          </div>
-          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="入住时间">
                 <el-date-picker
@@ -49,6 +47,8 @@
                 </el-date-picker>
               </el-form-item>
             </div>
+          </div>
+          <div class="search-view">
             <div class="search-item-view">
               <el-form-item label="备注信息">
                 <el-input
