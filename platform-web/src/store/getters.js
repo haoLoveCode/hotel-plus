@@ -1,0 +1,20 @@
+const getters = {
+    sidebar: state => state.app.sidebar,
+    visitedViews: state => state.app.visitedViews,
+    loginStatus: state => state.authUser.loginStatus,
+    userName: state => state.authUser.userName,
+    userData: state => state.authUser.userData,
+    groupType: state => state.authUser.groupType,
+    roleList: state => state.authUser.roleList,
+    permissionList: state => state.authUser.permissionList,
+    menuPermissionList: state => state.authUser.menuPermissionList,
+    token: state => state.authUser.token,
+    authUserId: state => state.authUser.authUserId,
+    buttonPermissionList: state => state.authUser.buttonPermissionList,
+    treePermissionList: state => state.authUser.treePermissionList,
+    permission_routers: state => state.permission.routers,
+    default_opened: state => state.permission.defaultOpened,
+    addRouters: state => state.permission.addRouters,
+    btnCode: state => state.authUser.btnCode ? state.authUser.btnCode : JSON.parse(localStorage.getItem("btnCode")),
+};
+export default getters

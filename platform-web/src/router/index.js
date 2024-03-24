@@ -1,0 +1,86 @@
+import Vue from 'vue';
+import Router from 'vue-router';
+import bizConstants from '@/utils/bizConstants'
+const _import = require('./'+process.env.NODE_ENV);
+// in development env not use Lazy Loading,because Lazy Loading large page will cause webpack hot update too slow.so only in production use Lazy Loading
+/* layout */
+import Layout from '@/views/layout/Layout';
+/* error page */
+const Err404 = _import('error/404');
+/* login */
+const LoginPage = _import('login/LoginPage');
+Vue.use(Router);
+//固定的路由界面
+export const constantRouterMap = [
+    {
+        path: "/loginPage",
+        component: LoginPage,
+        hidden: true
+    },
+    {
+        path: "/",
+        component: require('@/views/mainPage/MainLayout'),
+        name: '主页',
+        children: [
+            {
+                path: "/mainPage",
+                component: require('@/views/mainPage/MainPage'),
+                name: '主页',
+            },
+            {
+                path: "/memberCenter",
+                component: require('@/views/biz/MemberCenter'),
+                name: '个人中心',
+            },
+            {
+                path: "/noticeDataView",
+                component: require('@/views/biz/NoticeDataView'),
+                name: '公告内容',
+            },
+            {
+                path: "/salesItemDataView",
+                component: require('@/views/biz/saleItem/SalesItemDataView'),
+                name: '商品信息',
+            },
+            {
+                path: "/salesItemBuyView",
+                component: require('@/views/biz/saleItem/SalesItemBuyView'),
+                name: '下单购买',
+            },
+            {
+                path: "/addAddressView",
+                component: require('@/views/biz/takeAddress/AddAddressView'),
+                name: '新增地址',
+            },
+            {
+                path: "/orderListView",
+                component: require('@/views/biz/tradeOrder/OrderListView'),
+                name: '订单列表',
+            },
+            {
+                path: "/mineSaleOrderList",
+                component: require('@/views/biz/tradeOrder/MineSaleOrderList'),
+                name: '我卖出的',
+            },
+            {
+                path: "/mineSalesItemList",
+                component: require('@/views/biz/saleItem/MineSalesItemList'),
+                name: '我的商品',
+            },
+        ]
+    }
+]
+//异步路由Map
+export const asyncRouterMap = [
+    {
+        path: '*',
+        redirect: bizConstants.LOGIN_PAGE,
+        hidden: true
+    }
+];
+export default new Router({
+    // mode: 'history', //后端支持可开
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRouterMap,
+    asyncRouterMap:asyncRouterMap
+});
