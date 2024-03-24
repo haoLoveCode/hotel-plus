@@ -45,7 +45,7 @@
               房间简介:
             </div>
             <div class="descriptions-value">
-              {{particularsData.briefData}}
+              <el-tag size="medium" @click="showRichText(particularsData.briefData)">点击查看</el-tag>
             </div>
           </div>
         </div>

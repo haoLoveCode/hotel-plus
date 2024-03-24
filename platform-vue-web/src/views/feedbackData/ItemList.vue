@@ -3,15 +3,31 @@
     <div class="page-search-view">
       <el-form :inline="true" ref="pageForm">
         <div class="search-param-view">
+          <div class="search-item-view">
+            <el-form-item label="投诉建议信息">
+              <el-select
+                  v-model="searchData.feedbackDataId"
+                  :clearable="true"
+                  @change="handleFeedbackDataChange"
+                  placeholder="请选择投诉建议信息">
+                <el-option
+                    v-for="(item,index) in feedbackDataOptions"
+                    :key="item.value"
+                    :label="item.text"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </div>
           <div class="search-view">
             <div class="search-item-view">
-              <el-form-item label="房间类型">
+              <el-form-item label="提交人">
                 <el-select
-                    v-model="searchData.roomTypeId"
+                    v-model="searchData.submitterId"
                     :clearable="true"
-                    placeholder="请选择-房间类型信息">
+                    placeholder="请选择-提交人信息">
                   <el-option
-                      v-for="(item,index) in roomTypeOptions"
+                      v-for="(item,index) in submitterOptions"
                       :key="item.value"
                       :label="item.text"
                       :value="item.value">
@@ -20,13 +36,13 @@
               </el-form-item>
             </div>
             <div class="search-item-view">
-              <el-form-item label="房间状态">
+              <el-form-item label="处理状态">
                 <el-select
-                    v-model="searchData.roomStatus"
+                    v-model="searchData.handleStatus"
                     :clearable="true"
-                    placeholder="请选择-房间状态信息">
+                    placeholder="请选择-处理状态信息">
                   <el-option
-                      v-for="(item,index) in itemStatusOptions"
+                      v-for="(item,index) in handleStatusOptions"
                       :key="item.value"
                       :label="item.text"
                       :value="item.value">
@@ -34,75 +50,33 @@
                 </el-select>
               </el-form-item>
             </div>
-            <div class="search-item-view">
-              <el-form-item label="房间展示标题">
-                <el-input
-                    v-model="searchData.roomTitle"
-                    placeholder="请填写-房间展示标题"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
           </div>
           <div class="search-view">
             <div class="search-item-view">
-              <el-form-item label="房间简介">
+              <el-form-item label="内容标题">
                 <el-input
-                    v-model="searchData.briefData"
-                    placeholder="请填写-房间简介"
+                    v-model="searchData.dataTitle"
+                    placeholder="请填写-内容标题"
                     maxlength="10"
                     show-word-limit>
                 </el-input>
               </el-form-item>
             </div>
             <div class="search-item-view">
-              <el-form-item label="房间编号">
+              <el-form-item label="内容">
                 <el-input
-                    v-model="searchData.roomNo"
-                    placeholder="请填写-房间编号"
+                    v-model="searchData.dataValue"
+                    placeholder="请填写-内容"
                     maxlength="10"
                     show-word-limit>
                 </el-input>
               </el-form-item>
             </div>
             <div class="search-item-view">
-              <el-form-item label="房间楼层">
+              <el-form-item label="备注">
                 <el-input
-                    v-model="searchData.roomFloor"
-                    placeholder="请填写-房间楼层"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="价格">
-                <el-input
-                    v-model="searchData.unitPrice"
-                    placeholder="请填写-价格"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
-          </div>
-          <div class="search-view">
-            <div class="search-item-view">
-              <el-form-item label="房间面积">
-                <el-input
-                    v-model="searchData.roomArea"
-                    placeholder="请填写-房间面积"
-                    maxlength="10"
-                    show-word-limit>
-                </el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="床位数量">
-                <el-input
-                    v-model="searchData.bedNum"
-                    placeholder="请填写-床位数量"
+                    v-model="searchData.remarkData"
+                    placeholder="请填写-备注"
                     maxlength="10"
                     show-word-limit>
                 </el-input>
@@ -131,7 +105,7 @@
                 </el-button>
               </el-form-item>
             </div>
-            <div class="search-item-view" v-if="isAuth('roomData:add')">
+            <div class="search-item-view" v-if="isAuth('feedbackData:add')">
               <el-form-item>
                 <el-button
                   size="mini"
@@ -141,7 +115,7 @@
                 </el-button>
               </el-form-item>
             </div>
-            <div class="search-item-view" v-if="isAuth('roomData:add')">
+            <div class="search-item-view" v-if="isAuth('feedbackData:add')">
               <el-form-item>
                 <el-button
                     size="mini"
@@ -151,7 +125,7 @@
                 </el-button>
               </el-form-item>
             </div>
-            <div class="search-item-view" v-if="isAuth('roomData:export')">
+            <div class="search-item-view" v-if="isAuth('feedbackData:export')">
               <el-form-item>
                 <el-button
                   size="mini"
@@ -162,7 +136,7 @@
                 </el-button>
               </el-form-item>
             </div>
-            <div class="search-item-view" v-if="isAuth('roomData:batchDelete')">
+            <div class="search-item-view" v-if="isAuth('feedbackData:batchDelete')">
               <el-form-item>
                 <el-button
                   size="mini"
@@ -200,101 +174,44 @@
         </template>
       </el-table-column>
       <el-table-column
-          prop="roomTypeId"
-          label="房间类型"
+          prop="submitterId"
+          label="提交人"
           header-align="center"
           align="center"
           width="200"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.roomTypeId,roomTypeOptions)}}</el-tag>
+          <el-tag size="medium">{{handleTypeByValue(scope.row.submitterId,submitterOptions)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
-          prop="roomStatus"
-          label="房间状态"
+          prop="handleStatus"
+          label="处理状态"
           header-align="center"
           align="center"
           width="200"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.roomStatus,itemStatusOptions)}}</el-tag>
+          <el-tag size="medium">{{handleTypeByValue(scope.row.handleStatus,handleStatusOptions)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
-          prop="roomTitle"
-          label="房间展示标题"
-          header-align="center"
-          align="center"
-          width="200"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="briefData"
-          label="房间简介"
-          header-align="center"
-          align="center"
-          width="200"
-      >
-        <template v-slot="scope">
-          <el-tag size="medium" @click="showRichText(scope.row.briefData)">点击查看</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="roomNo"
-          label="房间编号"
+          prop="dataTitle"
+          label="内容标题"
           header-align="center"
           align="center"
       >
       </el-table-column>
       <el-table-column
-          prop="mainImg"
-          label="房间图片"
-          header-align="center"
-          align="center"
-      >
-        <template v-slot="scope">
-          <img v-if="scope.row.mainImg" @click="handlePreView(handleImageUrl(scope.row.mainImg))"
-               :src="handleImageUrl(scope.row.mainImg)"
-               style="width: 30px;height: 30px;border-radius: 5px;"/>
-          <el-tag v-else size="medium">暂无</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="imgList"
-          label="房间详情图片"
-          header-align="center"
-          align="center"
-          width="100"
-      >
-        <template v-slot="scope">
-          <el-tag size="medium" @click="viewRoomImgDataList(scope.row)">点击查看</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="roomFloor"
-          label="房间楼层"
+          prop="dataValue"
+          label="内容"
           header-align="center"
           align="center"
       >
       </el-table-column>
       <el-table-column
-          prop="unitPrice"
-          label="价格"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="roomArea"
-          label="房间面积"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="bedNum"
-          label="床位数量"
+          prop="remarkData"
+          label="备注"
           header-align="center"
           align="center"
       >
@@ -317,7 +234,7 @@
         align="center">
         <template v-slot="scope">
           <div class="operation-view">
-            <div class="operation-button-view" v-if="isAuth('roomData:view')">
+            <div class="operation-button-view" v-if="isAuth('feedbackData:view')">
               <el-button
                 @click="handleViewParticulars(scope.row)"
                 icon="el-icon-search"
@@ -326,7 +243,7 @@
                 查看
               </el-button>
             </div>
-            <div class="operation-button-view" v-if="isAuth('roomData:edit')">
+            <div class="operation-button-view" v-if="isAuth('feedbackData:edit')">
               <el-button
                 @click="handleUpdate(scope.row)"
                 icon="el-icon-edit"
@@ -335,7 +252,7 @@
                 编辑
               </el-button>
             </div>
-            <div class="operation-button-view" v-if="isAuth('roomData:deleteOne')">
+            <div class="operation-button-view" v-if="isAuth('feedbackData:deleteOne')">
               <el-button
                 @click="showDeleteOneModal(scope.row)"
                 :loading="deleteButtonLoading"
@@ -392,46 +309,6 @@
       :visible.sync="richTextVisible"
       width="50%">
       <div v-html="richText"></div>
-    </el-dialog>
-    <!--房间图片查看弹窗-->
-    <el-dialog
-        title="商品图片"
-        :visible.sync="roomImgListVisible"
-        width="80%">
-      <div class="table-view">
-        <el-table
-            :data="roomImgList"
-            border
-            :fit="true">
-          <el-table-column
-              prop="id"
-              label="编号"
-              header-align="center"
-              align="center"
-              width="50">
-          </el-table-column>
-          <el-table-column
-              prop="imgUrl"
-              label="图片名称"
-              header-align="center"
-              align="center"
-          >
-          </el-table-column>
-          <el-table-column
-              prop="imgUrl"
-              label="图片查看"
-              header-align="center"
-              align="center"
-          >
-            <template v-slot="scope">
-              <img v-if="scope.row.imgUrl" @click="handlePreView(handleImageUrl(scope.row.imgUrl))"
-                   :src="handleImageUrl(scope.row.imgUrl)"
-                   style="width: 30px;height: 30px;border-radius: 5px;"/>
-              <el-tag v-else size="medium">暂无</el-tag>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
     </el-dialog>
     <!--批量删除确认框-->
     <el-dialog
@@ -496,32 +373,9 @@
     data() {
       return {
         //-----------------
-        roomImgList: [],
-        roomImgListVisible: false,
-        roomTypeOptions: [],
-        itemStatusOptions: [
-          {
-            'text':'闲置',
-            'value': 1
-          },
-          {
-            'text':'已预订',
-            'value': 2
-          },
-          {
-            'text':'维护中',
-            'value': 3
-          },
-          {
-            'text':'已入住',
-            'value': 4
-          },
-          {
-            'text':'已退住',
-            'value': 5
-          },
-        ],
-        roomDataOptions: [],
+        submitterOptions: [],
+        handleStatusOptions: [],
+        feedbackDataOptions: [],
         //-----------------
         richTextVisible: false,
         richText: ``,
@@ -541,16 +395,11 @@
         multipleSelection: [],
         dataList: [],
         searchData: {
-          roomTypeId: '',
-          roomStatus: '',
-          roomTitle: '',
-          briefData: '',
-          roomNo: '',
-          mainImg: '',
-          roomFloor: '',
-          unitPrice: '',
-          roomArea: '',
-          bedNum: '',
+          submitterId: '',
+          handleStatus: '',
+          dataTitle: '',
+          dataValue: '',
+          remarkData: '',
         },
       };
     },
@@ -558,69 +407,15 @@
       this.init();
     },
     methods: {
-      //查看房间图片
-      async viewRoomImgDataList(data) {
-        let roomImgList = data.imgList;
-        if (!roomImgList || roomImgList.length == 0) {
-          this.$message.error('暂无图片');
-        }
-        this.roomImgList = new Array();
-        roomImgList.map((item, index) => {
-          console.log(`第${index}个元素为 ${item}`);
-          this.roomImgList.push({
-            imgUrl: item,
-            id: index + 1
-          })
-        });
-        this.roomImgListVisible = true;
-      },
-      async queryRoomType() {
-        const loading = this.$loading({
-          lock: true,
-          text: "正在请求。。。",
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.8)'
-        });
-        try {
-          Api.queryRoomType({}).then((res) => {
-            if (res.success) {
-              console.log('res:' + JSON.stringify(res))
-              if (this.$isNull(res)) {
-                return;
-              }
-              let data = res.data
-              if (this.$isNull(data)) {
-                return;
-              }
-              this.roomTypeOptions = new Array();
-              data.map((item) => {
-                let options = {
-                  'text': item.typeName,
-                  'value': item.roomTypeId
-                }
-                this.roomTypeOptions.push(options)
-              })
-              console.log('this.roomTypeOptions:' + JSON.stringify(this.roomTypeOptions))
-              loading.close();
-            } else {
-              loading.close();
-              this.$message.error('服务器异常');
-            }
-          });
-        } catch (error) {
-          loading.close();
-          this.$message.error(error.message || error.msg || "服务器异常");
-        }
-      },
       async showRichText(richText) {
         console.log(richText)
         this.richText = richText
         this.richTextVisible = true
       },
-      async handleRoomDataChange(value) {
-        this.searchData.roomDataId = value
+      async handleFeedbackDataChange(value) {
+        this.searchData.feedbackDataId = value
       },
-      async queryRoomData() {
+      async queryFeedbackData() {
         const loading = this.$loading({
           lock: true,
           text: "正在请求。。。",
@@ -628,7 +423,7 @@
           background: 'rgba(0, 0, 0, 0.8)'
         });
         try {
-          Api.queryRoomData({}).then((res) => {
+          Api.queryFeedbackData({}).then((res) => {
             if (res.success) {
               console.log('res:' + JSON.stringify(res))
               if (this.$isNull(res)) {
@@ -638,15 +433,15 @@
               if (this.$isNull(data)) {
                 return;
               }
-              this.roomDataOptions = new Array();
+              this.feedbackDataOptions = new Array();
               data.map((item) => {
                 let options = {
-                  'text': item.roomDataName,
-                  'value': item.roomDataId
+                  'text': item.feedbackDataName,
+                  'value': item.feedbackDataId
                 }
-                this.roomDataOptions.push(options)
+                this.feedbackDataOptions.push(options)
               })
-              console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
+              console.log('this.feedbackDataOptions:' + JSON.stringify(this.feedbackDataOptions))
               loading.close();
             } else {
               loading.close();
@@ -678,16 +473,11 @@
       // 重置控件
       resetSearchForm() {
         this.searchData = {
-          roomTypeId: '',
-          roomStatus: '',
-          roomTitle: '',
-          briefData: '',
-          roomNo: '',
-          mainImg: '',
-          roomFloor: '',
-          unitPrice: '',
-          roomArea: '',
-          bedNum: '',
+          submitterId: '',
+          handleStatus: '',
+          dataTitle: '',
+          dataValue: '',
+          remarkData: '',
         };
         this.queryPageList();
       },
@@ -755,9 +545,9 @@
       //处理单个删除
       deleteOne(data) {
         let mainIdList = new Array();
-        mainIdList.push(data.roomDataId)
+        mainIdList.push(data.feedbackDataId)
         this.deleteButtonLoading = true
-        Api.batchDeleteRoomData({
+        Api.batchDeleteFeedbackData({
           mainIdList: mainIdList
         }).then((res) => {
           //console.log('res:'+JSON.stringify(res))
@@ -785,7 +575,7 @@
         }
         let mainIdList = new Array();
         multipleSelection.map(item => {
-          mainIdList.push(item.roomDataId)
+          mainIdList.push(item.feedbackDataId)
         })
         console.log('mainIdList:' + JSON.stringify(mainIdList))
         if (this.$isNull(mainIdList)) {
@@ -804,7 +594,7 @@
           this.batchDeleteButtonLoading = false
           return;
         }
-        Api.batchDeleteRoomData({
+        Api.batchDeleteFeedbackData({
           mainIdList: mainIdList
         }).then((res) => {
           console.log('res:' + JSON.stringify(res))
@@ -842,7 +632,7 @@
           itemsPerPage: this.paginationData.itemsPerPage,
           currentPage: this.paginationData.currentPage,
         }
-        Api.queryRoomDataByPage({
+        Api.queryFeedbackDataByPage({
           ...params
         }).then((res) => {
           //console.log('res:'+JSON.stringify(res))
@@ -870,8 +660,7 @@
       // 初始化数据
       async init() {
         this.authUserOptions = await this.$bizConstants.authUserOptions()
-        await this.queryRoomType();
-        //await this.queryRoomData();
+        //await this.queryFeedbackData();
         this.queryPageList();
       },
       //处理导出
@@ -882,7 +671,7 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.8)'
         });
-        Api.exportRoomDataItem({
+        Api.exportFeedbackDataItem({
           ...this.searchData,
           itemsPerPage: this.paginationData.itemsPerPage,
           currentPage: this.paginationData.currentPage,
