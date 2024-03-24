@@ -21,7 +21,7 @@ public class CurrentCodeHandler {
     /**
      * 数据库配置
      */
-    public final static String DB_NAME = "video-bbs-platform";
+    public final static String DB_NAME = "hotel-plus";
 
     /**
      * 数据库配置->连接URL
@@ -31,7 +31,7 @@ public class CurrentCodeHandler {
     /**
      * 用户名
      */
-    public final static String DB_USER = "video-bbs-platform";
+    public final static String DB_USER = "hotel-plus";
 
     /**
      * 密码
@@ -61,7 +61,7 @@ public class CurrentCodeHandler {
     /**
      * VUE前端路径 需要填写绝对路径
      */
-    private static String VUE_PATH = "/Users/singer/GitCode/video-bbs-platform/platform-vue-web/src/views/";
+    private static String VUE_PATH = "/Users/singer/GitCode/hotel-plus/platform-vue-web/src/views/";
 
 
     /**

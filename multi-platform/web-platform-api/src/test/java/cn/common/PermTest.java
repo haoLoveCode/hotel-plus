@@ -27,7 +27,7 @@ import java.util.List;
  * @Description: API测试
  * @date 2024-03-04
  */
-@SpringBootTest(classes = WebPlatformApplication.class)
+@SpringBootTest(classes = HotelPlatform.class)
 @ActiveProfiles("dev")
 @Slf4j
 //@Ignore

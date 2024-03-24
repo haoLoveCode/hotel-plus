@@ -7,7 +7,7 @@
 Project_HOME=$(echo `pwd` | sed 's/\/sbin//')
 
 LOG_DIR=$Project_HOME/logs
-APPLICATION_MAIN=cn.common.WebPlatformApplication
+APPLICATION_MAIN=cn.common.HotelPlatform
 CLASSPATH=$Project_HOME/classes
 
 PORT=9001

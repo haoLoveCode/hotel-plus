@@ -30,7 +30,7 @@ import java.util.List;
  * @date 2024-03-06
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = AppWebApplication.class)
+@SpringBootTest(classes = HotelAppPlatform.class)
 @ActiveProfiles("dev")
 @Slf4j
 //@Ignore

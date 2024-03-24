@@ -11,7 +11,7 @@
     <artifactId>web-platform-api</artifactId>
     <version>${project.build.version}</version>
     <properties>
-        <project.main.class>cn.common.WebPlatformApplication</project.main.class>
+        <project.main.class>cn.common.HotelPlatform</project.main.class>
         <!--最终打包名称-->
         <deploy.package.name>web-platform-api</deploy.package.name>
     </properties>

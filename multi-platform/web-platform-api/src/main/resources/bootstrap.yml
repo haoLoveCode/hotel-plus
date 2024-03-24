@@ -98,7 +98,7 @@ aliyun:
     endPoint: oss-cn-chengdu.aliyuncs.com
     bucketName: skywalking-web
     prefix: https://skywalking-web.oss-cn-chengdu.aliyuncs.com/ #文件固定前缀
-    folder-prefix: multi-platform #文件夹前缀
+    folder-prefix: hotel-plus #文件夹前缀
 logging:
   level:
     org.springframework.web: debug

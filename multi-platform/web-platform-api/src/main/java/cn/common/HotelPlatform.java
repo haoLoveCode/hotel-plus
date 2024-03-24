@@ -25,10 +25,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @Slf4j
-public class WebPlatformApplication {
+public class HotelPlatform {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebPlatformApplication.class, args);
+		SpringApplication.run(HotelPlatform.class, args);
 	}
 
 }

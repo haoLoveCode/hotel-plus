@@ -11,7 +11,7 @@
     <artifactId>web-app-api</artifactId>
     <version>${project.build.version}</version>
     <properties>
-        <project.main.class>cn.common.AppWebApplication</project.main.class>
+        <project.main.class>cn.common.HotelAppPlatform</project.main.class>
         <!--最终打包名称-->
         <deploy.package.name>web-app-api</deploy.package.name>
     </properties>

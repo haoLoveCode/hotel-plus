@@ -7,7 +7,7 @@
 #利用pwd命令拿到当前工程目录，实际拿到到的是该shell脚本的目录。再利用sed命令将/bin替换为空
 Project_HOME=$(echo `pwd` | sed 's/\/sbin//')
 
-APPLICATION_MAIN=cn.common.AppWebApplication
+APPLICATION_MAIN=cn.common.HotelAppPlatform
 
 
 #-------------------------------------------------------------------------------------------------------------
