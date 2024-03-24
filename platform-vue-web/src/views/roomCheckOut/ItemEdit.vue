@@ -37,7 +37,7 @@
                   :clearable="true"
                   placeholder="请选择-客户身份信息信息">
                 <el-option
-                    v-for="(item,index) in guestentifyOptions"
+                    v-for="(item,index) in guestIdentifyOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -101,7 +101,7 @@ export default {
     return {
       //-----------------
       roomBookingOptions: [],
-      guestentifyOptions: [],
+      guestIdentifyOptions: [],
       //-----------------
       title: "编辑",
       editVisible: false,

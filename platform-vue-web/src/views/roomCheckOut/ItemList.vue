@@ -42,7 +42,7 @@
                     :clearable="true"
                     placeholder="请选择-客户身份信息信息">
                   <el-option
-                      v-for="(item,index) in guestentifyOptions"
+                      v-for="(item,index) in guestIdentifyOptions"
                       :key="item.value"
                       :label="item.text"
                       :value="item.value">
@@ -182,7 +182,7 @@
           width="200"
       >
         <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.guestIdentifyId,guestentifyOptions)}}</el-tag>
+          <el-tag size="medium">{{handleTypeByValue(scope.row.guestIdentifyId,guestIdentifyOptions)}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -357,7 +357,7 @@
       return {
         //-----------------
         roomBookingOptions: [],
-        guestentifyOptions: [],
+        guestIdentifyOptions: [],
         roomCheckOutOptions: [],
         //-----------------
         richTextVisible: false,

@@ -136,8 +136,8 @@ export default {
         checkInTime: [
           {
             required: true,
-            message: '请规范填写-入住时间',
-            trigger: 'blur'
+            message: '请选择-入住时间',
+            trigger: 'change'
           }
         ],
       }

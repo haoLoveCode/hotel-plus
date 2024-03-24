@@ -28,8 +28,6 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="客户身份信息" prop="guestIdentifyId">
               <el-select
@@ -45,26 +43,29 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
-            <el-form-item label="备注信息" prop="remark">
-              <el-input
-                  v-model="submitData.remark"
-                  placeholder="请填写-备注信息"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+            <el-form-item label="入住时间" prop="checkInTime">
+              <el-date-picker
+                  v-model="submitData.checkInTime"
+                  type="datetime"
+                  placeholder="请填写-入住时间"
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </el-form-item>
           </div>
         </div>
-        <div class="data-body-div">
+        <div class="text-area-view">
           <div class="data-item-view">
-            <el-form-item label="入住时间" prop="checkInTime">
+            <el-form-item label="备注信息" prop="remark">
               <el-input
-                  v-model="submitData.checkInTime"
-                  placeholder="请填写-入住时间"
-                  maxlength="10"
+                  type="textarea"
+                  :rows="3"
+                  v-model="submitData.remark"
+                  placeholder="请填写-备注信息"
+                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
@@ -101,6 +102,8 @@ export default {
       //-----------------
       roomBookingOptions: [],
       guestentifyOptions: [],
+      pickerOptions:this.$bizConstants.pickerOptions,
+      timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
       //-----------------
       title: "新增",
       addVisible: false,
@@ -135,14 +138,90 @@ export default {
         checkInTime: [
           {
             required: true,
-            message: '请规范填写-入住时间',
-            trigger: 'blur'
+            message: '请选择-入住时间',
+            trigger: 'change'
           }
         ],
       }
     };
   },
   methods: {
+    async queryGuestIdentify() {
+      const loading = this.$loading({
+        lock: true,
+        text: "正在请求。。。",
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      });
+      try {
+        Api.queryGuestIdentify({}).then((res) => {
+          if (res.success) {
+            console.log('res:' + JSON.stringify(res))
+            if (this.$isNull(res)) {
+              return;
+            }
+            let data = res.data
+            if (this.$isNull(data)) {
+              return;
+            }
+            this.guestIdentifyOptions = new Array();
+            data.map((item) => {
+              let options = {
+                'text': item.realName,
+                'value': item.guestIdentifyId
+              }
+              this.guestIdentifyOptions.push(options)
+            })
+            console.log('this.guestIdentifyOptions:' + JSON.stringify(this.guestIdentifyOptions))
+            loading.close();
+          } else {
+            loading.close();
+            this.$message.error('服务器异常');
+          }
+        });
+      } catch (error) {
+        loading.close();
+        this.$message.error(error.message || error.msg || "服务器异常");
+      }
+    },
+    async queryRoomBooking() {
+      const loading = this.$loading({
+        lock: true,
+        text: "正在请求。。。",
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      });
+      try {
+        Api.queryRoomBooking({}).then((res) => {
+          if (res.success) {
+            console.log('res:' + JSON.stringify(res))
+            if (this.$isNull(res)) {
+              return;
+            }
+            let data = res.data
+            if (this.$isNull(data)) {
+              return;
+            }
+            this.roomBookingOptions = new Array();
+            data.map((item) => {
+              let options = {
+                'text': item.bookingNo,
+                'value': item.roomBookingId
+              }
+              this.roomBookingOptions.push(options)
+            })
+            console.log('this.roomBookingOptions:' + JSON.stringify(this.roomBookingOptions))
+            loading.close();
+          } else {
+            loading.close();
+            this.$message.error('服务器异常');
+          }
+        });
+      } catch (error) {
+        loading.close();
+        this.$message.error(error.message || error.msg || "服务器异常");
+      }
+    },
     //处理展示
     async showAdd(data) {
       console.log('data:' + JSON.stringify(data))
@@ -153,7 +232,8 @@ export default {
       this.addVisible = true;
     },
     async setOtherData(data) {
-
+      await this.queryRoomBooking();
+      await this.queryGuestIdentify();
     },
     //处理初始化
     async init(data) {
