@@ -633,6 +633,51 @@ const globalServices = {
         responseType: 'blob',
     },
     //---------------房间类型信息----end-------------------
+    //---------------房间信息----start-------------------
+    /*分页查询房间信息*/
+    queryRoomDataByPage: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomData/queryByPage`,
+        needToken:true,
+    },
+    /*查询房间信息*/
+    queryRoomData: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomData/queryRoomData`,
+        needToken:true,
+    },
+    /*查询单个房间信息*/
+    queryOneRoomData: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomData/queryOneRoomData`,
+        needToken:true,
+    },
+    /*新增房间信息*/
+    addRoomDataItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomData/addItem`,
+        needToken:true,
+    },
+    /*编辑房间信息*/
+    editRoomDataItem: {
+        method: 'PUT',
+        url: `${httpUrl}/api/v1/roomData/updateItem`,
+        needToken:true,
+    },
+    /*批量删除房间信息*/
+    batchDeleteRoomData: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomData/batchDeleteItem`,
+        needToken:true,
+    },
+    /*导出房间信息*/
+    exportRoomDataItem: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomData/exportData`,
+        needToken:true,
+        responseType: 'blob',
+    },
+    //---------------房间信息----end-------------------
 
 };
 export default globalServices;

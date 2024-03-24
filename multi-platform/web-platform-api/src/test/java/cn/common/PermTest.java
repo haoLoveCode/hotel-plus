@@ -77,8 +77,8 @@ public class PermTest {
      */
     @Test
     public void genAuth(){
-        String entityName = "roomType";
-        String authName = "房间类型信息";
+        String entityName = "roomData";
+        String authName = "房间信息";
 
         List<AuthPermission> authPermissionList = Lists.newArrayList();
 
