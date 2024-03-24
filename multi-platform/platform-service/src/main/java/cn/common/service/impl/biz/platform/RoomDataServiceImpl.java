@@ -188,6 +188,7 @@ public class RoomDataServiceImpl implements RoomDataService {
         List<RoomData> entityList = roomDataRepository.selectList(
             new LambdaQueryWrapper<RoomData>().in(RoomData::getRoomDataId,mainIdList));
         entityList.stream().forEach(item -> {
+            roomImgRepository.delete(new LambdaQueryWrapper<RoomImg>().eq(RoomImg::getRoomDataId,item));
             roomDataRepository.deleteById(item);
         });
     }

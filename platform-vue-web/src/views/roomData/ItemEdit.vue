@@ -633,6 +633,10 @@ export default {
     align-content: center;
     align-items: flex-start;
     width: 100%;
+    .editor-div{
+      width: 100%;
+      height: auto;
+    }
     .data-body-div {
       display: flex;
       flex-direction: row;
