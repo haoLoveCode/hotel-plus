@@ -295,8 +295,8 @@ export default {
       this.addVisible = true;
     },
     async setOtherData(data) {
-      await this.queryRoomData();
       this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
+      await this.queryRoomData();
     },
     //处理初始化
     async init(data) {

@@ -28,10 +28,8 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
-            <el-form-item label="房间" prop="roomDataId">
+            <el-form-item label="房间信息" prop="roomDataId">
               <el-select
                   v-model="submitData.roomDataId"
                   :clearable="true"
@@ -45,8 +43,6 @@
               </el-select>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="预定状态" prop="bookingStatus">
               <el-select
@@ -74,50 +70,57 @@
               </el-input>
             </el-form-item>
           </div>
-        </div>
-        <div class="data-body-div">
-          <div class="data-item-view">
-            <el-form-item label="备注信息" prop="remark">
-              <el-input
-                  v-model="submitData.remark"
-                  placeholder="请填写-备注信息"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="预订时间" prop="bookingTime">
-              <el-input
+              <el-date-picker
                   v-model="submitData.bookingTime"
-                  placeholder="请填写-预订时间"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+                  type="datetime"
+                  placeholder="请选择-预订时间"
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </el-form-item>
           </div>
         </div>
         <div class="data-body-div">
           <div class="data-item-view">
             <el-form-item label="入住开始时间" prop="checkInBegin">
-              <el-input
+              <el-date-picker
                   v-model="submitData.checkInBegin"
+                  type="datetime"
                   placeholder="请填写-入住开始时间"
-                  maxlength="10"
-                  show-word-limit>
-              </el-input>
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </div>
+          <div class="data-item-view">
+            <el-form-item label="入住结束时间" prop="checkInEnd">
+              <el-date-picker
+                  v-model="submitData.checkInEnd"
+                  type="datetime"
+                  placeholder="请填写-入住结束时间"
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </el-form-item>
           </div>
         </div>
-        <div class="data-body-div">
+        <div class="text-area-view">
           <div class="data-item-view">
-            <el-form-item label="入住结束时间" prop="checkInEnd">
+            <el-form-item label="备注信息" prop="remark">
               <el-input
-                  v-model="submitData.checkInEnd"
-                  placeholder="请填写-入住结束时间"
-                  maxlength="10"
+                  type="textarea"
+                  :rows="3"
+                  v-model="submitData.remark"
+                  placeholder="请填写-备注信息"
+                  maxlength="200"
                   show-word-limit>
               </el-input>
             </el-form-item>
@@ -282,6 +285,7 @@ export default {
       this.editVisible = true;
     },
     async setOtherData(data) {
+      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
       await this.queryRoomData();
     },
     //处理初始化
