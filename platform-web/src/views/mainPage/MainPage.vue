@@ -20,21 +20,6 @@
         </div>
       </el-link>
     </div>
-    <el-divider content-position="center" v-if="dataList.length > 0">数据列表</el-divider>
-    <div class="main-data-view" v-if="dataList.length > 0">
-      <div class="main-item">
-        <div class="main-item-view"
-             @click="toMainData(item)"
-             v-for="(item,index) in dataList" :key="index">
-          <div class="main-item-top">
-            <el-image class="main-item-img" fit="fill" :src="item.mainImg" alt=""/>
-          </div>
-          <div class="main-item-bottom">
-            {{ item.dataName }}
-          </div>
-        </div>
-      </div>
-    </div>
     <el-divider content-position="center" v-if="roomDataList.length > 0">商品信息</el-divider>
     <div class="main-data-view" v-if="roomDataList.length > 0">
       <div class="main-item">
