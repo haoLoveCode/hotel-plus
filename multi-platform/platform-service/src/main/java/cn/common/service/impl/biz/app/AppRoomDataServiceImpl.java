@@ -85,7 +85,7 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     @Override
     public RoomData queryRoomByBookingUd(String roomBookingId){
         MPJLambdaWrapper<RoomData> roomWrapper = new MPJLambdaWrapper<>();
-        roomWrapper.leftJoin(RoomBooking.class,RoomBooking::getRoomBookingId,RoomData::getRoomDataId);
+        roomWrapper.leftJoin(RoomBooking.class,RoomBooking::getRoomDataId,RoomData::getRoomDataId);
         roomWrapper.selectAll(RoomData.class);
         roomWrapper.eq(RoomBooking::getRoomBookingId,roomBookingId);
         RoomData roomData = roomDataRepository.selectJoinOne(RoomData.class, roomWrapper);

@@ -1,15 +1,22 @@
 package cn.common.service.impl.biz.platform;
 
+import cn.common.enums.BookingStatusEnum;
+import cn.common.enums.OrderTypeEnum;
 import cn.common.enums.RoomStatusEnum;
+import cn.common.repository.entity.biz.OrderData;
 import cn.common.repository.entity.biz.RoomBooking;
 import cn.common.repository.entity.biz.RoomData;
+import cn.common.repository.entity.biz.TradeOrder;
+import cn.common.repository.repository.biz.OrderDataRepository;
 import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.repository.repository.biz.RoomDataRepository;
+import cn.common.repository.repository.biz.TradeOrderRepository;
 import cn.common.req.biz.RoomBookingAddReq;
 import cn.common.req.biz.RoomBookingReq;
 import cn.common.req.biz.RoomBookingUpdateReq;
 import cn.common.resp.biz.RoomBookingExportResp;
 import cn.common.resp.biz.RoomBookingResp;
+import cn.common.resp.biz.openBiz.TradeOrderResp;
 import cn.common.service.biz.platform.RoomBookingService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
@@ -30,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
+import pro.skywalking.enums.OrderStatusEnum;
 import pro.skywalking.excel.ExportExcelHandler;
 import pro.skywalking.exception.BusinessException;
 import pro.skywalking.helper.PageBuilder;
@@ -43,6 +51,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +74,12 @@ public class RoomBookingServiceImpl implements RoomBookingService {
     private RoomBookingRepository roomBookingRepository;
 
     @Resource
+    private TradeOrderRepository tradeOrderRepository;
+
+    @Resource
+    private OrderDataRepository orderDataRepository;
+
+    @Resource
     private RoomDataRepository roomDataRepository;
 
     @Resource
@@ -69,9 +87,6 @@ public class RoomBookingServiceImpl implements RoomBookingService {
 
     @Resource
     private BaseConstant baseConstant;
-
-    @Resource
-    private AuthUserService authUserService;
 
     @Resource
     private HttpServletResponse response;
@@ -147,23 +162,103 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         if(roomData.getRoomStatus().compareTo(RoomStatusEnum.UNUSED.getCode()) != 0){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "当前房间非闲置，不可预定");
         }
+        LocalDateTime checkInBegin = addReq.getCheckInBegin();
+        LocalDateTime checkInEnd = addReq.getCheckInEnd();
+        //预定天
+        Long bookingDays = checkInBegin.until(checkInEnd, ChronoUnit.DAYS) + 1;
+
+        String authAppUserId = addReq.getSubscriberId();
+        //内部支付交易订单号
+        String outTradeNo = SnowflakeIdWorker.uniqueMainId();
+
+        //设置交易订单信息
+        TradeOrder tradeOrder = new TradeOrder();
+        tradeOrder.setItemId(roomDataId);
+        tradeOrder.setOrderRemark(StrUtil.EMPTY);
+        tradeOrder.setAuthAppUserId(authAppUserId);
+        tradeOrder.setOrderAmount(roomData.getUnitPrice().multiply(new BigDecimal(bookingDays)));
+        tradeOrder.setOutTradeNo(outTradeNo);
+        tradeOrder.setOrderType(OrderTypeEnum.SALES_ITEM.getCode());
+        //订单状态
+        tradeOrder.setOrderStatus(OrderStatusEnum.PAY_SUCCESS.getCode());
+        //支付方式 aliPay/支付宝  weChatPay/微信
+        tradeOrder.setPayType("weChatPay");
+        tradeOrder.setTradeOrderId(SnowflakeIdWorker.uniqueMainId());
+        //存入交易数据
+        setOrderData(tradeOrder,roomData);
+
+        try{
+            //防止字段为空
+            BaseUtil.setFieldValueNotNull(tradeOrder);
+            tradeOrderRepository.insert(tradeOrder);
+            //缓存支付信息
+                /*redisRepository.set(cachePrefix,
+                        JSON.toJSONString(wxMiniPayResp),
+                        Long.valueOf(BizConstants.WX_ORDER_EXPIRED),
+                        TimeUnit.MINUTES);
+                return wxMiniPayResp;*/
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>下单出现异常 : {} , {} <<<<<<<<<",e.getMessage(),e);
+            throw new BusinessException(ErrorCode.ERROR.getCode(),
+                    ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
+        }
         String mainId = SnowflakeIdWorker.uniqueMainId();
-        String authUserId = authUserService.currentAuthUserId();
         RoomBooking entity = mapperFacade.map(addReq, RoomBooking.class);
         try {
             BaseUtil.setFieldValueNotNull(entity);
+            entity.setBookingStatus(BookingStatusEnum.BOOKING_SUCCESS.getCode());
+            entity.setBookingNo(outTradeNo);
             entity.setRoomBookingId(mainId);
-            entity.setOperatorId(authUserId);
+            entity.setRoomDataId(roomDataId);
+            entity.setSubscriberId(authAppUserId);
+            entity.setOperatorId(authAppUserId);
         } catch (Exception e) {
             log.error("新增房间预订信息->设置为空的属性失败 {} , {} ",e.getMessage(),e);
             throw new BusinessException(ErrorCode.ERROR.getCode(),
-                ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
+                    ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
         }
         roomBookingRepository.insert(entity);
 
         //更新房间状态
         roomData.setRoomStatus(RoomStatusEnum.BOOKING.getCode());
         roomDataRepository.updateById(roomData);
+
+    }
+
+    /**
+     *
+     * @description: 设置交易数据
+     * @author: create by singer - Singer email:singer-coder@qq.com
+     * @date 2023/2/24
+     * @param tradeOrder 交易订单信息
+     * @param tradeOrder 创建订单的信息
+     * @param itemData 购买的物品信息
+     * @return
+     */
+    public void setOrderData(TradeOrder tradeOrder,
+                             RoomData itemData){
+        String roomDataId = itemData.getRoomDataId();
+        String tradeOrderId = tradeOrder.getTradeOrderId();
+        String authAppUserId = tradeOrder.getAuthAppUserId();
+        OrderData entity = new OrderData();
+
+        entity.setItemId(tradeOrder.getItemId());
+        entity.setTradeOrderId(tradeOrder.getTradeOrderId());
+        entity.setOutTradeNo(tradeOrder.getOutTradeNo());
+        entity.setItemNum(BigInteger.ONE.intValue());
+        entity.setAuthAppUserId(authAppUserId);
+
+        entity.setItemData(JSON.toJSONString(itemData));
+        try{
+            //防止字段为空
+            BaseUtil.setFieldValueNotNull(entity);
+            entity.setOrderDataId(SnowflakeIdWorker.uniqueMainId());
+            orderDataRepository.insert(entity);
+        }catch (Exception e){
+            log.error(">>>>>>>>>>>下单出现异常 : {} , {} <<<<<<<<<",e.getMessage(),e);
+            throw new BusinessException(ErrorCode.ERROR.getCode(),
+                    ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
+        }
     }
 
     /**
