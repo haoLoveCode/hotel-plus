@@ -176,9 +176,9 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
         }
         //预定人
         String subscriberId = roomBooking.getSubscriberId();
-        //非预定成功状态不可入住
-        if(roomBooking.getBookingStatus().compareTo(BookingStatusEnum.BOOKING_SUCCESS.getCode()) != 0){
-            throw new BusinessException(ErrorCode.ERROR.getCode(), "非预定成功状态不可入住");
+        //非预定入住状态不可退住
+        if(roomBooking.getBookingStatus().compareTo(BookingStatusEnum.CHECKED_IN.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "非预定入住状态不可退住");
         }
         //此处为交易订单号
         String bookingNo = roomBooking.getBookingNo();
