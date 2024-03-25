@@ -15,7 +15,6 @@
                    active-text-color="#087fe7">
             <el-menu-item index="/mainPage">主页</el-menu-item>
             <el-menu-item index="/orderListView">我的订单</el-menu-item>
-            <el-menu-item index="/mineSaleOrderList">我卖出的</el-menu-item>
             <el-menu-item index="/memberCenter">个人中心</el-menu-item>
           </el-menu>
         </div>

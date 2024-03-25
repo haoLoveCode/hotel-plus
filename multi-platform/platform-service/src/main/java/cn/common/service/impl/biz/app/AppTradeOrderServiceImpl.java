@@ -201,6 +201,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         //构建查询条件
         MPJLambdaWrapper<TradeOrder> pageWrapper = new MPJLambdaWrapper<>();
         pageWrapper.leftJoin(RoomData.class, RoomData::getRoomDataId, TradeOrder::getItemId);
+        setQueryCriteria(pageWrapper,pageReq);
         //是否查询当前用户卖出的
         /*Boolean queryMineSales = pageReq.getQueryMineSales();
         if(queryMineSales){
@@ -218,7 +219,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         pageWrapper.selectAs(RoomData::getBedNum, TradeOrderResp::getBedNum);
         pageWrapper.selectAs(RoomData::getMainImg, TradeOrderResp::getMainImg);
         pageWrapper.selectAs(RoomData::getUnitPrice, TradeOrderResp::getUnitPrice);
-        setPageCriteria(pageWrapper, pageReq);
+        setQueryCriteria(pageWrapper, pageReq);
         pageWrapper.orderBy(true, false, TradeOrder::getCreateTime);
         //开始分页
         Page<Object> page = PageHelper.startPage(pageReq.getCurrentPage(), pageReq.getItemsPerPage());
@@ -243,7 +244,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      * @author: Singer
      * @date 2024-03-06
      */
-    private void setPageCriteria(MPJLambdaWrapper<TradeOrder> pageWrapper, TradeOrderReq pageReq) {
+    private void setQueryCriteria(MPJLambdaWrapper<TradeOrder> pageWrapper, TradeOrderReq pageReq) {
 
         if (!CheckParam.isNull(pageReq.getItemId())) {
             pageWrapper.eq(TradeOrder::getItemId, pageReq.getItemId());

@@ -57,11 +57,6 @@ export const constantRouterMap = [
                 component: require('@/views/biz/tradeOrder/OrderListView'),
                 name: '订单列表',
             },
-            {
-                path: "/mineSaleOrderList",
-                component: require('@/views/biz/tradeOrder/MineSaleOrderList'),
-                name: '我卖出的',
-            },
         ]
     }
 ]

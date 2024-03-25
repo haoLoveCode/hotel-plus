@@ -224,6 +224,7 @@ export default {
       let userData = await this.$bizConstants.userMeta();
       this.userData = {...userData};
       console.log('当前用户信息:' + JSON.stringify(this.userData))
+      this.queryParams.
       this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
     itemActive($event) {
@@ -235,9 +236,9 @@ export default {
       $event.currentTarget.className = 'order-item-view'
     },
   },
-  created() {
-    this.queryOrderListByPage();
-    this.init();
+  async created() {
+    await this.queryOrderListByPage();
+    await this.init();
   },
   mounted() {
 
