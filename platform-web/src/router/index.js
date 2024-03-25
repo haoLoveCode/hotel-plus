@@ -53,6 +53,11 @@ export const constantRouterMap = [
                 name: '我的建议',
             },
             {
+                path: "/feedBackList",
+                component: require('@/views/biz/FeedBackList'),
+                name: '投诉建议',
+            },
+            {
                 path: "/submitFeedBack",
                 component: require('@/views/biz/SubmitFeedBack'),
                 name: '提交建议',

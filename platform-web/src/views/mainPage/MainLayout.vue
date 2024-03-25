@@ -16,6 +16,7 @@
             <el-menu-item index="/mainPage">主页</el-menu-item>
             <el-menu-item index="/orderListView">我的预定订单</el-menu-item>
             <el-menu-item index="/mineFeedBackList">我的投诉建议</el-menu-item>
+            <el-menu-item index="/feedBackList">用户投诉建议</el-menu-item>
             <el-menu-item index="/memberCenter">个人中心</el-menu-item>
           </el-menu>
         </div>
