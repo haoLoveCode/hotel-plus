@@ -13,7 +13,6 @@ import cn.common.repository.repository.biz.TradeOrderRepository;
 import cn.common.req.biz.RoomCheckInAddReq;
 import cn.common.req.biz.RoomCheckInReq;
 import cn.common.req.biz.RoomCheckInUpdateReq;
-import cn.common.resp.biz.RoomBookingResp;
 import cn.common.resp.biz.RoomCheckInResp;
 import cn.common.service.biz.AuthAppUserService;
 import cn.common.service.biz.app.AppRoomCheckInService;
