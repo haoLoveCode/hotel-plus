@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description:
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public class CornUtil {
 
@@ -51,7 +51,7 @@ public class CornUtil {
 
     public static void main(String[] args) throws ParseException {
         String cron = "* * * 3/5 * ? ";
-        System.out.println("是否会执行:"+matchCron(cron, "2024-03-06 14:21:08"));
+        System.out.println("是否会执行:"+matchCron(cron, "2024-03-25 14:21:08"));
     }
 
 }

@@ -34,7 +34,7 @@
         <!-- TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 后台系统API文件的名字会根据fileNamePattern的值，每隔一段时间改变一次 -->
-            <!-- 文件名：log/log.2024-03-06.0.log -->
+            <!-- 文件名：log/log.2024-03-25.0.log -->
             <fileNamePattern>${log.path}.%d.%i.log</fileNamePattern>
             <!-- 每产生一个日志文件，该日志文件的保存期限为5天 -->
             <maxHistory>5</maxHistory>

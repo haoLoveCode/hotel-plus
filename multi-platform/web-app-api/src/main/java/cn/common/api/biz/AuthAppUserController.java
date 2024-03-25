@@ -21,7 +21,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: APP认证用户前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/authAppUser")
@@ -36,7 +36,7 @@ public class AuthAppUserController extends BaseApiController {
      *
      * @return pro.skywalking.resp.base.ApiResponse
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @PostMapping("/logOut")
     @ApiLog(value = "退出登录")
@@ -52,7 +52,7 @@ public class AuthAppUserController extends BaseApiController {
      * @param req 用户名密码登陆请求参数
      * @return
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @PostMapping(value = "/userLogin")
     @ApiLog(value = "用户名密码登陆")
@@ -67,7 +67,7 @@ public class AuthAppUserController extends BaseApiController {
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @description: 绑定用户的微信手机号
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @PostMapping(value = "/bindWxPhone")
     @ApiLog(value = "绑定用户的微信手机号")
@@ -83,7 +83,7 @@ public class AuthAppUserController extends BaseApiController {
      * @param req 用户名密码注册请求参数
      * @return
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @PostMapping(value = "/userReg")
     @ApiLog(value = "用户注册")
@@ -98,7 +98,7 @@ public class AuthAppUserController extends BaseApiController {
      *
      * @param regReq Web用户注册请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @PostMapping(value = "/webUserReg")
     @ApiLog(value = "Web用户注册")
@@ -112,7 +112,7 @@ public class AuthAppUserController extends BaseApiController {
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @description: 绑定用户的微信openId
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @PostMapping(value = "/bindWxOpenId")
     @ApiLog(value = "绑定用户的微信openId")
@@ -127,7 +127,7 @@ public class AuthAppUserController extends BaseApiController {
      *
      * @return java.lang.Boolean
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @GetMapping("/verifyToken")
     @ApiLog(value = "验证Token")
@@ -141,7 +141,7 @@ public class AuthAppUserController extends BaseApiController {
      *
      * @param updateReq 更新请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @PutMapping(value = "/updateAppAuthUser")
     @ApiLog(value = "更新APP认证用户")
@@ -156,7 +156,7 @@ public class AuthAppUserController extends BaseApiController {
      * @return cn.common.resp.biz.openBiz.AuthAppUserResp
      * @description: 查询当前APP用户的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @GetMapping(value = "/currentUserMeta")
     @ApiLog(value = "查询当前APP用户的数据")
@@ -168,7 +168,7 @@ public class AuthAppUserController extends BaseApiController {
     /**
      * 查询所有APP认证用户信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName animal-plus
  * @Description: 腾讯位置服务数据
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class TcPlaceData implements Serializable {

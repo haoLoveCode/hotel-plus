@@ -7,7 +7,7 @@ import lombok.Getter;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.ant.fun.common.enums
  * @Description: 系统错误码枚举
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Getter
 @AllArgsConstructor

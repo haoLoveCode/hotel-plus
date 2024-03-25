@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * 商品图片信息请求数据封装类
  * @title: SalesItemImgUpdateReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class SalesItemImgUpdateReq implements Serializable {

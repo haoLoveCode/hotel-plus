@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 订单信息前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/orderData")
@@ -31,7 +31,7 @@ public class OrderDataController extends BaseApiController {
     /**
      * 查询单个的订单数据
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param outTradeNo 交易订单号
      * @return java.util.List
      */

@@ -22,7 +22,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 公告信息前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/noticeData")
@@ -35,7 +35,7 @@ public class AppNoticeDataController extends BaseApiController {
     /**
      * 新增公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增公告信息Req
      */
     @PostMapping(value = "/addItem")
@@ -49,7 +49,7 @@ public class AppNoticeDataController extends BaseApiController {
     /**
      * 主键ID集合批量删除公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的公告信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -63,7 +63,7 @@ public class AppNoticeDataController extends BaseApiController {
     /**
      * 更新公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新公告信息请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -77,7 +77,7 @@ public class AppNoticeDataController extends BaseApiController {
     /**
      * 查询公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -92,7 +92,7 @@ public class AppNoticeDataController extends BaseApiController {
     /**
      * 查询单个公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -107,7 +107,7 @@ public class AppNoticeDataController extends BaseApiController {
     /**
      * 分页查询公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询公告信息Req
      * @return Pagination
      */

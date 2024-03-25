@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 首页轮播图实体
  * @title: MainSwiper.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 @TableName("main_swiper")

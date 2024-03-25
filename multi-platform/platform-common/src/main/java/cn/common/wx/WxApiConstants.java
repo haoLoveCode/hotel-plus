@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description: 业务常量
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 @Component

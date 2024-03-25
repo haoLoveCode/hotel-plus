@@ -12,7 +12,7 @@ import java.util.List;
  * @author Singer create by singer email:singer-coder@qq.com
  * @packageName cn.singer.repository.entity
  * @Description: 系统日志->Repository
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Mapper
 public interface PlatformApiLogRepository extends BaseRepository<PlatformApiLog> {
@@ -24,7 +24,7 @@ public interface PlatformApiLogRepository extends BaseRepository<PlatformApiLog>
      * @return List
      * @title: AuthRoleRepository.java
      * @author create by Singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      */
     @Delete(
             "<script>" +
@@ -40,7 +40,7 @@ public interface PlatformApiLogRepository extends BaseRepository<PlatformApiLog>
      * @return List
      * @title: AuthRoleRepository.java
      * @author create by Singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      */
     @Delete(
             "<script>" +

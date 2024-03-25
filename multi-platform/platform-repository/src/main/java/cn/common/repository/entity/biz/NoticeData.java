@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 公告信息实体
  * @title: NoticeData.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 @TableName("notice_data")

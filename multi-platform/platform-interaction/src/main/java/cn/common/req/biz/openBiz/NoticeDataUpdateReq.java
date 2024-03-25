@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * 公告信息请求数据封装类
  * @title: NoticeDataUpdateReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class NoticeDataUpdateReq implements Serializable {

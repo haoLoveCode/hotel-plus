@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * 订单信息返回数据封装类
  * @title: OrderDataResp.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class OrderDataResp extends BaseResp implements Serializable {

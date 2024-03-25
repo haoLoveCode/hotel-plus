@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
   * 微信V3支付配置参数类
  * 				此处如果是驼峰，需要把baseConstant变为base-constant
   * @author: create by singer - Singer email:singer-coder@qq.com
-  * @date 2024-03-06
+  * @date 2024-03-25
   */
 @Data
 @Component

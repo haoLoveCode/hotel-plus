@@ -10,7 +10,7 @@ import java.io.*;
  * 商品类型信息新增Req
  * @title: SalesItemTypeAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class SalesItemTypeAddReq implements Serializable {

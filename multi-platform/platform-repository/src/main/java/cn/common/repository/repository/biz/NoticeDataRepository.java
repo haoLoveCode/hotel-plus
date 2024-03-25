@@ -8,7 +8,7 @@ import com.github.yulichang.base.MPJBaseMapper;
  * @author Singer
  * @packageName cn.singer.repository.entity
  * @Description: 公告信息->Repository
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Mapper
 public interface NoticeDataRepository extends MPJBaseMapper<NoticeData> {
@@ -18,7 +18,7 @@ public interface NoticeDataRepository extends MPJBaseMapper<NoticeData> {
      * 根据业务主键批量删除公告信息
      * @title: NoticeDataRepository.java
      * @author Singer
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      * @param mainIdList 业务主键ID集合
      * @return List
 

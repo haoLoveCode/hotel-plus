@@ -24,7 +24,7 @@ import java.util.List;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.api.controller
  * @Description: 前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/platformApiLog")
@@ -38,7 +38,7 @@ public class PlatformApiLogController extends BaseApiController {
     /**
      * 主键ID集合批量系统日志
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的系统日志信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -52,7 +52,7 @@ public class PlatformApiLogController extends BaseApiController {
     /**
      * 分页查询系统日志
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询系统日志Req
      * @return Pagination
      */
@@ -66,7 +66,7 @@ public class PlatformApiLogController extends BaseApiController {
     /**
      * 根据参数统计访问量
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 查询参数
      * @return
      */

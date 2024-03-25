@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.service
  * @Description: 系统菜单权限相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("authPermissionService")
 @Slf4j
@@ -71,7 +71,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
      * @return
      * @description: 根据菜单名称删除权限
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     public void deletePermByPath(List<String> pathList) {
         List<AuthPermission> needDeleteAuthPermissionList = authPermissionRepository.selectList(new LambdaQueryWrapper<AuthPermission>()
@@ -94,7 +94,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
      * @return
      * @description: 根据业务主键ID删除
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     public void deletePermById(List<String> mainIdList) {
         List<AuthPermission> needDeleteAuthPermissionList = authPermissionRepository.selectList(new LambdaQueryWrapper<AuthPermission>()
@@ -115,7 +115,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 新增
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @Override
@@ -152,7 +152,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 批量删除信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     @Override
@@ -176,7 +176,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 查询权限树集合
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 查询集合Req
      * @return java.util.List
      */
@@ -211,7 +211,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 分页查询
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return pro.skywalking.resp.page.Pagination
      */
@@ -247,7 +247,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 根据主键ID查询菜单信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param mainId 菜单主键ID
      * @return pro.skywalking.resp.platform.auth.perm.AuthPermissionResp
      */
@@ -264,7 +264,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 查询所有权限集合
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 查询所有权限集合Req
      * @return java.util.List
      */
@@ -294,7 +294,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 查询权限集合
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 查询权限集合Req
      * @return java.util.List
      */
@@ -324,7 +324,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 处理查询所有子节点 最终authPermissionList将会包含所有节点数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authPermissionList 权限集合
      * @param authPermissionIdList 节点ID
      */
@@ -349,7 +349,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 处理树节点数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param dataList 数据
      * @return java.util.List
      */
@@ -395,7 +395,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 拿到子节点的递归方法
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param nodeId 数据
      * @param permissionNodeList 节点数据
      * @return java.util.List
@@ -433,7 +433,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 设置分页条件
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageWrapper 查询条件
      * @param pageReq 分页插件
      * @return
@@ -473,7 +473,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 更新
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 更新请求参数
      */
     @Override
@@ -510,7 +510,7 @@ public class AuthPermissionServiceImpl implements AuthPermissionService {
     /**
      * 设置需要更新的字段
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新参数
      * @param entity 产业
      */

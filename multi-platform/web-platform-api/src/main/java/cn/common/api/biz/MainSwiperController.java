@@ -22,7 +22,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 首页轮播图前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/mainSwiper")
@@ -35,7 +35,7 @@ public class MainSwiperController extends BaseApiController {
     /**
      * 新增首页轮播图
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @PostMapping(value = "/addItem")
@@ -49,7 +49,7 @@ public class MainSwiperController extends BaseApiController {
     /**
      * 主键ID集合批量删除首页轮播图
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -63,7 +63,7 @@ public class MainSwiperController extends BaseApiController {
     /**
      * 更新首页轮播图
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -77,7 +77,7 @@ public class MainSwiperController extends BaseApiController {
     /**
      * 查询所有首页轮播图信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -91,7 +91,7 @@ public class MainSwiperController extends BaseApiController {
     /**
      * 分页查询首页轮播图
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */

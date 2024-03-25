@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.ant.fun.api.controller
  * @Description: 平台前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/platform")

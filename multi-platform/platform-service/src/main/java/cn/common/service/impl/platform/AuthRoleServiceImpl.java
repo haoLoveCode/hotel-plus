@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 * @author Singer create by Singer email:singer-coder@qq.com
 * @packageName cn.common.service
 * @Description: 首页分类相关服务方法实现
-* @date 2024-03-06
+* @date 2024-03-25
 */
 @Service("authRoleService")
 @Slf4j
@@ -73,7 +73,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
      * 新增
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @Override
@@ -120,7 +120,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
      * 批量删除信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     @Override
@@ -136,7 +136,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
       * 查询角色具备的权限信息
       * @author: create by singer - Singer email:singer-coder@qq.com
-      * @date 2024-03-06
+      * @date 2024-03-25
       * @param authRoleId 角色ID
       * @return java.util.List
       */
@@ -154,7 +154,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
      * 查询所有用户信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-067
+     * @date 2024-03-257
      * @return java.util.List
      */
     @Override
@@ -171,7 +171,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
      * 分页查询
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */
@@ -203,7 +203,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
      * 设置分页条件
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageWrapper 查询条件
      * @param pageReq 分页插件
      * @return
@@ -226,7 +226,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
      * 更新
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     @Override
@@ -257,7 +257,7 @@ public class AuthRoleServiceImpl implements AuthRoleService {
     /**
      * 设置需要更新的字段
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新参数
      * @param entity 实体
      */

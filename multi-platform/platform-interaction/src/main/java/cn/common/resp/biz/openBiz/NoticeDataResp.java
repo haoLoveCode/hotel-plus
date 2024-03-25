@@ -10,7 +10,7 @@ import java.io.*;
  * 公告信息返回数据封装类
  * @title: NoticeDataResp.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class NoticeDataResp extends BaseResp implements Serializable {

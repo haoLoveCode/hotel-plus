@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.req.biz.app.wx
  * @Description: 微信页面二维码生成请求参数封装
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class WxPageQrCode implements Serializable {

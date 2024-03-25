@@ -18,7 +18,7 @@ import java.util.List;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName dining-platform
  * @Description: APP端查询轮播图
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("appMainSwiperService")
 @Slf4j
@@ -32,7 +32,7 @@ public class AppMainSwiperServiceImpl implements AppMainSwiperService {
     /**
      * 查询所有信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */

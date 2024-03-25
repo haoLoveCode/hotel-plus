@@ -8,7 +8,7 @@ import pro.skywalking.repository.BaseRepository;
  * @author Singer
  * @packageName cn.singer.repository.entity
  * @Description: 订单信息->Repository
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Mapper
 public interface OrderDataRepository extends BaseRepository<OrderData> {
@@ -18,7 +18,7 @@ public interface OrderDataRepository extends BaseRepository<OrderData> {
      * 根据业务主键批量删除
      * @title: OrderDataRepository.java
      * @author Singer
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      * @param mainIdList 业务主键ID集合
      * @return List
 

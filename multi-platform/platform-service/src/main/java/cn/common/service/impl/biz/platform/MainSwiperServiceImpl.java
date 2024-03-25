@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 首页轮播图相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("mainSwiperService")
 @Slf4j
@@ -56,7 +56,7 @@ public class MainSwiperServiceImpl implements MainSwiperService {
     /**
      * 新增
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @Override
@@ -80,7 +80,7 @@ public class MainSwiperServiceImpl implements MainSwiperService {
     /**
      * 批量删除信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     @Override
@@ -99,7 +99,7 @@ public class MainSwiperServiceImpl implements MainSwiperService {
     /**
      * 查询所有信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -115,7 +115,7 @@ public class MainSwiperServiceImpl implements MainSwiperService {
     /**
      * 分页查询
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */
@@ -146,7 +146,7 @@ public class MainSwiperServiceImpl implements MainSwiperService {
     /**
      * 设置分页条件
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageWrapper 查询条件
      * @param pageReq 分页插件
      * @return
@@ -173,7 +173,7 @@ public class MainSwiperServiceImpl implements MainSwiperService {
     /**
      * 更新
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     @Override
@@ -193,7 +193,7 @@ public class MainSwiperServiceImpl implements MainSwiperService {
     /**
      * 设置需要更新的字段
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新参数
      * @param entity 产业
      */

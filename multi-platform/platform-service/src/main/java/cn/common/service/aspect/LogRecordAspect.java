@@ -37,7 +37,7 @@ import java.util.Set;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.service.aspect;
  * @Description: 日志记录切面
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Slf4j
 @Aspect
@@ -53,7 +53,7 @@ public class LogRecordAspect {
     /**
      * 定义切点
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Pointcut("@annotation(pro.skywalking.anon.ApiLog)")
     public void pointcut() {
@@ -62,7 +62,7 @@ public class LogRecordAspect {
     /**
      * 环绕通知，处理切点里面的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param point 环绕通知对象主要用于处理切点里面的数据
      * @return Object
      */
@@ -120,7 +120,7 @@ public class LogRecordAspect {
     /**
      * 拿到请求参数
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param params 要返回的参数
      * @param args 请求参数列表
      * @param paramNames 请求参数名称列表

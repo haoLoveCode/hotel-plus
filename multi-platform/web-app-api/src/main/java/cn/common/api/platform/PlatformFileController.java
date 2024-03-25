@@ -22,7 +22,7 @@ import java.util.List;
  * @author Singer create by singer email:singer-coder@qq.com
  * @projectName greeting-platform
  * @Description: 系统文件相关前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping("api/platformFile")
@@ -38,7 +38,7 @@ public class PlatformFileController extends BaseApiController {
     /**
      * 拿到文件直接访问路径
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param fileNames
      * @return ApiResponse
      */
@@ -52,7 +52,7 @@ public class PlatformFileController extends BaseApiController {
     /**
      * 拿到单个文件名称的地址
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param fileName 文件名称
      * @return String
      */
@@ -65,7 +65,7 @@ public class PlatformFileController extends BaseApiController {
     /**
      * 拿到多个文件名称的地址
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param meta 文件名称集合
      * @return String
      */
@@ -78,7 +78,7 @@ public class PlatformFileController extends BaseApiController {
     /**
      * 拿到多个文件名称的地址
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param meta 文件名称集合
      * @return List
      */
@@ -91,7 +91,7 @@ public class PlatformFileController extends BaseApiController {
     /**
      * 删除文件
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param name 删除OSS的文件
      */
     @DeleteMapping("/deleteFileByFileName")
@@ -105,7 +105,7 @@ public class PlatformFileController extends BaseApiController {
     /**
      * 上传文件
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param file
      * @return String
      */
@@ -119,7 +119,7 @@ public class PlatformFileController extends BaseApiController {
     /**
      * 上传文件(混淆)
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param file
      * @return String
      */

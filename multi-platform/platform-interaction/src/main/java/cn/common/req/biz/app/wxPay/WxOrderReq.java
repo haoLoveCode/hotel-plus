@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.req.biz.app
  * @Description: 微信支付下单请求对象
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class WxOrderReq implements Serializable {

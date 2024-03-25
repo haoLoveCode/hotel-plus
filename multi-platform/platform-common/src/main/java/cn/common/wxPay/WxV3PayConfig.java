@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
   * 微信V3支付配置类
   * @author: create by singer - Singer email:singer-coder@qq.com
-  * @date 2024-03-06
+  * @date 2024-03-25
   */
 @Configuration
 //存在appId配置才进行注入
@@ -42,7 +42,7 @@ public class WxV3PayConfig {
      *
      * @description: JS的支付APISerivce
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return com.wechat.pay.java.service.payments.jsapi.JsapiService
      */
@@ -85,7 +85,7 @@ public class WxV3PayConfig {
        *
        * @description: JS的支付APISerivce
        * @author: create by singer - Singer email:singer-coder@qq.com
-       * @date 2024-03-06
+       * @date 2024-03-25
        * @param
        * @return com.wechat.pay.java.service.payments.jsapi.JsapiService
        */
@@ -128,7 +128,7 @@ public class WxV3PayConfig {
      *
      * @description: JS的支付商家批量转账API
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return com.wechat.pay.java.service.payments.jsapi.JsapiService
      */

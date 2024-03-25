@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 支付数据信息分页查询请求封装类
  * @title: PayDataReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class PayDataReq extends BasePageReq implements Serializable {

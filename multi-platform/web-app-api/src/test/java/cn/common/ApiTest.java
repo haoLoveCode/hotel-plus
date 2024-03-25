@@ -27,7 +27,7 @@ import java.util.List;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common
  * @Description: API测试
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = HotelAppPlatform.class)
@@ -55,7 +55,7 @@ public class ApiTest {
     /**
      * 给所有的角色-用户建立关系
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Test
     public void initAllAuthUSerRole(){
@@ -89,7 +89,7 @@ public class ApiTest {
     /**
       * 给所有的权限-角色建立关系
       * @author: create by singer - Singer email:singer-coder@qq.com
-      * @date 2024-03-06
+      * @date 2024-03-25
       */
     @Test
     public void initRolePermission(){

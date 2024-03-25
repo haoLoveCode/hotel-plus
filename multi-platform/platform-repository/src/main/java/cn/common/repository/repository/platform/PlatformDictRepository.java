@@ -12,7 +12,7 @@ import java.util.List;
 * @author Singer create by singer email:singer-coder@qq.com
 * @packageName cn.singer.repository.entity
 * @Description: 字典信息->Repository
-* @date 2024-03-06
+* @date 2024-03-25
 */
 @Mapper
 public interface PlatformDictRepository extends BaseRepository<PlatformDict> {
@@ -23,7 +23,7 @@ public interface PlatformDictRepository extends BaseRepository<PlatformDict> {
          * 根据业务主键批量删除
          * @title: PlatformDictRepository.java
          * @author create by Singer - Singer email:singer-coder@qq.com
-         * @date 2024-03-06 11:05
+         * @date 2024-03-25 11:05
          * @param mainIdList 业务主键ID集合
          * @return List
          */

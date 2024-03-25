@@ -14,7 +14,7 @@ import java.util.List;
  * @author Singer create by singer email:singer-coder@qq.com
  * @packageName cn.singer.repository.entity
  * @Description: 用户角色->Repository
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Mapper
 public interface AuthUserRoleRepository extends BaseRepository<AuthUserRole> {
@@ -26,7 +26,7 @@ public interface AuthUserRoleRepository extends BaseRepository<AuthUserRole> {
      * @return List
      * @title: AuthRoleRepository.java
      * @author create by Singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      */
     @Delete(
         "<script>" +
@@ -44,7 +44,7 @@ public interface AuthUserRoleRepository extends BaseRepository<AuthUserRole> {
      *
      * @param authUserIdList 用户ID集合
      * @author: create by singer email:2609207540@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Delete(
         "<script>" +
@@ -62,7 +62,7 @@ public interface AuthUserRoleRepository extends BaseRepository<AuthUserRole> {
      *
      * @param authUserId 用户ID
      * @author: create by singer email:2609207540@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Delete("<script>" +
             "	DELETE FROM auth_user_role WHERE auth_user_id = #{authUserId}	" +
@@ -77,7 +77,7 @@ public interface AuthUserRoleRepository extends BaseRepository<AuthUserRole> {
      * @return List
      * @title: AuthMenuRepository.java
      * @author create by Singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      */
     @Select(
     "<script>" +
@@ -109,7 +109,7 @@ public interface AuthUserRoleRepository extends BaseRepository<AuthUserRole> {
      * @return List
      * @title: AuthMenuRepository.java
      * @author create by Singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      */
     @Select(
             "<script>" +

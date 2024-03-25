@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 交易订单信息相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("appTradeOrderService")
 @Slf4j
@@ -73,7 +73,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      *
      * @param addReq 新增Req
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -102,7 +102,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      *
      * @param req 需要被删除的信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public void batchDeleteItem(BaseDeleteReq req) {
@@ -122,7 +122,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      * @return cn.common.resp.biz.openBiz.TradeOrderResp
      * @description: 查询单个交易订单数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public TradeOrderResp queryByOrderNo(String outTradeNo) {
@@ -140,7 +140,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      * @return java.util.List
      * @description: 查询当前用户的所有订单信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public List<TradeOrderResp> queryOrderList() {
@@ -188,7 +188,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      * @param
      * @return java.util.List
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public List<TradeOrderResp> queryAllTradeOrder() {
@@ -205,7 +205,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      * @param pageReq 分页查询Req
      * @return Pagination
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public Pagination<TradeOrderResp> queryByPage(
@@ -269,7 +269,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      * @param pageReq     分页插件
      * @return
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private void setQueryCriteria(MPJLambdaWrapper<TradeOrder> pageWrapper, TradeOrderReq pageReq) {
 
@@ -315,7 +315,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      *
      * @param req 更新请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -340,7 +340,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      *
      * @param updateReq 更新请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -365,7 +365,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
      * @param updateReq 更新参数
      * @param entity    产业
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private void setNeedUpdateItem(TradeOrder entity,
                                    TradeOrderUpdateReq updateReq) {

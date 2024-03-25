@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.resp.biz.app.auth
  * @Description: 微信的AccessToken
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class WxAccessToken implements Serializable {

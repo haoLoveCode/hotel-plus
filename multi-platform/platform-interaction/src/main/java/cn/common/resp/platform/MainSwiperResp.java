@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 首页轮播图返回数据封装类
  * @title: MainSwiperResp.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class MainSwiperResp extends BaseResp implements Serializable {

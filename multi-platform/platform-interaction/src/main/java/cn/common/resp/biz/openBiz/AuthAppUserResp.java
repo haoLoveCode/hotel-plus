@@ -10,7 +10,7 @@ import java.io.*;
  * APP认证用户返回数据封装类
  * @title: AuthAppUserResp.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AuthAppUserResp extends BaseResp implements Serializable {

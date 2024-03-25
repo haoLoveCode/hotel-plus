@@ -17,7 +17,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.service
  * @Description: APP认证用户相关服务
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public interface AuthAppUserService {
 
@@ -26,7 +26,7 @@ public interface AuthAppUserService {
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @description: 绑定用户的微信手机号
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp bindWxPhone(WxMiniPhoneReq req);
 
@@ -36,7 +36,7 @@ public interface AuthAppUserService {
      * @param pageReq
      * @return java.util.List
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void exportData(AuthAppUserReq pageReq);
 
@@ -44,7 +44,7 @@ public interface AuthAppUserService {
      * 系统退出登录
      *
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void logOut();
 
@@ -54,7 +54,7 @@ public interface AuthAppUserService {
      * @param req 用户名密码登陆请求参数
      * @return
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp userLogin(AuthAppUserLoginReq req);
 
@@ -64,7 +64,7 @@ public interface AuthAppUserService {
      * @param req 用户名密码注册请求参数
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp userReg(AuthAppUserRegReq req);
 
@@ -73,7 +73,7 @@ public interface AuthAppUserService {
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @description: 绑定用户的微信openId
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp bindWxOpenId(WxMiniOpenIdReq req);
 
@@ -82,7 +82,7 @@ public interface AuthAppUserService {
      *
      * @return java.lang.Long
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     String currentToken();
 
@@ -91,7 +91,7 @@ public interface AuthAppUserService {
      *
      * @return java.lang.Boolean
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     TokenVerifyResp verifyToken();
 
@@ -100,7 +100,7 @@ public interface AuthAppUserService {
      *
      * @return java.lang.String
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     String authAppUserId();
 
@@ -109,7 +109,7 @@ public interface AuthAppUserService {
      *
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp queryLoginUserMetaNoThrow();
 
@@ -118,7 +118,7 @@ public interface AuthAppUserService {
      *
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp queryLoginUserMeta();
 
@@ -127,7 +127,7 @@ public interface AuthAppUserService {
      *
      * @param addReq 新增Req
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void addItem(AuthAppUserAddReq addReq);
 
@@ -136,7 +136,7 @@ public interface AuthAppUserService {
      *
      * @param regReq Web用户注册请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp webUserReg(AuthWebUserRegReq regReq);
 
@@ -145,7 +145,7 @@ public interface AuthAppUserService {
      *
      * @param req 需要被删除的信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void batchDeleteItem(BaseDeleteReq req);
 
@@ -155,7 +155,7 @@ public interface AuthAppUserService {
      * @param
      * @return java.util.List
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     List<AuthAppUserResp> queryAuthAppUser();
 
@@ -164,7 +164,7 @@ public interface AuthAppUserService {
      * @return cn.common.resp.biz.openBiz.AuthAppUserResp
      * @description: 查询当前APP用户的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     AuthAppLoginResp currentUserMeta();
 
@@ -174,7 +174,7 @@ public interface AuthAppUserService {
      * @param pageReq 分页查询Req
      * @return Pagination
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     Pagination<AuthAppUserResp> queryByPage(
             AuthAppUserReq pageReq);
@@ -184,7 +184,7 @@ public interface AuthAppUserService {
      *
      * @param updateReq 更新请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void updateItem(AuthAppUserUpdateReq updateReq);
 
@@ -193,7 +193,7 @@ public interface AuthAppUserService {
      *
      * @param updateReq 更新请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void updateAppAuthUser(AuthAppUserUpdateReq updateReq);
 

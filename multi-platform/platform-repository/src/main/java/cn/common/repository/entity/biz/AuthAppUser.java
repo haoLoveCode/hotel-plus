@@ -11,7 +11,7 @@ import java.io.Serializable;
  * APP认证用户实体
  * @title: AuthAppUser.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 @TableName("auth_app_user")

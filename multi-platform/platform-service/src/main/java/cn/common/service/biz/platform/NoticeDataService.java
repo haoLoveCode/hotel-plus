@@ -13,14 +13,14 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 公告信息相关服务
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public interface NoticeDataService {
 
     /**
      * 导出公告信息数据
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageReq
      * @return java.util.List
      */
@@ -29,7 +29,7 @@ public interface NoticeDataService {
     /**
      * 新增公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     void addItem(NoticeDataAddReq addReq);
@@ -37,7 +37,7 @@ public interface NoticeDataService {
     /**
      * 批量删除公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的公告信息
      */
     void batchDeleteItem(BaseDeleteReq req);
@@ -45,7 +45,7 @@ public interface NoticeDataService {
     /**
      * 查询公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -54,7 +54,7 @@ public interface NoticeDataService {
     /**
      * 查询单个公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -63,7 +63,7 @@ public interface NoticeDataService {
     /**
      * 分页查询公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询公告信息Req
      * @return Pagination
      */
@@ -73,7 +73,7 @@ public interface NoticeDataService {
     /**
      * 更新公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新公告信息请求参数
      */
     void updateItem(NoticeDataUpdateReq updateReq);

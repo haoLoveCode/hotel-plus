@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.service
  * @Description: 首页分类相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("platformApiLogService")
 @Slf4j
@@ -59,7 +59,7 @@ public class PlatformApiLogServiceImpl implements PlatformApiLogService {
      * @return
      * @description: 清空日志表
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @PostConstruct()
@@ -73,7 +73,7 @@ public class PlatformApiLogServiceImpl implements PlatformApiLogService {
      *
      * @param req 需要被删除的信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public void batchDeleteItem(BaseDeleteReq req) {
@@ -90,7 +90,7 @@ public class PlatformApiLogServiceImpl implements PlatformApiLogService {
      * @param pageReq 分页查询Req
      * @return pro.skywalking.resp.page.Pagination
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public Pagination<PlatformApiLogResp> queryByPage(PlatformApiLogReq pageReq) {
@@ -121,7 +121,7 @@ public class PlatformApiLogServiceImpl implements PlatformApiLogService {
      * @param req 查询参数
      * @return java.util.List
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public List<ApiLogStatisticsResp> statisticsVisitCount(PlatformApiLogReq req) {
@@ -162,7 +162,7 @@ public class PlatformApiLogServiceImpl implements PlatformApiLogService {
      * @param pageWrapper 查询条件
      * @param pageReq     分页插件
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private void setPageCriteria(LambdaQueryWrapper<PlatformApiLog> pageWrapper, PlatformApiLogReq pageReq) {
 

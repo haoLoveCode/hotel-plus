@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.resp.biz.app.wxpay
  * @Description:  微信统一下单请求返回结果封装
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class WxV3PayResult implements Serializable {

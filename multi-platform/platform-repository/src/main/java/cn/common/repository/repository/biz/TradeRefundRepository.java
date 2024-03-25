@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @author Singer
  * @packageName cn.singer.repository.entity
  * @Description: 退款交易信息->Repository
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Mapper
 public interface TradeRefundRepository extends MPJBaseMapper<TradeRefund> {
@@ -18,7 +18,7 @@ public interface TradeRefundRepository extends MPJBaseMapper<TradeRefund> {
      * 根据业务主键批量删除退款交易信息
      * @title: TradeRefundRepository.java
      * @author Singer
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      * @param mainIdList 业务主键ID集合
      * @return List
 

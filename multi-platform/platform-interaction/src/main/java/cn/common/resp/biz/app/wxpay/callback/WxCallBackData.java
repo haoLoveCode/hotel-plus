@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description: 微信支付回调解密数据
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class WxCallBackData implements Serializable {

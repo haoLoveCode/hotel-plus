@@ -17,7 +17,7 @@ import javax.validation.Valid;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: APP认证用户前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/wxPayApi")
@@ -36,7 +36,7 @@ public class WxPayController extends BaseApiController {
      * 微信支付回调
      * @description:
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req
      * @return
      */

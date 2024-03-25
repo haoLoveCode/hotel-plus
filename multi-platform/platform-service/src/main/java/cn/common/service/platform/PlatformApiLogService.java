@@ -13,7 +13,7 @@ import java.util.List;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.service
  * @Description: 系统日志相关服务
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public interface PlatformApiLogService {
 
@@ -22,7 +22,7 @@ public interface PlatformApiLogService {
      * @return
      * @description: 清空日志表
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void clearApiLog();
 
@@ -31,7 +31,7 @@ public interface PlatformApiLogService {
      *
      * @param req 需要被删除的信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     void batchDeleteItem(BaseDeleteReq req);
 
@@ -41,7 +41,7 @@ public interface PlatformApiLogService {
      * @param req 查询参数
      * @return java.util.List
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     List<ApiLogStatisticsResp> statisticsVisitCount(PlatformApiLogReq req);
 
@@ -51,7 +51,7 @@ public interface PlatformApiLogService {
      * @param pageReq 分页查询Req
      * @return pro.skywalking.resp.page.Pagination
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     Pagination<PlatformApiLogResp> queryByPage(
             PlatformApiLogReq pageReq);

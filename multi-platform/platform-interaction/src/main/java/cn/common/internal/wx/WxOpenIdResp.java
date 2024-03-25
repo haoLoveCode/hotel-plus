@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Singer create by singer email:singer-coder@qq.com
  * @projectName wx-mini-api
  * @Description: 微信
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class WxOpenIdResp implements Serializable {

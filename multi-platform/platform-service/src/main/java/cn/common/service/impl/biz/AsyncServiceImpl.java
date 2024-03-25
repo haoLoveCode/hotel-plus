@@ -11,7 +11,7 @@ import javax.annotation.Resource;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description: 异步处理Service
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("asyncService")
 @Slf4j

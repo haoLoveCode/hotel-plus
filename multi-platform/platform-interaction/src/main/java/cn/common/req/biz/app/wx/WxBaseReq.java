@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.zmi.common.interaction.req.app
  * @Description: 微信的基础请求信息
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class WxBaseReq implements Serializable {

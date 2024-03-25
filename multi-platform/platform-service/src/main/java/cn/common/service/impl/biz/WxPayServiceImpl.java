@@ -73,7 +73,7 @@ import java.util.List;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description: 微信支付相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("wxPayService")
 @ConditionalOnProperty(
@@ -138,7 +138,7 @@ public class WxPayServiceImpl implements WxPayService {
      *
      * @description: 存储支付快照信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param outTradeNo 外部交易订单号
      * @param payData 支付数据
      * @return
@@ -165,7 +165,7 @@ public class WxPayServiceImpl implements WxPayService {
      * 微信支付回调
      * @description:
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req
      * @return
      */
@@ -222,7 +222,7 @@ public class WxPayServiceImpl implements WxPayService {
      *
      * @description: 微信退款回调
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 退款回调参数
      * @return
      */
@@ -344,7 +344,7 @@ public class WxPayServiceImpl implements WxPayService {
      *
      * @description: 处理退款
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  tradeOrder 订单数据
      * @return
      */
@@ -382,7 +382,7 @@ public class WxPayServiceImpl implements WxPayService {
      *
      * @description: 设置退款下相关数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param tradeOrder 交易订单信息
      * @param refundResp 退款结果
      * @return
@@ -417,7 +417,7 @@ public class WxPayServiceImpl implements WxPayService {
      *
      * @description: 微信下单
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req
      * @return cn.common.resp.biz.app.wxpay.WxMiniPayResp
      */
@@ -461,7 +461,7 @@ public class WxPayServiceImpl implements WxPayService {
      *
      * @description: 返回微信私钥信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.lang.String
      */
@@ -489,7 +489,7 @@ public class WxPayServiceImpl implements WxPayService {
      * 使用商户私钥对待签名串进行SHA256 with RSA签名，
      * 并对签名结果进行Base64编码得到签名值
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param content 内容
      * @param charset 编码
      * @return java.lang.String
@@ -522,7 +522,7 @@ public class WxPayServiceImpl implements WxPayService {
     /**
      * 设置微信下单请求参数并且返回请求后的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param wxOrderReq 微信下单请求参数
      * @param outTradeNo 外部订单号
      * @param openId 支付用户的OpenId
@@ -571,7 +571,7 @@ public class WxPayServiceImpl implements WxPayService {
      *
      * @description: 根据外部支付订单号查询微信订单状态
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param outTradeNo 外部支付订单号
      * @return
      */

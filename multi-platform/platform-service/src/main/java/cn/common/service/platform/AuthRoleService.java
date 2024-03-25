@@ -16,14 +16,14 @@ import java.util.List;
 * @author Singer create by Singer email:singer-coder@qq.com
 * @packageName cn.common.service
 * @Description: 系统角色相关服务
-* @date 2024-03-06
+* @date 2024-03-25
 */
 public interface AuthRoleService {
 
     /**
      * 新增
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     void addItem(AuthRoleAddReq addReq);
@@ -31,7 +31,7 @@ public interface AuthRoleService {
     /**
      * 批量删除信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     void batchDeleteItem(BaseDeleteReq req);
@@ -39,7 +39,7 @@ public interface AuthRoleService {
     /**
      * 查询所有用户信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-067
+     * @date 2024-03-257
      * @return java.util.List
      */
     List<AuthRoleResp> queryAllAuthRole();
@@ -47,7 +47,7 @@ public interface AuthRoleService {
     /**
      * 查询角色具备的权限信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authRoleId 角色ID
      * @return java.util.List
      */
@@ -56,7 +56,7 @@ public interface AuthRoleService {
     /**
      * 分页查询
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */
@@ -66,7 +66,7 @@ public interface AuthRoleService {
     /**
      * 更新
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     void updateItem(AuthRoleUpdateReq updateReq);

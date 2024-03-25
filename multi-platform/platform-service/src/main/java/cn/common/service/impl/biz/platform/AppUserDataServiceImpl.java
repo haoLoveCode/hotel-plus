@@ -48,7 +48,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Singer
  * @packageName cn.common.service
  * @Description: APP用户其他信息相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("appUserDataService")
 @Slf4j
@@ -71,7 +71,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 导出APP用户其他信息数据
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageReq
      * @return java.util.List
      */
@@ -120,7 +120,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 新增APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增APP用户其他信息Req
      */
     @Override
@@ -144,7 +144,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 批量删除APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的APP用户其他信息
      */
     @Override
@@ -163,7 +163,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 查询所有APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -179,7 +179,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 分页查询APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询APP用户其他信息Req
      * @return Pagination
      */
@@ -210,7 +210,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 设置分页条件
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageWrapper 查询条件
      * @param pageReq 查询参数
      * @return
@@ -238,7 +238,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 更新APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新APP用户其他信息请求参数
      */
     @Override
@@ -258,7 +258,7 @@ public class AppUserDataServiceImpl implements AppUserDataService {
     /**
      * 设置需要更新的字段
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新参数
      * @param entity 实体
      */

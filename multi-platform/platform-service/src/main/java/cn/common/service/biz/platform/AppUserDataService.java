@@ -14,14 +14,14 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.service
  * @Description: APP用户其他信息相关服务
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public interface AppUserDataService {
 
     /**
      * 导出APP用户其他信息数据
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageReq
      * @return java.util.List
      */
@@ -30,7 +30,7 @@ public interface AppUserDataService {
     /**
      * 新增APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     void addItem(AppUserDataAddReq addReq);
@@ -38,7 +38,7 @@ public interface AppUserDataService {
     /**
      * 批量删除APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的APP用户其他信息
      */
     void batchDeleteItem(BaseDeleteReq req);
@@ -46,7 +46,7 @@ public interface AppUserDataService {
     /**
      * 查询所有APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -55,7 +55,7 @@ public interface AppUserDataService {
     /**
      * 分页查询APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询APP用户其他信息Req
      * @return Pagination
      */
@@ -65,7 +65,7 @@ public interface AppUserDataService {
     /**
      * 更新APP用户其他信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新APP用户其他信息请求参数
      */
     void updateItem(AppUserDataUpdateReq updateReq);

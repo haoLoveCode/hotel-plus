@@ -58,7 +58,7 @@ import java.util.stream.Collectors;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common.service
  * @Description: 系统用户信息相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("authUserService")
 @Slf4j
@@ -91,7 +91,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * @description: 生成图形验证码
      * @auther: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param captchaReq 生成图形验证码请求参数
      * @return pro.skywalking.resp.platform.auth.captcha.CaptchaResp
      */
@@ -121,7 +121,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 拿到当前登录用户的Token
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @return java.lang.Long
      */
     @Override
@@ -137,7 +137,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 拿到用户ID
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @return java.lang.String
      */
     @Override
@@ -164,7 +164,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 查询所有用户信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-067
+     * @date 2024-03-257
      * @return java.util.List
      */
     @Override
@@ -181,7 +181,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 拿到登录后的用户信息 不抛出异常
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      */
     @Override
@@ -198,7 +198,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 拿到登录后的用户信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      */
     @Override
@@ -220,7 +220,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 新增
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @Override
@@ -265,7 +265,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 批量删除信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     @Override
@@ -282,7 +282,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 查询用户角色信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authUserId 用户ID
      * @return java.util.List
      */
@@ -298,7 +298,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 分页查询
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return pro.skywalking.resp.page.Pagination
      */
@@ -345,7 +345,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 设置分页条件
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageWrapper 查询条件
      * @param pageReq 分页插件
      * @return
@@ -392,7 +392,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 更新
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     @Override
@@ -423,7 +423,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 设置需要更新的字段
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新参数
      * @param entity 产业
      */
@@ -464,7 +464,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 系统退出登录
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public void logOut(){
@@ -481,7 +481,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 系统登录
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 用户登录请求参数
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      */
@@ -525,7 +525,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 拿到登录后返回的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      */
     @Override
@@ -562,7 +562,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 登录成功的逻辑处理
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authUser 系统用户
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      */
@@ -610,7 +610,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 处理树节点数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param dataList 数据
      * @return java.util.List
      */
@@ -649,7 +649,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 拿到子节点的递归方法
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param nodeId 数据
      * @param permissionNodeList 节点数据
      * @return java.util.List
@@ -686,7 +686,7 @@ public class AuthUserServiceImpl implements AuthUserService {
     /**
      * 设置权限数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param permList 权限集合
      */
     private void handlePermissionList(List<AuthPermissionResult> permList){

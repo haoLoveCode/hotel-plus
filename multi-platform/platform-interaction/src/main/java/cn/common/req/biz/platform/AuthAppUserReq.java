@@ -9,7 +9,7 @@ import java.io.Serializable;
  * APP认证用户分页查询请求封装类
  * @title: AuthAppUserReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AuthAppUserReq extends BasePageReq implements Serializable {

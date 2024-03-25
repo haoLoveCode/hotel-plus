@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 系统用户注册
  * @title: Place.java
  * @author create by singer - Singer email:singer-coder@qq.com
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AuthWebUserRegReq implements Serializable {

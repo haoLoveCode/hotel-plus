@@ -6,7 +6,7 @@ import com.lmax.disruptor.EventFactory;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName skywalking-common
  * @Description:
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public class DataFactory implements EventFactory<NeedHandleEvent> {
 

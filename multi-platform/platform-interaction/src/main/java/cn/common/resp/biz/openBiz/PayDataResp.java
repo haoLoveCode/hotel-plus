@@ -10,7 +10,7 @@ import java.io.*;
  * 支付数据信息返回数据封装类
  * @title: PayDataResp.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class PayDataResp extends BaseResp implements Serializable {

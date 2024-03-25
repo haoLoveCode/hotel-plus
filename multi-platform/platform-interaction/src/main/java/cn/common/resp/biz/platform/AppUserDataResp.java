@@ -9,7 +9,7 @@ import java.io.Serializable;
  * APP用户其他信息返回数据封装类
  * @title: AppUserDataResp.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AppUserDataResp extends BaseResp implements Serializable {

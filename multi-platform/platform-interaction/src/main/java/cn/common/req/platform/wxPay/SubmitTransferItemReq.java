@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * 提交转-账明细信息Req
  * @title: TransferItemAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class SubmitTransferItemReq implements Serializable {

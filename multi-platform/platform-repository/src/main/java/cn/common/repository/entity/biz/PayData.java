@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 支付数据信息实体
  * @title: PayData.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 @TableName("pay_data")

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 订单信息实体
  * @title: OrderDataUpdateReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class OrderDataUpdateReq implements Serializable {

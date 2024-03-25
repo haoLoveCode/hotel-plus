@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 系统用户登陆业务交互参数封装
  * @title: Place.java
  * @author create by singer - Singer email:singer-coder@qq.com
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AuthAppUserLoginReq implements Serializable {

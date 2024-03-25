@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description: 基本的App用户认证返回封装
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Data
 public class AuthBaseResp extends BaseResp implements Serializable {

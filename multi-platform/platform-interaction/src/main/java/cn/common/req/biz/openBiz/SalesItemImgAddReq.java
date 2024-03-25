@@ -10,7 +10,7 @@ import java.io.*;
  * 商品图片信息新增Req
  * @title: SalesItemImgAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class SalesItemImgAddReq implements Serializable {

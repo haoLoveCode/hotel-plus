@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName skywalking-common
  * @Description: 处理数据的Handler
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Slf4j
 @Service
@@ -19,7 +19,7 @@ public class DataEventHandler implements EventHandler<NeedHandleEvent> {
       *
       * @description: 收到事件后的处理
       * @author: create by singer - Singer email:singer-coder@qq.com
-      * @date 2024-03-06
+      * @date 2024-03-25
       * @param  event
       * @param  sequence
       * @param  endOfBatch

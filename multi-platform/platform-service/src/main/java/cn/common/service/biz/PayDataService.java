@@ -14,14 +14,14 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 支付数据信息相关服务
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public interface PayDataService {
 
     /**
      * 导出数据
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageReq
      * @return java.util.List
      */
@@ -30,7 +30,7 @@ public interface PayDataService {
     /**
      * 新增
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     void addItem(PayDataAddReq addReq);
@@ -38,7 +38,7 @@ public interface PayDataService {
     /**
      * 批量删除信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     void batchDeleteItem(BaseDeleteReq req);
@@ -46,7 +46,7 @@ public interface PayDataService {
     /**
      * 查询所有信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -55,7 +55,7 @@ public interface PayDataService {
     /**
      * 分页查询
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */
@@ -65,7 +65,7 @@ public interface PayDataService {
     /**
      * 更新
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     void updateItem(PayDataUpdateReq updateReq);

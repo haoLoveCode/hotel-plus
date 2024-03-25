@@ -50,7 +50,7 @@ import java.util.Map;
  * @author Singer
  * @packageName cn.common.service
  * @Description: 公告信息相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("noticeDataService")
 @Slf4j
@@ -77,7 +77,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 导出公告信息数据
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageReq
      * @return java.util.List
      */
@@ -126,7 +126,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 新增公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增公告信息Req
      */
     @Override
@@ -151,7 +151,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 批量删除公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的公告信息
      */
     @Override
@@ -170,7 +170,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 查询公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -191,7 +191,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 查询单个公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -212,7 +212,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 设置查询条件
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param wrapper 查询条件
      * @param req 查询参数
      * @return
@@ -244,7 +244,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 分页查询公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询公告信息Req
      * @return Pagination
      */
@@ -275,7 +275,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 设置分页条件
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageWrapper 查询条件
      * @param pageReq 查询参数
      * @return
@@ -307,7 +307,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 更新公告信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新公告信息请求参数
      */
     @Override
@@ -327,7 +327,7 @@ public class NoticeDataServiceImpl implements NoticeDataService {
     /**
      * 设置需要更新的字段
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新参数
      * @param entity 实体
      */

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.common
  * @Description: 启动类
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @SpringBootApplication(scanBasePackages = {
 		"pro.skywalking",

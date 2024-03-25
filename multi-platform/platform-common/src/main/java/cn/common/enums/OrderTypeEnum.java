@@ -7,7 +7,7 @@ import lombok.Getter;
  * @author create by singer - Singer email:singer-coder@qq.com
  * @packageName pro.common.enums
  * @Description: 订单类型信息
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Getter
 @AllArgsConstructor

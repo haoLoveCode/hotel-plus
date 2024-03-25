@@ -9,7 +9,7 @@ import java.io.Serializable;
  * APP认证用户新增Req
  * @title: AuthAppUserAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AuthAppUserAddReq implements Serializable {

@@ -20,7 +20,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 交易订单信息前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/tradeOrder")
@@ -33,7 +33,7 @@ public class AppTradeOrderController extends BaseApiController {
      *
      * @description: 查询单个交易订单数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  outTradeNo 外部交易订单号
      * @return cn.common.resp.biz.openBiz.TradeOrderResp
      */
@@ -48,7 +48,7 @@ public class AppTradeOrderController extends BaseApiController {
     /**
      * 更新订单状态
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 更新请求参数
      */
     @PutMapping(value = "/setOrderStatus")
@@ -63,7 +63,7 @@ public class AppTradeOrderController extends BaseApiController {
      *
      * @description: 查询当前用户的所有订单信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @return java.util.List
      */
     @PostMapping(value = "/queryOrderList")
@@ -76,7 +76,7 @@ public class AppTradeOrderController extends BaseApiController {
     /**
      * 分页查询用户订单信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * APP用户其他信息请求数据封装类
  * @title: AppUserDataUpdateReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AppUserDataUpdateReq implements Serializable {

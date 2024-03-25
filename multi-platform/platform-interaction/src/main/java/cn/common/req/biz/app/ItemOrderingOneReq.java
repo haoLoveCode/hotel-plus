@@ -11,7 +11,7 @@ import java.util.List;
  * 下单单个商品
  * @title: SalesItemAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class ItemOrderingOneReq implements Serializable {

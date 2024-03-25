@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Singer
  * @title: AuthAppUserUpdateReq.java
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class AuthAppUserUpdateReq implements Serializable {

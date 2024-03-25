@@ -23,7 +23,7 @@ import java.util.List;
 * @author Singer create by Singer email:singer-coder@qq.com
 * @packageName cn.common.api.controller
 * @Description: 权限前端控制器
-* @date 2024-03-06
+* @date 2024-03-25
 */
 @RestController
 @RequestMapping(value = "api/v1/authPermission")
@@ -36,7 +36,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 新增权限
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @PostMapping(value = "/addItem")
@@ -49,7 +49,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 主键ID集合批量权限
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的权限信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -63,7 +63,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 更新权限
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 更新权限请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -77,7 +77,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 分页查询权限
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */
@@ -91,7 +91,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 查询权限集合
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 查询集合Req
      * @return Pagination
      */
@@ -105,7 +105,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 查询权限树集合
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 查询集合Req
      * @return Pagination
      */
@@ -119,7 +119,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 根据主键ID查询菜单信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param mainId 菜单主键ID
      * @return cn.common.resp.platform.auth.perm.AuthPermissionResp
      */
@@ -133,7 +133,7 @@ public class AuthPermissionController extends BaseApiController {
     /**
      * 查询所有权限集合
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 查询所有权限集合Req
      * @return java.util.List
      */

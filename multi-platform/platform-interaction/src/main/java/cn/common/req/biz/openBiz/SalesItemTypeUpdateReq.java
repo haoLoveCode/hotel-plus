@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * 商品类型信息请求数据封装类
  * @title: SalesItemTypeUpdateReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class SalesItemTypeUpdateReq implements Serializable {

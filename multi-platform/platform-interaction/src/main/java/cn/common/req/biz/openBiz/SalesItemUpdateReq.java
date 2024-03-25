@@ -11,7 +11,7 @@ import java.util.List;
  * 商品信息请求数据封装类
  * @title: SalesItemUpdateReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class SalesItemUpdateReq implements Serializable {

@@ -22,7 +22,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.common.api.controller
  * @Description: 交易订单信息前端控制器
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @RestController
 @RequestMapping(value = "api/v1/tradeOrder")
@@ -35,7 +35,7 @@ public class TradeOrderController extends BaseApiController {
     /**
      * 新增交易订单信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @PostMapping(value = "/addItem")
@@ -49,7 +49,7 @@ public class TradeOrderController extends BaseApiController {
     /**
      * 导出交易订单信息数据
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param pageReq
      * @return java.util.List
     */
@@ -63,7 +63,7 @@ public class TradeOrderController extends BaseApiController {
     /**
      * 主键ID集合批量删除交易订单信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -77,7 +77,7 @@ public class TradeOrderController extends BaseApiController {
     /**
      * 更新交易订单信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -91,7 +91,7 @@ public class TradeOrderController extends BaseApiController {
     /**
      * 查询所有交易订单信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return java.util.List
      */
@@ -105,7 +105,7 @@ public class TradeOrderController extends BaseApiController {
     /**
      * 分页查询交易订单信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */

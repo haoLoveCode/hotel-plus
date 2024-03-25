@@ -15,7 +15,7 @@ import java.util.Base64;
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description:
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public class WxAesUtil {
 
@@ -35,7 +35,7 @@ public class WxAesUtil {
        *
        * @description: 解密
        * @author: create by singer - Singer email:singer-coder@qq.com
-       * @date 2024-03-06
+       * @date 2024-03-25
        * @param associatedData
        * @param nonce
        * @param ciphertext

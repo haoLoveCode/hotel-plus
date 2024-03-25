@@ -32,7 +32,7 @@ import java.util.Map;
  * @author Singer create by Singer email:singer-coder@qq.com
  * @packageName cn.zmi.common.utils.wx
  * @Description: 微信相关工具
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Component
 @Slf4j
@@ -53,7 +53,7 @@ public class WxServiceImpl implements WxService {
        * 拿到微信用户的手机号
        * @description:
        * @author: create by singer - Singer email:singer-coder@qq.com
-       * @date 2024-03-06
+       * @date 2024-03-25
        * @param getPhoneCode getPhoneNumber返回的code
        * @param weChatAccessToken  weChatAccessToken
        * @return
@@ -90,7 +90,7 @@ public class WxServiceImpl implements WxService {
     /**
       * 生成微信页面二维码
       * @author: create by singer - Singer email:singer-coder@qq.com
-      * @date 2024-03-06
+      * @date 2024-03-25
       * @param wxPageQrCode 微信页面二维码请求参数
       * @return
       */
@@ -143,7 +143,7 @@ public class WxServiceImpl implements WxService {
     /**
      * 拿到微信AccessToken
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-065
+     * @date 2024-03-255
      * @param wxBaseReq 拿到微信AccessToken的请求参数 可以传入空 主要是设置 client_credential
      * @return String
      */

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 支付数据信息新增Req
  * @title: PayDataAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class PayDataAddReq implements Serializable {

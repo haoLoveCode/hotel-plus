@@ -10,7 +10,7 @@ import java.io.*;
  * 公告信息新增Req
  * @title: NoticeDataAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class NoticeDataAddReq implements Serializable {

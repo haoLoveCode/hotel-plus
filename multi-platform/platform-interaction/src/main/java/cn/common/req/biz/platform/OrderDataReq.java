@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 订单信息分页查询请求封装类
  * @title: OrderDataReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class OrderDataReq extends BasePageReq implements Serializable {

@@ -24,7 +24,7 @@ import java.util.List;
 * @author Singer create by Singer email:singer-coder@qq.com
 * @packageName cn.common.api.controller
 * @Description: 前端控制器
-* @date 2024-03-06
+* @date 2024-03-25
 */
 @RestController
 @RequestMapping(value = "api/v1/authRole")
@@ -37,7 +37,7 @@ public class AuthRoleController extends BaseApiController {
     /**
      * 新增角色
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增角色Req
      */
     @PostMapping(value = "/addItem")
@@ -50,7 +50,7 @@ public class AuthRoleController extends BaseApiController {
     /**
      * 主键ID集合批量角色
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的角色信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -64,7 +64,7 @@ public class AuthRoleController extends BaseApiController {
     /**
      * 更新角色
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新角色请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -78,7 +78,7 @@ public class AuthRoleController extends BaseApiController {
     /**
      * 查询所有角色信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-067
+     * @date 2024-03-257
      * @return cn.common.resp.base.ApiResponse
      */
     @GetMapping(value = "/queryAllAuthRole")
@@ -91,7 +91,7 @@ public class AuthRoleController extends BaseApiController {
     /**
      * 查询角色具备的权限信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authRoleId 角色ID
      * @return cn.common.resp.base.ApiResponse
      */
@@ -105,7 +105,7 @@ public class AuthRoleController extends BaseApiController {
     /**
      * 分页查询
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */

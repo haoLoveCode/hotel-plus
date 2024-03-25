@@ -14,7 +14,7 @@ import com.wechat.pay.java.service.transferbatch.model.InitiateBatchTransferResp
  * @author Singer create by singer - Singer email:singer-coder@qq.com
  * @projectName multi-platform
  * @Description: 微信支付相关服务方法
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 public interface WxPayService {
 
@@ -32,7 +32,7 @@ public interface WxPayService {
      *
      * @description: 处理退款
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  tradeOrder 订单数据
      * @return
      */
@@ -42,7 +42,7 @@ public interface WxPayService {
      * 微信支付回调
      * @description:
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req
      * @return
      */
@@ -52,7 +52,7 @@ public interface WxPayService {
      *
      * @description: 微信退款回调
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 退款回调参数
      * @return
      */
@@ -62,7 +62,7 @@ public interface WxPayService {
      *
      * @description: 微信下单
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req
      * @return cn.common.resp.biz.app.wxpay.WxMiniPayResp
      */
@@ -71,7 +71,7 @@ public interface WxPayService {
     /**
      * SHA256withRSA签名
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param content 内容
      * @param charset 编码
      * @return String
@@ -81,7 +81,7 @@ public interface WxPayService {
     /**
      * 设置微信下单请求参数并且返回请求后的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param wxOrderReq 微信下单请求参数
      * @param outTradeNo 外部订单号
      * @param openId 支付用户的OpenId
@@ -96,7 +96,7 @@ public interface WxPayService {
      *
      * @description: 根据外部支付订单号查询微信订单状态
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param outTradeNo 外部支付订单号
      * @return
      */

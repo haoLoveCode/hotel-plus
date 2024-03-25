@@ -12,7 +12,7 @@ import java.util.List;
  * @author Singer
  * @packageName cn.singer.repository.entity
  * @Description: APP用户其他信息->Repository
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Mapper
 public interface AppUserDataRepository extends MPJBaseMapper<AppUserData> {
@@ -22,7 +22,7 @@ public interface AppUserDataRepository extends MPJBaseMapper<AppUserData> {
      * 根据业务主键批量删除APP用户其他信息
      * @title: AppUserDataRepository.java
      * @author Singer
-     * @date 2024-03-06 11:05
+     * @date 2024-03-25 11:05
      * @param mainIdList 业务主键ID集合
      * @return List
      */

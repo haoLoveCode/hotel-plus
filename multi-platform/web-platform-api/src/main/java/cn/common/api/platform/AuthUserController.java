@@ -29,7 +29,7 @@ import java.util.List;
 * @author Singer create by Singer email:singer-coder@qq.com
 * @packageName cn.common.api.controller
 * @Description: 前端控制器
-* @date 2024-03-06
+* @date 2024-03-25
 */
 @RestController
 @RequestMapping(value = "api/v1/authUser")
@@ -42,7 +42,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * @description: 生成图形验证码
      * @auther: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param captchaReq 生成图形验证码请求参数
      * @return pro.skywalking.resp.platform.auth.captcha.CaptchaResp
      */
@@ -56,7 +56,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 拿到登录后的用户信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @return cn.common.resp.base.ApiResponse
      */
     @GetMapping("/queryLoginUserMeta")
@@ -81,7 +81,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 拿到登录后返回的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param
      * @return cn.common.resp.platform.auth.user.PlatformLoginResp
      */
@@ -95,7 +95,7 @@ public class AuthUserController extends BaseApiController {
     /**
       * 退出登录
       * @author: create by singer - Singer email:singer-coder@qq.com
-      * @date 2024-03-06
+      * @date 2024-03-25
       * @return cn.common.resp.base.ApiResponse
       */
     @PostMapping("/logOut")
@@ -108,7 +108,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 查询所有用户信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-067
+     * @date 2024-03-257
      * @return java.util.List
      */
     @GetMapping("/queryAllAuthUser")
@@ -120,7 +120,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 新增用户
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param addReq 新增Req
      */
     @PostMapping(value = "/addItem")
@@ -133,7 +133,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 主键ID集合批量用户
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param req 需要被删除的信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -147,7 +147,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 更新用户
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param updateReq 更新请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -161,7 +161,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 分页查询用户
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param  pageReq 分页查询Req
      * @return Pagination
      */
@@ -175,7 +175,7 @@ public class AuthUserController extends BaseApiController {
     /**
      * 查询用户角色信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authUserId 用户ID
      * @return java.util.List
      */

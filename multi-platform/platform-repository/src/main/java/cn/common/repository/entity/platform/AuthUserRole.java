@@ -12,7 +12,7 @@ import java.io.Serializable;
 * 用户角色实体
 * @title: AuthUserRole.java
 * @author create by Singer - Singer email:singer-coder@qq.com
-* @date 2024-03-06 11:13
+* @date 2024-03-25 11:13
 */
 @Data
 @TableName("auth_user_role")

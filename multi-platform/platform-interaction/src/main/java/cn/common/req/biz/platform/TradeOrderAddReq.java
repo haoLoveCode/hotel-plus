@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * 交易订单信息新增Req
  * @title: TradeOrderAddReq.java
  * @author Singer
- * @date 2024-03-06 11:13
+ * @date 2024-03-25 11:13
  */
 @Data
 public class TradeOrderAddReq implements Serializable {

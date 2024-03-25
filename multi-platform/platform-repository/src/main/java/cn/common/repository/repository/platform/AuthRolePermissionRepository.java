@@ -12,7 +12,7 @@ import java.util.List;
 * @author Singer create by singer email:singer-coder@qq.com
 * @packageName cn.singer.repository.entity
 * @Description: 角色权限->Repository
-* @date 2024-03-06
+* @date 2024-03-25
 */
 @Mapper
 public interface AuthRolePermissionRepository extends BaseRepository<AuthRolePermission> {
@@ -21,7 +21,7 @@ public interface AuthRolePermissionRepository extends BaseRepository<AuthRolePer
     * 根据业务主键批量删除
     * @title: AuthRoleRepository.java
     * @author create by Singer - Singer email:singer-coder@qq.com
-    * @date 2024-03-06 11:05
+    * @date 2024-03-25 11:05
     * @param mainIdList 业务主键ID集合
     * @return List
      */
@@ -39,7 +39,7 @@ public interface AuthRolePermissionRepository extends BaseRepository<AuthRolePer
     /**
      * 根据权限ID批量删除指定权限
      * @author: create by singer email:2609207540@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authPermissionIdList 权限ID集合
      */
     @Delete(
@@ -56,7 +56,7 @@ public interface AuthRolePermissionRepository extends BaseRepository<AuthRolePer
     /**
      * 根据角色ID批量删除指定权限
      * @author: create by singer email:2609207540@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authRoleIdList 角色ID集合
      */
     @Delete(
@@ -73,7 +73,7 @@ public interface AuthRolePermissionRepository extends BaseRepository<AuthRolePer
     /**
      * 根据角色ID删除指定权限
      * @author: create by singer email:2609207540@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      * @param authRoleId 角色ID
      */
     @Delete("<script>" +

@@ -64,7 +64,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Singer
  * @packageName cn.common.service
  * @Description: APP认证用户相关服务方法实现
- * @date 2024-03-06
+ * @date 2024-03-25
  */
 @Service("authAppUserService")
 @Slf4j
@@ -109,7 +109,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param pageReq
      * @return java.util.List
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public void exportData(AuthAppUserReq pageReq) {
@@ -158,7 +158,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @return java.lang.Boolean
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public TokenVerifyResp verifyToken() {
@@ -179,7 +179,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @return java.lang.String
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public String authAppUserId() {
@@ -192,7 +192,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public AuthAppLoginResp queryLoginUserMeta() {
@@ -213,7 +213,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @return pro.skywalking.resp.platform.auth.user.PlatformLoginResp
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public AuthAppLoginResp queryLoginUserMetaNoThrow() {
@@ -230,7 +230,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * 系统退出登录
      *
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public void logOut() {
@@ -248,7 +248,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @description: 绑定用户的微信手机号
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     public AuthAppLoginResp bindWxPhone(WxMiniPhoneReq req) {
         log.info(">>>>>>>>>>>>>>>>>绑定用户手机号:Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
@@ -293,7 +293,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param req 用户名密码注册请求参数
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     public AuthAppLoginResp userReg(AuthAppUserRegReq req) {
         log.info(">>>>>>>>>>>>>>>>>用户注册:Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
@@ -359,7 +359,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param req 用户名密码登陆请求参数
      * @return
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     public AuthAppLoginResp userLogin(AuthAppUserLoginReq req) {
         log.info(">>>>>>>>>>>>>>>>>用户名密码登陆:Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
@@ -379,7 +379,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @return cn.common.resp.biz.app.auth.AuthAppLoginResp
      * @description: 绑定用户的微信openId
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     public AuthAppLoginResp bindWxOpenId(WxMiniOpenIdReq req) {
         log.info(">>>>>>>>>>>>>>>>>绑定微信OpenId:Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
@@ -424,7 +424,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @return java.lang.Long
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public String currentToken() {
@@ -440,7 +440,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @return
      * @description: 设置返回的用户信息
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private AuthAppLoginResp handleLoginSuccess(AuthAppUser authAppUser) {
         AuthAppLoginResp resp = mapperFacade.map(authAppUser, AuthAppLoginResp.class);
@@ -466,7 +466,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param jsCode
      * @return WxCodeToSessionResult
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private WxOpenIdResp initAuthCode2SessionParamMap(String jsCode) {
         Map<String, Object> paramHashMap = new HashMap(8);
@@ -489,7 +489,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @param addReq 新增Req
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -519,7 +519,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @param regReq Web用户注册请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -550,7 +550,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @param req 需要被删除的信息
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public void batchDeleteItem(BaseDeleteReq req) {
@@ -570,7 +570,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param
      * @return java.util.List
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public List<AuthAppUserResp> queryAuthAppUser() {
@@ -586,7 +586,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @return cn.common.resp.biz.openBiz.AuthAppUserResp
      * @description: 查询当前APP用户的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     public AuthAppLoginResp currentUserMeta() {
         return queryLoginUserMeta();
@@ -598,7 +598,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param pageReq 分页查询Req
      * @return Pagination
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     public Pagination<AuthAppUserResp> queryByPage(AuthAppUserReq pageReq) {
@@ -629,7 +629,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param pageReq     查询参数
      * @return
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private void setPageCriteria(LambdaQueryWrapper<AuthAppUser> pageWrapper, AuthAppUserReq pageReq) {
 
@@ -683,7 +683,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @param updateReq 更新请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -709,7 +709,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      *
      * @param updateReq 更新请求参数
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -736,7 +736,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @return
      * @description: 更新用户其他的数据
      * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private void updateUserOtherData(AuthAppUserUpdateReq updateReq, AuthAppUser entity) {
         AppUserData appUserData = appUserDataRepository.selectOne(new LambdaQueryWrapper<AppUserData>().eq(AppUserData::getAuthAppUserId, entity.getAuthAppUserId()));
@@ -775,7 +775,7 @@ public class AuthAppUserServiceImpl implements AuthAppUserService {
      * @param updateReq 更新参数
      * @param entity    产业
      * @author: Singer
-     * @date 2024-03-06
+     * @date 2024-03-25
      */
     private void setNeedUpdateItem(AuthAppUser entity, AuthAppUserUpdateReq updateReq) {
         if (!CheckParam.isNull(updateReq.getUserName())) {
