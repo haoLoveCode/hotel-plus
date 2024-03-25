@@ -13,14 +13,14 @@ import java.util.List;
  * @author Singer
  * @packageName ${basePackageName}.service
  * @Description: ${entityDesc}相关服务
- * @date 2024/3/24
+ * @date 2024/1/25
  */
 public interface ${className}Service {
 
     /**
      * 导出${entityDesc}数据
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param pageReq
      * @return java.util.List
      */
@@ -29,7 +29,7 @@ public interface ${className}Service {
     /**
      * 新增${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param addReq 新增Req
      */
     void addItem(${className}AddReq addReq);
@@ -37,7 +37,7 @@ public interface ${className}Service {
     /**
      * 批量删除${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param req 需要被删除的${entityDesc}信息
      */
     void batchDeleteItem(BaseDeleteReq req);
@@ -45,7 +45,7 @@ public interface ${className}Service {
     /**
      * 查询${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param
      * @return java.util.List
      */
@@ -54,7 +54,7 @@ public interface ${className}Service {
     /**
      * 查询单个${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param
      * @return java.util.List
      */
@@ -63,7 +63,7 @@ public interface ${className}Service {
     /**
      * 分页查询${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param  pageReq 分页查询${entityDesc}Req
      * @return Pagination
      */
@@ -73,7 +73,7 @@ public interface ${className}Service {
     /**
      * 更新${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param updateReq 更新${entityDesc}请求参数
      */
     void updateItem(${className}UpdateReq updateReq);

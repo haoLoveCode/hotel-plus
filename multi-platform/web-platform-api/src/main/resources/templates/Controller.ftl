@@ -32,7 +32,7 @@ import java.util.List;
  * @author Singer
  * @packageName ${basePackageName}.api.controller
  * @Description: ${entityDesc}前端控制器
- * @date 2024/3/24
+ * @date 2024/1/25
  */
 @RestController
 @RequestMapping(value = "api/v1/${camelCaseEntityName}")
@@ -45,7 +45,7 @@ public class ${className}Controller extends BaseApiController {
     /**
      * 新增${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param addReq 新增${entityDesc}Req
      */
     @PostMapping(value = "/addItem")
@@ -59,7 +59,7 @@ public class ${className}Controller extends BaseApiController {
     /**
      * 导出${entityDesc}数据
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param pageReq
      * @return java.util.List
     */
@@ -73,7 +73,7 @@ public class ${className}Controller extends BaseApiController {
     /**
      * 主键ID集合批量删除${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param req 需要被删除的${entityDesc}信息
      */
     @PostMapping(value = "/batchDeleteItem")
@@ -87,7 +87,7 @@ public class ${className}Controller extends BaseApiController {
     /**
      * 更新${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param updateReq 更新${entityDesc}请求参数
      */
     @PutMapping(value = "/updateItem")
@@ -101,7 +101,7 @@ public class ${className}Controller extends BaseApiController {
     /**
      * 查询${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param
      * @return java.util.List
      */
@@ -116,7 +116,7 @@ public class ${className}Controller extends BaseApiController {
     /**
      * 查询单个${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param
      * @return java.util.List
      */
@@ -131,7 +131,7 @@ public class ${className}Controller extends BaseApiController {
     /**
      * 分页查询${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param  pageReq 分页查询${entityDesc}Req
      * @return Pagination
      */

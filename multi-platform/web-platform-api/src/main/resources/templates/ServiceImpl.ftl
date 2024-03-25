@@ -52,7 +52,7 @@ import java.util.Map;
  * @author Singer
  * @packageName ${basePackageName}.service
  * @Description: ${entityDesc}相关服务方法实现
- * @date 2024/3/24
+ * @date 2024/1/25
  */
 @Service("${camelCaseEntityName}Service")
 @Slf4j
@@ -79,7 +79,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 导出${entityDesc}数据
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param pageReq
      * @return java.util.List
      */
@@ -87,10 +87,10 @@ public class ${className}ServiceImpl implements ${className}Service {
     public void exportData(${className}Req pageReq){
         log.info(">>>>>>>>>>>>>>>>>${entityDesc}数据导出Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
         //构建查询条件
-        LambdaQueryWrapper<${className}> pageWrapper = new LambdaQueryWrapper<>();
-        setPageCriteria(pageWrapper,pageReq);
-        pageWrapper.orderBy(true,false,${className}::getCreateTime);
-        List<${className}> pageList = ${camelCaseEntityName}Repository.selectList(pageWrapper);
+        LambdaQueryWrapper<${className}> queryWrapper = new LambdaQueryWrapper<>();
+        setQueryCriteria(queryWrapper,pageReq);
+        queryWrapper.orderBy(true,false,${className}::getCreateTime);
+        List<${className}> pageList = ${camelCaseEntityName}Repository.selectList(queryWrapper);
         if (CollectionUtils.isEmpty(pageList)) {
             return;
         }
@@ -128,7 +128,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 新增${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param addReq 新增${entityDesc}Req
      */
     @Override
@@ -153,7 +153,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 批量删除${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param req 需要被删除的${entityDesc}信息
      */
     @Override
@@ -172,7 +172,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 查询${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param
      * @return java.util.List
      */
@@ -181,7 +181,7 @@ public class ${className}ServiceImpl implements ${className}Service {
         log.info(">>>>>>>>>>>>>>>>>查询${entityDesc}Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
         //构建查询条件
         LambdaQueryWrapper<${className}> wrapper = new LambdaQueryWrapper<>();
-        setCriteria(wrapper,req);
+        setQueryCriteria(wrapper,req);
         wrapper.orderBy(true,false,${className}::getCreateTime);
         List<${className}> entityList = ${camelCaseEntityName}Repository.selectList(wrapper);
         if(CollectionUtils.isEmpty(entityList)){
@@ -193,7 +193,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 查询单个${entityDesc}信息
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param
      * @return java.util.List
      */
@@ -202,7 +202,7 @@ public class ${className}ServiceImpl implements ${className}Service {
         log.info(">>>>>>>>>>>>>>>>>查询单个${entityDesc}Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
         //构建查询条件
         LambdaQueryWrapper<${className}> wrapper = new LambdaQueryWrapper<>();
-        setCriteria(wrapper,req);
+        setQueryCriteria(wrapper,req);
         wrapper.orderBy(true,false,${className}::getCreateTime);
         ${className} entity = ${camelCaseEntityName}Repository.selectOne(wrapper);
         if(CheckParam.isNull(entity)){
@@ -214,12 +214,12 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 设置查询条件
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param wrapper 查询条件
      * @param req 查询参数
      * @return
      */
-    private void setCriteria(LambdaQueryWrapper<${className}> wrapper,
+    private void setQueryCriteria(LambdaQueryWrapper<${className}> wrapper,
                         ${className}Req req){
         <#-- list指令 迭代循环 -->
         <#list columnList as column>
@@ -233,7 +233,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 分页查询${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param  pageReq 分页查询${entityDesc}Req
      * @return Pagination
      */
@@ -242,12 +242,12 @@ public class ${className}ServiceImpl implements ${className}Service {
         ${className}Req pageReq){
         log.info(">>>>>>>>>>>>>>>>>分页查询${entityDesc}Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
         //构建查询条件
-        LambdaQueryWrapper<${className}> pageWrapper = new LambdaQueryWrapper<>();
-        setPageCriteria(pageWrapper,pageReq);
-        pageWrapper.orderBy(true,false,${className}::getCreateTime);
+        LambdaQueryWrapper<${className}> wrapper = new LambdaQueryWrapper<>();
+        setQueryCriteria(wrapper,pageReq);
+        wrapper.orderBy(true,false,${className}::getCreateTime);
         //开始分页
         Page<Object> page = PageHelper.startPage(pageReq.getCurrentPage(), pageReq.getItemsPerPage());
-        List<${className}> pageList = ${camelCaseEntityName}Repository.selectList(pageWrapper);
+        List<${className}> pageList = ${camelCaseEntityName}Repository.selectList(wrapper);
         if (CollectionUtils.isEmpty(pageList)) {
             return PageBuilder.buildPageResult(page,new ArrayList<>());
         }
@@ -262,28 +262,9 @@ public class ${className}ServiceImpl implements ${className}Service {
     }
 
     /**
-     * 设置分页条件
-     * @author: Singer
-     * @date 2024/3/24
-     * @param pageWrapper 查询条件
-     * @param pageReq 查询参数
-     * @return
-     */
-    private void setPageCriteria(LambdaQueryWrapper<${className}> pageWrapper,
-                        ${className}Req pageReq){
-        <#-- list指令 迭代循环 -->
-        <#list columnList as column>
-
-        if(!CheckParam.isNull(pageReq.get${column.setOrSetName}())){
-            pageWrapper.like(${className}::get${column.setOrSetName},pageReq.get${column.setOrSetName}());
-        }
-        </#list>
-    }
-
-    /**
      * 更新${entityDesc}
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param updateReq 更新${entityDesc}请求参数
      */
     @Override
@@ -303,7 +284,7 @@ public class ${className}ServiceImpl implements ${className}Service {
     /**
      * 设置需要更新的字段
      * @author: Singer
-     * @date 2024/3/24
+     * @date 2024/1/25
      * @param updateReq 更新参数
      * @param entity 实体
      */
