@@ -1,6 +1,7 @@
 package cn.common.service.impl.biz.app;
 
 import cn.common.enums.FeedBackStatusEnums;
+import cn.common.repository.entity.biz.AuthAppUser;
 import cn.common.repository.entity.biz.FeedbackData;
 import cn.common.repository.repository.biz.FeedbackDataRepository;
 import cn.common.req.biz.FeedbackDataAddReq;
@@ -14,6 +15,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -122,14 +124,18 @@ public class AppFeedbackDataServiceImpl implements AppFeedbackDataService {
     public List<FeedbackDataResp> queryFeedbackData(FeedbackDataReq req){
         log.info(">>>>>>>>>>>>>>>>>查询投诉建议信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
         //构建查询条件
-        LambdaQueryWrapper<FeedbackData> wrapper = new LambdaQueryWrapper<>();
-        setCriteria(wrapper,req);
-        wrapper.orderBy(true,false,FeedbackData::getCreateTime);
-        List<FeedbackData> entityList = feedbackDataRepository.selectList(wrapper);
-        if(CollectionUtils.isEmpty(entityList)){
+        MPJLambdaWrapper<FeedbackData> wrapper = new MPJLambdaWrapper<>();
+        wrapper.leftJoin(AuthAppUser.class, AuthAppUser::getAuthAppUserId, FeedbackData::getSubmitterId);
+        wrapper.selectAll(FeedbackData.class);
+        wrapper.selectAs(AuthAppUser::getAvatarUrl, FeedbackDataResp::getAvatarUrl);
+        wrapper.selectAs(AuthAppUser::getRealName, FeedbackDataResp::getRealName);
+        setQueryCriteria(wrapper, req);
+        wrapper.orderBy(true, false, FeedbackData::getCreateTime);
+        List<FeedbackDataResp> respList = feedbackDataRepository.selectJoinList(FeedbackDataResp.class,wrapper);
+        if (CollectionUtils.isEmpty(respList)) {
             return Lists.newArrayList();
         }
-        return mapperFacade.mapAsList(entityList,FeedbackDataResp.class);
+        return respList;
     }
 
     /**
@@ -143,25 +149,63 @@ public class AppFeedbackDataServiceImpl implements AppFeedbackDataService {
     public FeedbackDataResp queryOneFeedbackData(FeedbackDataReq req){
         log.info(">>>>>>>>>>>>>>>>>查询单个投诉建议信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
         //构建查询条件
-        LambdaQueryWrapper<FeedbackData> wrapper = new LambdaQueryWrapper<>();
-        setCriteria(wrapper,req);
-        wrapper.orderBy(true,false,FeedbackData::getCreateTime);
-        FeedbackData entity = feedbackDataRepository.selectOne(wrapper);
-        if(CheckParam.isNull(entity)){
+        MPJLambdaWrapper<FeedbackData> wrapper = new MPJLambdaWrapper<>();
+        wrapper.leftJoin(AuthAppUser.class, AuthAppUser::getAuthAppUserId, FeedbackData::getSubmitterId);
+        wrapper.selectAll(FeedbackData.class);
+        wrapper.selectAs(AuthAppUser::getAvatarUrl, FeedbackDataResp::getAvatarUrl);
+        wrapper.selectAs(AuthAppUser::getRealName, FeedbackDataResp::getRealName);
+        setQueryCriteria(wrapper, req);
+        wrapper.orderBy(true, false, FeedbackData::getCreateTime);
+        FeedbackDataResp resp = feedbackDataRepository.selectJoinOne(FeedbackDataResp.class,wrapper);
+        if (CheckParam.isNull(resp)) {
             return new FeedbackDataResp();
         }
-        return mapperFacade.map(entity,FeedbackDataResp.class);
+        return resp;
     }
 
     /**
-     * 设置查询条件
+     * 分页查询投诉建议信息
+     *
+     * @param pageReq 分页查询投诉建议信息Req
+     * @return Pagination
+     * @author: Singer
+     * @date 2024/3/24
+     */
+    @Override
+    public Pagination<FeedbackDataResp> queryByPage(
+            FeedbackDataReq pageReq) {
+        log.info(">>>>>>>>>>>>>>>>>分页查询投诉建议信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
+        //构建查询条件
+        MPJLambdaWrapper<FeedbackData> pageWrapper = new MPJLambdaWrapper<>();
+        setQueryCriteria(pageWrapper, pageReq);
+        pageWrapper.leftJoin(AuthAppUser.class, AuthAppUser::getAuthAppUserId, FeedbackData::getSubmitterId);
+        pageWrapper.selectAll(FeedbackData.class);
+        pageWrapper.selectAs(AuthAppUser::getAvatarUrl, FeedbackDataResp::getAvatarUrl);
+        pageWrapper.selectAs(AuthAppUser::getRealName, FeedbackDataResp::getRealName);
+        pageWrapper.orderBy(true, false, FeedbackData::getCreateTime);
+        //开始分页
+        Page<Object> page = PageHelper.startPage(pageReq.getCurrentPage(), pageReq.getItemsPerPage());
+        List<FeedbackDataResp> respList = feedbackDataRepository.selectJoinList(FeedbackDataResp.class,pageWrapper);
+        if (CollectionUtils.isEmpty(respList)) {
+            return PageBuilder.buildPageResult(page, new ArrayList<>());
+        }
+        Integer startIndex = (pageReq.getItemsPerPage() * pageReq.getCurrentPage()) - pageReq.getItemsPerPage() + 1;
+        AtomicInteger idBeginIndex = new AtomicInteger(startIndex);
+        respList.stream().forEach(item -> {
+            item.setId(Integer.valueOf(idBeginIndex.getAndIncrement()).longValue());
+        });
+        return PageBuilder.buildPageResult(page, respList);
+    }
+
+    /**
+     * 设置分页条件
      * @author: Singer
      * @date 2024/3/24
      * @param wrapper 查询条件
      * @param req 查询参数
      * @return
      */
-    private void setCriteria(LambdaQueryWrapper<FeedbackData> wrapper,
+    private void setQueryCriteria(MPJLambdaWrapper<FeedbackData> wrapper,
                         FeedbackDataReq req){
 
         if(!CheckParam.isNull(req.getDataTitle())){
@@ -173,78 +217,15 @@ public class AppFeedbackDataServiceImpl implements AppFeedbackDataService {
         }
 
         if(!CheckParam.isNull(req.getSubmitterId())){
-            wrapper.like(FeedbackData::getSubmitterId,req.getSubmitterId());
+            wrapper.eq(FeedbackData::getSubmitterId,req.getSubmitterId());
         }
 
         if(!CheckParam.isNull(req.getHandleStatus())){
-            wrapper.like(FeedbackData::getHandleStatus,req.getHandleStatus());
+            wrapper.eq(FeedbackData::getHandleStatus,req.getHandleStatus());
         }
 
         if(!CheckParam.isNull(req.getRemarkData())){
             wrapper.like(FeedbackData::getRemarkData,req.getRemarkData());
-        }
-    }
-
-    /**
-     * 分页查询投诉建议信息
-     * @author: Singer
-     * @date 2024/3/24
-     * @param  pageReq 分页查询投诉建议信息Req
-     * @return Pagination
-     */
-    @Override
-    public Pagination<FeedbackDataResp> queryByPage(
-        FeedbackDataReq pageReq){
-        log.info(">>>>>>>>>>>>>>>>>分页查询投诉建议信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
-        //构建查询条件
-        LambdaQueryWrapper<FeedbackData> pageWrapper = new LambdaQueryWrapper<>();
-        setPageCriteria(pageWrapper,pageReq);
-        pageWrapper.orderBy(true,false,FeedbackData::getCreateTime);
-        //开始分页
-        Page<Object> page = PageHelper.startPage(pageReq.getCurrentPage(), pageReq.getItemsPerPage());
-        List<FeedbackData> pageList = feedbackDataRepository.selectList(pageWrapper);
-        if (CollectionUtils.isEmpty(pageList)) {
-            return PageBuilder.buildPageResult(page,new ArrayList<>());
-        }
-        List<FeedbackDataResp> respList =
-            mapperFacade.mapAsList(pageList, FeedbackDataResp.class);
-        Integer startIndex = (pageReq.getItemsPerPage() * pageReq.getCurrentPage()) - pageReq.getItemsPerPage() + 1;
-        AtomicInteger idBeginIndex = new AtomicInteger(startIndex);
-        respList.stream().forEach(item -> {
-            item.setId(Integer.valueOf(idBeginIndex.getAndIncrement()).longValue());
-        });
-        return PageBuilder.buildPageResult(page,respList);
-    }
-
-    /**
-     * 设置分页条件
-     * @author: Singer
-     * @date 2024/3/24
-     * @param pageWrapper 查询条件
-     * @param pageReq 查询参数
-     * @return
-     */
-    private void setPageCriteria(LambdaQueryWrapper<FeedbackData> pageWrapper,
-                        FeedbackDataReq pageReq){
-
-        if(!CheckParam.isNull(pageReq.getDataTitle())){
-            pageWrapper.like(FeedbackData::getDataTitle,pageReq.getDataTitle());
-        }
-
-        if(!CheckParam.isNull(pageReq.getDataValue())){
-            pageWrapper.like(FeedbackData::getDataValue,pageReq.getDataValue());
-        }
-
-        if(!CheckParam.isNull(pageReq.getSubmitterId())){
-            pageWrapper.like(FeedbackData::getSubmitterId,pageReq.getSubmitterId());
-        }
-
-        if(!CheckParam.isNull(pageReq.getHandleStatus())){
-            pageWrapper.like(FeedbackData::getHandleStatus,pageReq.getHandleStatus());
-        }
-
-        if(!CheckParam.isNull(pageReq.getRemarkData())){
-            pageWrapper.like(FeedbackData::getRemarkData,pageReq.getRemarkData());
         }
     }
 

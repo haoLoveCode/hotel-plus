@@ -262,34 +262,33 @@ public class FeedbackDataServiceImpl implements FeedbackDataService {
 
     /**
      * 设置分页条件
-     *
-     * @param pageWrapper 查询条件
-     * @param pageReq     查询参数
-     * @return
      * @author: Singer
      * @date 2024/3/24
+     * @param wrapper 查询条件
+     * @param req 查询参数
+     * @return
      */
-    private void setQueryCriteria(MPJLambdaWrapper<FeedbackData> pageWrapper,
-                                 FeedbackDataReq pageReq) {
+    private void setQueryCriteria(MPJLambdaWrapper<FeedbackData> wrapper,
+                                  FeedbackDataReq req){
 
-        if (!CheckParam.isNull(pageReq.getDataTitle())) {
-            pageWrapper.like(FeedbackData::getDataTitle, pageReq.getDataTitle());
+        if(!CheckParam.isNull(req.getDataTitle())){
+            wrapper.like(FeedbackData::getDataTitle,req.getDataTitle());
         }
 
-        if (!CheckParam.isNull(pageReq.getDataValue())) {
-            pageWrapper.like(FeedbackData::getDataValue, pageReq.getDataValue());
+        if(!CheckParam.isNull(req.getDataValue())){
+            wrapper.like(FeedbackData::getDataValue,req.getDataValue());
         }
 
-        if (!CheckParam.isNull(pageReq.getSubmitterId())) {
-            pageWrapper.like(FeedbackData::getSubmitterId, pageReq.getSubmitterId());
+        if(!CheckParam.isNull(req.getSubmitterId())){
+            wrapper.eq(FeedbackData::getSubmitterId,req.getSubmitterId());
         }
 
-        if (!CheckParam.isNull(pageReq.getHandleStatus())) {
-            pageWrapper.like(FeedbackData::getHandleStatus, pageReq.getHandleStatus());
+        if(!CheckParam.isNull(req.getHandleStatus())){
+            wrapper.eq(FeedbackData::getHandleStatus,req.getHandleStatus());
         }
 
-        if (!CheckParam.isNull(pageReq.getRemarkData())) {
-            pageWrapper.like(FeedbackData::getRemarkData, pageReq.getRemarkData());
+        if(!CheckParam.isNull(req.getRemarkData())){
+            wrapper.like(FeedbackData::getRemarkData,req.getRemarkData());
         }
     }
 

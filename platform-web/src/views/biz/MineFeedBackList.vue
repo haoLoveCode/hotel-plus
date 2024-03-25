@@ -199,13 +199,8 @@ export default {
             return;
           }
           await dataList.map(async (item) => {
-            /*let imgList = item.imgList;
-            if (!imgList || imgList.length === 0) {
-              return;
-            }
-            let firstItem = imgList.at(0);
-            let mainImg = await this.handleImageUrl(firstItem);
-            item.mainImg = mainImg;*/
+            item.mainImg = item.avatarUrl;
+            //item.mainImg = await this.handleImageUrl(item.avatarUrl);
             this.feedbackItemList.push(item);
           })
           console.log('feedbackItemList:'+JSON.stringify(this.feedbackItemList));
