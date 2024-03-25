@@ -155,26 +155,6 @@ export default {
       await this.$baseUtils.verifyToken();
       await this.currentUserMeta();
     },
-    //查询当前用户信息
-    async currentUserMeta() {
-      await Api.currentUserMeta({
-
-      }).then(async (res) => {
-        if (!res.success) {
-          return;
-        }
-        if (this.$isNull(res)) {
-          return;
-        }
-        let data = res.data
-        if (this.$isNull(data)) {
-          return;
-        }
-        data.avatarUrl = await this.handleImageUrl(data.avatarUrl);
-        this.userData = {...data};
-        console.log('当前用户信息:' + JSON.stringify(this.userData))
-      });
-    },
     clearAll() {
       console.log('触发清除所有')
       this.submitData = {

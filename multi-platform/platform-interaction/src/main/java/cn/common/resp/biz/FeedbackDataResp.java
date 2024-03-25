@@ -47,4 +47,19 @@ public class FeedbackDataResp extends BaseResp implements Serializable {
      */
     private String remarkData;
 
+    //--------------用户信息-start-------------------------
+
+    /**
+     * 头像
+     */
+    private String avatarUrl;
+
+    /**
+     * 真实姓名
+     */
+    private String realName;
+
+
+    //--------------用户信息-end-------------------------
+
 }

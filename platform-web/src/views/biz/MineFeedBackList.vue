@@ -1,198 +1,55 @@
 <template>
   <div class="page-view">
-    <div class="page-search-view">
-      <el-form :inline="true" ref="pageForm">
-        <div class="search-param-view">
-          <div class="search-view">
-            <div class="search-item-view">
-              <el-form-item label="内容标题">
-                <el-input
-                    v-model="searchData.dataTitle"
-                    placeholder="内容标题"
-                ></el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="内容">
-                <el-input
-                    v-model="searchData.dataValue"
-                    placeholder="内容"
-                ></el-input>
-              </el-form-item>
-            </div>
-            <div class="search-item-view">
-              <el-form-item label="提交人">
-                <el-select
-                    v-model="searchData.submitterId"
-                    :clearable="true"
-                    placeholder="请选择提交人">
-                  <el-option
-                      v-for="item in authAppUserOptions"
-                      :key="item.value"
-                      :label="item.text"
-                      :value="item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
+    <MainPageHeader ref="MainPageHeaderRef"></MainPageHeader>
+    <div class="search-view">
+      <el-input
+          type="textarea"
+          :rows="2"
+          placeholder="请输入内容" v-model="queryParams.keyword" class="search-input">
+      </el-input>
+      <div class="search-btn">
+        <el-button type="primary" icon="el-icon-search" @click="handleSearchData">搜索</el-button>
+      </div>
+    </div>
+    <el-divider content-position="center" v-if="feedbackItemList.length > 0">投诉建议信息</el-divider>
+    <div class="main-data-view" v-if="feedbackItemList.length > 0">
+      <div class="main-item">
+        <div class="main-item-view"
+             @click="toNewsData(item)"
+             @mouseover="itemActive($event)" @mouseout="removeActive($event)"
+             v-for="(item,index) in feedbackItemList" :key="index">
+          <div class="main-item-top">
+            <div class="main-item-text" style="font-weight: bold;font-size: 20px;">
+              {{ item.dataTitle }}
             </div>
           </div>
-          <div class="search-view">
-            <div class="search-item-view">
-              <el-form-item label="处理状态">
-                <el-select
-                    v-model="searchData.handleStatus"
-                    :clearable="true"
-                    placeholder="请选择处理状态">
-                  <el-option
-                      v-for="item in handleOptions"
-                      :key="item.value"
-                      :label="item.text"
-                      :value="item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
+          <div class="item-text-view">
+            <div class="item-text" style="font-size: 10px;">
+              新闻来源:{{ item.newsSource }}
             </div>
-            <div class="search-item-view">
-              <el-form-item label="备注">
-                <el-input
-                    v-model="searchData.remarkData"
-                    placeholder="备注"
-                ></el-input>
-              </el-form-item>
+            <div class="item-text" style="font-size: 10px;">
+              备注:{{ item.remarkData }}
             </div>
           </div>
-          <div class="search-view">
-            <div class="search-item-view">
-              <el-form-item>
-                <el-button
-                    size="mini"
-                    @click="handleSearch"
-                    icon="search"
-                    type="primary">
-                  搜索
-                </el-button>
-              </el-form-item>
+          <div class="main-item-bottom" style="font-weight: bold;">
+            <div class="bottom-text-view">
+              发布人署名:{{ item.publisherSign }}
             </div>
-            <div class="search-item-view">
-              <el-form-item>
-                <el-button
-                    size="mini"
-                    type="primary"
-                    @click="resetSearchForm">
-                  重置
-                </el-button>
-              </el-form-item>
+            <div class="bottom-text-view">
+              发布时间:{{ item.createTime }}
             </div>
-            <div class="search-item-view">
-              <el-form-item>
-                <el-button
-                    size="mini"
-                    type="primary"
-                    @click="handleAdd">
-                  提交建议
-                </el-button>
-              </el-form-item>
+          </div>
+          <div class="upvote-view" @click="userUpvote(item)" v-if="false">
+            <div class="upvote-num">
+              点赞数:{{ item.upvoteNum }}
             </div>
-            <div class="search-item-view">
-              <el-form-item>
-                <el-button
-                    size="mini"
-                    type="danger"
-                    @click="showDeleteBatchModal">
-                  批量删除
-                </el-button>
-              </el-form-item>
-            </div>
+            <el-image class="upvote-img" v-if="!item.upvoteStatus" fit="fill" src="/static/images/no-upvote.png"
+                      alt=""/>
+            <el-image class="upvote-img" v-if="item.upvoteStatus" fit="fill" src="/static/images/upvote-on.png" alt=""/>
           </div>
         </div>
-      </el-form>
+      </div>
     </div>
-    <el-table
-        :data="dataList"
-        border
-        row-key="id"
-        lazy
-        @selection-change="handleSelectionChange"
-        size="mini"
-    >
-      <el-table-column
-          type="selection"
-          fixed="left"
-          width="55">
-      </el-table-column>
-      <el-table-column
-          prop="id"
-          label="标识"
-          fixed="left"
-          align="center"
-          width="80">
-        <template v-slot="scope">
-          {{ scope.row.id }}
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="dataTitle"
-          label="内容标题"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="dataValue"
-          label="内容"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          prop="submitterId"
-          label="提交人"
-          header-align="center"
-          align="center"
-      >
-        <template v-slot="scope">
-          {{handleTypeByValue(scope.row.submitterId,authAppUserOptions)}}
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="handleStatus"
-          label="处理状态"
-          header-align="center"
-          align="center"
-      >
-        <template v-slot="scope">
-          <el-tag size="medium">{{handleTypeByValue(scope.row.handleStatus,handleOptions)}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="remarkData"
-          label="备注"
-          header-align="center"
-          align="center"
-      >
-      </el-table-column>
-      <el-table-column
-          label="操作"
-          fixed="right"
-          width="250"
-          header-align="center"
-          align="center">
-        <template v-slot="scope">
-          <div class="operation-view">
-            <div class="operation-button-view">
-              <el-button
-                  @click="showDeleteOneModal(scope.row)"
-                  :loading="deleteButtonLoading"
-                  icon="el-icon-delete"
-                  type="danger"
-                  size="mini">
-                删除
-              </el-button>
-            </div>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
     <div class="pagination-view">
       <el-pagination
           @size-change="handleSizeChange"
@@ -205,212 +62,176 @@
           :total="paginationData.totalCount">
       </el-pagination>
     </div>
-    <el-dialog :visible.sync="previewVisible" title="图片预览">
+    <el-dialog append-to-body :visible.sync="previewVisible" title="图片预览">
       <img width="100%" :src="previewImageUrl" alt=""/>
-    </el-dialog>
-    <!--删除确认框-->
-    <el-dialog
-        title="提示"
-        :visible.sync="deleteVisible"
-        width="30%">
-      <span>需要删除该条么?</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button
-            @click="handleDeleteCancel"
-            size="mini">
-          取 消
-        </el-button>
-        <el-button
-            type="primary"
-            @click="handleDeleteOne"
-            :loading="deleteButtonLoading"
-            size="mini">
-          确 定
-        </el-button>
-      </span>
-    </el-dialog>
-    <!--富文本查看弹窗-->
-    <el-dialog
-        append-to-body
-        title="富文本内容"
-        :visible.sync="richTextVisible"
-        width="50%">
-      <div v-html="richText"></div>
-    </el-dialog>
-    <!--批量删除确认框-->
-    <el-dialog
-        title="提示"
-        :visible.sync="batchDeleteVisible"
-        width="30%">
-      <span style="font-weight: bold;color: #ee0620;font-size: 20px;">
-        需要删除选择的{{multipleSelection.length}}条数据么?
-      </span>
-      <span slot="footer" class="dialog-footer">
-        <el-button
-            @click="handleDeleteBatchCancel"
-            size="mini">
-          取 消
-        </el-button>
-        <el-button
-            type="primary"
-            @click="handleDeleteBatch"
-            :loading="batchDeleteButtonLoading"
-            size="mini">
-          确 定
-        </el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
-
 <script>
-import pageTable from "@/components/pageTable/pageTable.vue";
+import {mapGetters} from "vuex";
+import moment from 'moment';
 import Api from "@/services";
-import MixinWx from "@/mixin/authUser";
+import MainPageHeader from "@/views/mainPage/MainPageHeader";
 
 export default {
   components: {
-    pageTable,
+    MainPageHeader:MainPageHeader,
   },
-  mixins: [MixinWx],
   data() {
     return {
-      //-----------------
-      authAppUserOptions:[],
-      handleOptions: [
-        {
-          'text':'已提交',
-          'value':1
-        },
-        {
-          'text':'已处理',
-          'value':2
-        },
-      ],
-      userData:{},
-      //-----------------
-      feedbackDataOptions: [],
-      richTextVisible: false,
-      richText: ``,
-      deleteVisible: false,
-      batchDeleteVisible: false,
-      needDeleteItem: {},
+      //-------------------------
+      noticeList: [],
+      //-------------------------
       previewImageUrl: '',
       previewVisible: false,
-      deleteButtonLoading: false,
-      batchDeleteButtonLoading: false,
+      editorContent: '',
+      mainSwiperList: [],
+      dataList: [],
+      mainDataTypeList: [],
+      feedbackItemList: [],
+      currentTime: '',
+      mainDataActiveIndex: 0,
+      queryParams: {
+        keyword: '',
+        newsTypeId: ''
+      },
       paginationData: {
         itemsPerPage: 10,
         totalCount: 0,
         currentPage: 1
       },
-      multipleSelection: [],
-      dataList: [],
-      searchData: {
-        dataTitle: '',
-        dataValue: '',
-        submitterId: '',
-        handleStatus: '',
-        remarkData: '',
-      },
     };
   },
-  created() {
-    this.init();
-  },
+  computed: {},
   methods: {
-    //查询当前用户信息
-    async currentUserMeta() {
-      await Api.currentUserMeta({
-
+    dataSetCssActive($event) {
+      console.log($event)
+      $event.currentTarget.className = 'vertical-data-item-active'
+    },
+    dataSetCssRemove($event) {
+      console.log($event)
+      $event.currentTarget.className = 'vertical-data-item'
+    },
+    itemActive($event) {
+      console.log($event)
+      $event.currentTarget.className = 'main-item-view-active'
+    },
+    removeActive($event) {
+      console.log($event)
+      $event.currentTarget.className = 'main-item-view'
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.paginationData.itemsPerPage = val
+      this.queryFeedbackData();
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.paginationData.currentPage = val
+      this.queryFeedbackData();
+    },
+    //跳转到公告详情界面
+    toNoticeDataView(item) {
+      this.$router.push({
+        path: '/noticeDataView',
+        query: {
+          noticeDataId: item.noticeDataId,
+        }
+      })
+    },
+    //跳转到其他信息界面
+    toNewsData(item) {
+      this.$router.push({
+        path: '/newsDataView',
+        query: {
+          newsDataId: item.newsDataId,
+        }
+      })
+    },
+    //分页查询其他信息集合
+    async queryFeedbackData() {
+      const loading = this.$loading({
+        lock: true,
+        text: "正在请求。。。",
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      });
+      let params = {
+        ...this.queryParams,
+        itemsPerPage: this.paginationData.itemsPerPage,
+        currentPage: this.paginationData.currentPage,
+      }
+      await Api.queryFeedbackData({
+        ...params
       }).then(async (res) => {
-        if (!res.success) {
-          return;
-        }
-        if (this.$isNull(res)) {
-          return;
-        }
+        this.feedbackItemList = new Array();
+        //console.log('res:'+JSON.stringify(res))
         let data = res.data
-        if (this.$isNull(data)) {
+        //console.log('data:'+JSON.stringify(data))
+        if (!res.success) {
+          this.$message.error(res.message || res.msg || "服务器异常");
+          loading.close();
           return;
+        } else {
+          if (!data || Object.keys(data).length === 0) {
+            loading.close();
+            return;
+          }
+          //console.log('data:'+JSON.stringify(data))
+          this.paginationData.totalCount = data.totalCount
+          this.paginationData.itemsPerPage = data.itemsPerPage
+          this.paginationData.currentPage = data.currentPage
+          let dataList = data.data;
+          //console.log('dataList:'+JSON.stringify(dataList));
+          if (!dataList || Object.keys(dataList).length === 0) {
+            this.feedbackItemList = new Array();
+            loading.close();
+            return;
+          }
+          await dataList.map(async (item) => {
+            /*let imgList = item.imgList;
+            if (!imgList || imgList.length === 0) {
+              return;
+            }
+            let firstItem = imgList.at(0);
+            let mainImg = await this.handleImageUrl(firstItem);
+            item.mainImg = mainImg;*/
+            this.feedbackItemList.push(item);
+          })
+          console.log('feedbackItemList:'+JSON.stringify(this.feedbackItemList));
+          loading.close();
         }
-        data.avatarUrl = await this.handleImageUrl(data.avatarUrl);
-        this.userData = {...data};
-        console.log('当前用户信息:' + JSON.stringify(this.userData))
+      }).catch((error) => {
+        console.log(error);
+        this.$message.error(error.message || error.msg || "服务器异常");
+        loading.close();
       });
     },
-    async showRichText(richText) {
-      console.log(richText)
-      this.richText = richText
-      this.richTextVisible = true
+    //跳转到详情数据
+    toMainData(item) {
+      this.$router.push({
+        path: '/mainData',
+        query: {
+          newsDataId: item.newsDataId,
+        }
+      })
     },
-    handleTypeByValue(value, optionList) {
-      if (this.$isNull(value)) {
-        console.log('返回空')
-        return '无'
-      }
-      if (this.$isNull(optionList)) {
-        console.log('optionList返回空')
-        return '';
-      }
-      let result =
-          optionList.find(item => item.value == value);
-      if (!this.$isNull(result)) {
-        return result.text
-      } else {
-        return '无'
-      }
+    //处理搜索
+    async handleSearchData() {
+      await this.queryFeedbackData();
     },
-    // 重置控件
-    resetSearchForm() {
-      this.searchData = {
-        dataTitle: '',
-        dataValue: '',
-        submitterId: '',
-        handleStatus: '',
-        remarkData: '',
-      };
-      this.queryPageList();
-    },
-    handleViewParticulars(data) {
-      this.$refs.itemParticulars.init(data)
-    },
-    //点击取消删除
-    handleDeleteCancel() {
-      this.needDeleteItem = {}
-      this.deleteVisible = false;
-    },
-    //点击取消删除
-    handleDeleteBatchCancel() {
-      this.batchDeleteVisible = false;
-    },
-    //点击批量删除
-    handleDeleteBatch() {
-      this.batchDelete()
-    },
-    //点击删除
-    handleDeleteOne() {
-      this.deleteOne(this.needDeleteItem)
-    },
-    //展示批量删除弹窗
-    showDeleteBatchModal() {
-      let multipleSelection = this.multipleSelection
-      if (this.$isNull(multipleSelection)) {
-        this.$message.error(`请选择需要删除的数据`);
-        return;
-      }
-      if (multipleSelection.length == 0) {
-        this.$message.error(`请选择需要删除的数据`);
-        return;
-      }
-      this.batchDeleteVisible = true
-    },
-    //展示删除弹窗
-    showDeleteOneModal(data) {
-      this.needDeleteItem = {
-        ...data
-      }
-      this.deleteVisible = true
+    // 拿到图片尺寸
+    getImgSize (url) {
+      return new Promise((resolve, reject) => {
+        let imgObj = new Image()
+        imgObj.src = url
+        imgObj.onload = () => {
+          resolve({
+            width: imgObj.width,
+            height: imgObj.height
+          })
+        }
+      })
     },
     handlePreView(url) {
       if (this.$isNull(url)) {
@@ -419,197 +240,201 @@ export default {
       this.previewImageUrl = url
       this.previewVisible = true
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.paginationData.itemsPerPage = val
-      this.queryPageList();
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.paginationData.currentPage = val
-      this.queryPageList();
-    },
-    handleSelectionChange(val) {
-      console.log('val:' + JSON.stringify(val))
-      this.multipleSelection = val;
-    },
-    //处理单个删除
-    deleteOne(data) {
-      let mainIdList = new Array();
-      mainIdList.push(data.feedbackDataId)
-      this.deleteButtonLoading = true
-      Api.batchDeleteFeedbackData({
-        mainIdList: mainIdList
-      }).then((res) => {
-        //console.log('res:'+JSON.stringify(res))
-        if (res.success) {
-          this.handleSearch()
-        } else {
-          this.$message.error(res.message || res.msg || "服务器异常");
-        }
-        this.needDeleteItem = {}
-        this.deleteButtonLoading = false
-        this.deleteVisible = false;
-      })
-    },
-    //处理批量删除
-    batchDelete() {
-      this.batchDeleteButtonLoading = true
-      let multipleSelection = this.multipleSelection;
-      if (this.$isNull(multipleSelection)) {
-        this.batchDeleteButtonLoading = false
-        return;
-      }
-      if (multipleSelection.length == 0) {
-        this.batchDeleteButtonLoading = false
-        return;
-      }
-      let mainIdList = new Array();
-      multipleSelection.map(item => {
-        mainIdList.push(item.feedbackDataId)
-      })
-      console.log('mainIdList:' + JSON.stringify(mainIdList))
-      if (this.$isNull(mainIdList)) {
-        this.$message({
-          message: '请选择需要删除的数据',
-          type: 'success'
-        });
-        this.batchDeleteButtonLoading = false
-        return;
-      }
-      if (mainIdList.length == 0) {
-        this.$message({
-          message: '请选择需要删除的数据',
-          type: 'success'
-        });
-        this.batchDeleteButtonLoading = false
-        return;
-      }
-      Api.batchDeleteFeedbackData({
-        mainIdList: mainIdList
-      }).then((res) => {
-        console.log('res:' + JSON.stringify(res))
-        if (res.success) {
-          this.handleSearch()
-        } else {
-          this.$message.error(res.message || res.msg || "服务器异常");
-        }
-        this.batchDeleteVisible = false
-        this.batchDeleteButtonLoading = false
-      })
-    },
-    //分页查询集合
-    queryPageList() {
-      const loading = this.$loading({
-        lock: true,
-        text: "正在请求。。。",
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)'
-      });
-      let params = {
-        ...this.searchData,
-        itemsPerPage: this.paginationData.itemsPerPage,
-        currentPage: this.paginationData.currentPage,
-      }
-      //用户ID
-      params.submitterId = this.userData.authAppUserId;
-      Api.queryFeedbackDataByPage({
-        ...params
-      }).then((res) => {
-        //console.log('res:'+JSON.stringify(res))
-        let data = res.data
-        //console.log('data:'+JSON.stringify(data))
-        if (res.success) {
-          if (data) {
-            //console.log('data:'+JSON.stringify(data))
-            this.paginationData.totalCount = data.totalCount
-            this.paginationData.itemsPerPage = data.itemsPerPage
-            this.paginationData.currentPage = data.currentPage
-            data = data.data
-            this.dataList = data;
-          }
-        } else {
-          this.$message.error(res.message || res.msg || "服务器异常");
-        }
-        loading.close();
-      }).catch((error) => {
-        console.log(error);
-        this.$message.error(error.message || error.msg || "服务器异常");
-        loading.close();
-      });
-    },
-    // 初始化数据
     async init() {
-      await this.currentUserMeta();
-      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
-      //await this.queryFeedbackData();
-      this.queryPageList();
+      console.log('首页初始化')
+      await this.setMainSwiper();
+      await this.queryFeedbackData();
+      this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
-    // 搜索事件
-    handleSearch() {
-      this.queryPageList();
-    },
-    // 处理新增
-    handleAdd() {
-      this.$router.push({path: "/submitFeedBack"});
-    },
+  },
+  created() {
+    this.init();
+  },
+  mounted() {
+
   },
 };
 </script>
+
 <style scoped lang="scss">
-.page-view{
+.page-view {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 20px;
-  .page-search-view{
-    margin: 20px 20px;
-    .search-param-view{
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  position: relative;
+  .page-top-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    //border: 1px solid #dbdbdb;
+    background-color: #304156;;
+    .left-view {
+      margin: 0px 10px;
+      font-weight: bold;
+      color: #FFFFFF;
+    }
+    .right-view {
+      margin: 0px 10px;
+      font-weight: bold;
+    }
+  }
+  .platform-view {
+    width: 100%;
+    margin: 10px 0px;
+    .platform-item-view {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      .image-view {
+        border-radius: 10px;
+        width: 80%;
+        height: 300px;
+      }
+    }
+  }
+  .search-view {
+    width: 90%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    .search-input {
+      width: 90%;
+    }
+    .search-btn {
+      margin: 0px 10px;
+    }
+  }
+  .main-data-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    .main-item {
+      display: flex;
+      flex-direction: column;
       justify-content: flex-start;
-      .search-view{
+      align-items: center;
+      flex: 1;
+      width: 100%;
+      background-color: #FFFFFF;
+      border: 1px solid #dbdbdb;
+      //border: 2px solid #0ae54f;
+      border-radius: 10px;
+      flex-wrap: wrap;
+      .main-item-view-active {
+        @extend .main-item-view;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+      }
+      .main-item-view {
+        width: 90%;
         display: flex;
-        flex-direction: row;
-        align-items: flex-start;
+        flex-direction: column;
         justify-content: flex-start;
-        .search-item-view{
+        align-items: flex-start;
+        margin: 10px 0;
+        cursor: pointer;//悬浮时变手指
+        //border: 2px solid #1482F0;
+        border-bottom: 2px solid #dbdbdb;
+        .main-item-top {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin: 5px 10px;
+          //border: 2px solid #e50a4c;
+          .main-item-text {
+            border-radius: 10px;
+          }
+          .main-item-img {
+            margin-top: 10px;
+            width: 200px;
+            height: 200px;
+            border: solid 1px #e6e6e6;
+            border-radius: 10px;
+          }
+        }
+        .item-text-view {
+          //border: 2px solid #e50a4c;
+          word-break: break-all;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin: 0px 10px;
+          .item-text {
+            width: 100%;
+          }
+        }
+        .main-item-bottom {
+          width: 80%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: flex-start;
+          word-break: break-all;
+          margin: 10px 10px;
+          .bottom-text-view{
 
+          }
+        }
+        .upvote-view {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 200px;
+          .upvote-num {
+            font-size: 15px;
+          }
+          .upvote-img {
+            width: 30px;
+            height: 30px;
+          }
         }
       }
     }
   }
-  .operation-view{
+  .main-data-type {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    .operation-button-view{
-      margin: 2px 2px;
+    width: 90%;
+    //border: 1px solid #dbdbdb;
+    background-color: #FFFFFF;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    margin-top: 20px;
+    .main-item-type {
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #FFFFFF;
+      .spot-item-text {
+        margin: 10px 20px;
+      }
+    }
+    .main-type-active {
+      @extend .main-item-type;
+      background-color: #087fe7;
+      color: #FFFFFF;
     }
   }
-  .pagination-view{
+  .pagination-view {
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: 20px;
     //border: 2 px solid #15de0f;
-  }
-  .table-view{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    .table-data-view{
-      width: 100%;
-    }
-    .table-footer-view{
-
-    }
   }
 }
 </style>
