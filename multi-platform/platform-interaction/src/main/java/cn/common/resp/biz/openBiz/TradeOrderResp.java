@@ -74,65 +74,64 @@ public class TradeOrderResp extends BaseResp implements Serializable {
      */
     private String takeAddressId;
 
-    //-------------商品信息---start--------------
-
+    //-------------房间信息---start--------------
 
     /**
-     * 业务主键ID
+     * 房间ID
      */
-    private String salesItemId;
+    private String roomDataId;
 
     /**
-     * 发布人ID
+     * 房间类型ID
      */
-    private String publisherId;
+    private String roomTypeId;
 
     /**
-     * 商品类型ID
+     * 房间展示标题
      */
-    private String typeItemId;
+    private String roomTitle;
 
     /**
-     * 商品名称
+     * 房间简介
      */
-    private String itemName;
+    private String briefData;
 
     /**
-     * 商品简介
+     * 房间编号
      */
-    private String itemSummary;
+    private String roomNo;
 
     /**
-     * 商品标题
-     */
-    private String itemTitle;
-
-    /**
-     * 销售价格
-     */
-    private BigDecimal salePrice;
-
-    /**
-     * 原价
-     */
-    private BigDecimal originalPrice;
-
-    /**
-     * 商品图片
+     * 房间图片
      */
     private String mainImg;
 
     /**
-     * 商品状态
+     * 房间状态
      */
-    private Integer itemStatus;
+    private Integer roomStatus;
 
     /**
-     * 备注
+     * 房间楼层
      */
-    private String remarkData;
+    private Integer roomFloor;
+
+    /**
+     * 价格
+     */
+    private BigDecimal unitPrice;
+
+    /**
+     * 房间面积
+     */
+    private BigDecimal roomArea;
+
+    /**
+     * 床位数量
+     */
+    private Integer bedNum;
 
 
-    //-------------商品信息---end--------------
+    //-------------房间信息---end--------------
 
 }

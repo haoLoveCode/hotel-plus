@@ -20,7 +20,10 @@
 
 <style lang="scss">
     @import './styles/index.scss'; // 全局自定义的css样式
-
+    // to fix el-message弹框被el-dialog覆盖的问题。
+    .el-message {
+      z-index: 100000 !important;
+    }
     .area-select.medium {
         width: 142px;
         margin-left: 0px !important;

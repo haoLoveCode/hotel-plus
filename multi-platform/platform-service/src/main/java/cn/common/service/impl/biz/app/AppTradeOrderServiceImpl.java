@@ -2,7 +2,7 @@ package cn.common.service.impl.biz.app;
 
 import cn.common.enums.BizErrorCode;
 import cn.common.repository.entity.biz.OrderAddress;
-import cn.common.repository.entity.biz.SalesItem;
+import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.entity.biz.TradeOrder;
 import cn.common.repository.repository.biz.OrderAddressRepository;
 import cn.common.repository.repository.biz.TradeOrderRepository;
@@ -177,24 +177,28 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
     @Override
     public List<TradeOrderResp> queryOrderList(){
         String authUserId = authAppUserService.authAppUserId();
-        MPJLambdaWrapper<TradeOrder> queryWrapper = new MPJLambdaWrapper<TradeOrder>()
-                .eq(TradeOrder::getAuthAppUserId, authUserId)
-                .orderBy(true, false, TradeOrder::getCreateTime);
+        //构建查询条件
+        MPJLambdaWrapper<TradeOrder> queryWrapper = new MPJLambdaWrapper<>();
         queryWrapper.leftJoin(OrderAddress.class,OrderAddress::getOrderId,TradeOrder::getTradeOrderId);
-        queryWrapper.leftJoin(SalesItem.class,SalesItem::getSalesItemId,TradeOrder::getItemId);
+        queryWrapper.leftJoin(RoomData.class,RoomData::getRoomDataId,TradeOrder::getItemId);
+        //是否查询当前用户卖出的
+        /*Boolean queryMineSales = pageReq.getQueryMineSales();
+        if(queryMineSales){
+            pageWrapper.eq(RoomData::getPublisherId,authUserId);
+        }*/
         queryWrapper.selectAll(TradeOrder.class);
         queryWrapper.selectAs(OrderAddress::getTakeAddressId,TradeOrderResp::getTakeAddressId);
-        queryWrapper.selectAs(SalesItem::getSalesItemId,TradeOrderResp::getSalesItemId);
-        queryWrapper.selectAs(SalesItem::getPublisherId,TradeOrderResp::getPublisherId);
-        queryWrapper.selectAs(SalesItem::getTypeItemId,TradeOrderResp::getTypeItemId);
-        queryWrapper.selectAs(SalesItem::getItemName,TradeOrderResp::getItemName);
-        queryWrapper.selectAs(SalesItem::getItemSummary,TradeOrderResp::getItemSummary);
-        queryWrapper.selectAs(SalesItem::getItemTitle,TradeOrderResp::getItemTitle);
-        queryWrapper.selectAs(SalesItem::getSalePrice,TradeOrderResp::getSalePrice);
-        queryWrapper.selectAs(SalesItem::getOriginalPrice,TradeOrderResp::getOriginalPrice);
-        queryWrapper.selectAs(SalesItem::getMainImg,TradeOrderResp::getMainImg);
-        queryWrapper.selectAs(SalesItem::getItemStatus,TradeOrderResp::getItemStatus);
-        queryWrapper.selectAs(SalesItem::getRemarkData,TradeOrderResp::getRemarkData);
+        queryWrapper.selectAs(RoomData::getRoomDataId,TradeOrderResp::getRoomDataId);
+        queryWrapper.selectAs(RoomData::getBriefData,TradeOrderResp::getBriefData);
+        queryWrapper.selectAs(RoomData::getRoomNo,TradeOrderResp::getRoomNo);
+        queryWrapper.selectAs(RoomData::getRoomArea,TradeOrderResp::getRoomArea);
+        queryWrapper.selectAs(RoomData::getRoomStatus,TradeOrderResp::getRoomStatus);
+        queryWrapper.selectAs(RoomData::getRoomFloor,TradeOrderResp::getRoomFloor);
+        queryWrapper.selectAs(RoomData::getRoomTitle,TradeOrderResp::getRoomTitle);
+        queryWrapper.selectAs(RoomData::getRoomTypeId,TradeOrderResp::getRoomTypeId);
+        queryWrapper.selectAs(RoomData::getBedNum,TradeOrderResp::getBedNum);
+        queryWrapper.selectAs(RoomData::getMainImg,TradeOrderResp::getMainImg);
+        queryWrapper.selectAs(RoomData::getUnitPrice,TradeOrderResp::getUnitPrice);
         List<TradeOrderResp> respList = tradeOrderRepository.selectJoinList(TradeOrderResp.class,queryWrapper);
         if(CollectionUtils.isEmpty(respList)){
             return Lists.newArrayList();
@@ -233,25 +237,25 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         //构建查询条件
         MPJLambdaWrapper<TradeOrder> pageWrapper = new MPJLambdaWrapper<>();
         pageWrapper.leftJoin(OrderAddress.class,OrderAddress::getOrderId,TradeOrder::getTradeOrderId);
-        pageWrapper.leftJoin(SalesItem.class,SalesItem::getSalesItemId,TradeOrder::getItemId);
+        pageWrapper.leftJoin(RoomData.class,RoomData::getRoomDataId,TradeOrder::getItemId);
         //是否查询当前用户卖出的
-        Boolean queryMineSales = pageReq.getQueryMineSales();
+        /*Boolean queryMineSales = pageReq.getQueryMineSales();
         if(queryMineSales){
-            pageWrapper.eq(SalesItem::getPublisherId,authUserId);
-        }
+            pageWrapper.eq(RoomData::getPublisherId,authUserId);
+        }*/
         pageWrapper.selectAll(TradeOrder.class);
         pageWrapper.selectAs(OrderAddress::getTakeAddressId,TradeOrderResp::getTakeAddressId);
-        pageWrapper.selectAs(SalesItem::getSalesItemId,TradeOrderResp::getSalesItemId);
-        pageWrapper.selectAs(SalesItem::getPublisherId,TradeOrderResp::getPublisherId);
-        pageWrapper.selectAs(SalesItem::getTypeItemId,TradeOrderResp::getTypeItemId);
-        pageWrapper.selectAs(SalesItem::getItemName,TradeOrderResp::getItemName);
-        pageWrapper.selectAs(SalesItem::getItemSummary,TradeOrderResp::getItemSummary);
-        pageWrapper.selectAs(SalesItem::getItemTitle,TradeOrderResp::getItemTitle);
-        pageWrapper.selectAs(SalesItem::getSalePrice,TradeOrderResp::getSalePrice);
-        pageWrapper.selectAs(SalesItem::getOriginalPrice,TradeOrderResp::getOriginalPrice);
-        pageWrapper.selectAs(SalesItem::getMainImg,TradeOrderResp::getMainImg);
-        pageWrapper.selectAs(SalesItem::getItemStatus,TradeOrderResp::getItemStatus);
-        pageWrapper.selectAs(SalesItem::getRemarkData,TradeOrderResp::getRemarkData);
+        pageWrapper.selectAs(RoomData::getRoomDataId,TradeOrderResp::getRoomDataId);
+        pageWrapper.selectAs(RoomData::getBriefData,TradeOrderResp::getBriefData);
+        pageWrapper.selectAs(RoomData::getRoomNo,TradeOrderResp::getRoomNo);
+        pageWrapper.selectAs(RoomData::getRoomArea,TradeOrderResp::getRoomArea);
+        pageWrapper.selectAs(RoomData::getRoomStatus,TradeOrderResp::getRoomStatus);
+        pageWrapper.selectAs(RoomData::getRoomFloor,TradeOrderResp::getRoomFloor);
+        pageWrapper.selectAs(RoomData::getRoomTitle,TradeOrderResp::getRoomTitle);
+        pageWrapper.selectAs(RoomData::getRoomTypeId,TradeOrderResp::getRoomTypeId);
+        pageWrapper.selectAs(RoomData::getBedNum,TradeOrderResp::getBedNum);
+        pageWrapper.selectAs(RoomData::getMainImg,TradeOrderResp::getMainImg);
+        pageWrapper.selectAs(RoomData::getUnitPrice,TradeOrderResp::getUnitPrice);
         setPageCriteria(pageWrapper,pageReq);
         pageWrapper.orderBy(true,false,TradeOrder::getCreateTime);
         //开始分页

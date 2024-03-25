@@ -128,7 +128,7 @@
           <div class="ordering-text-title">
             预定住宿天数:
           </div>
-          <div class="ordering-text-value">
+          <div class="ordering-text-value" v-if="submitData.itemNum && submitData.itemNum > 0">
             {{submitData.itemNum}}天，({{submitData.checkInBegin}}-{{submitData.checkInEnd}})
           </div>
         </div>
@@ -207,9 +207,11 @@ export default {
       submitData: {
         checkInBegin: '',
         checkInEnd: '',
-        itemNum:1,
+        itemNum:0,
         remark:'',
-        totalAmount: 0
+        totalAmount: 0,
+        roomDataId: '',
+        subscriberId: '',
       },
       commentDataList: [],
       userData:{},
@@ -235,12 +237,18 @@ export default {
       let checkInBeginMoment = moment(checkInBegin);
       console.log(checkInBeginMoment);
       let checkInEndMoment = moment(checkInEnd);
-
+      if(checkInEndMoment.isBefore(checkInBeginMoment)){
+        this.$message.error('退房时间不可在入住时间之后');
+        return;
+      }
       let diffDays = checkInEndMoment.diff(checkInBeginMoment, 'days')
       console.log('diffDays:'+diffDays);
       if(diffDays && diffDays >0){
         this.submitData.itemNum = diffDays;
         this.submitData.totalAmount = diffDays * this.roomItemData.unitPrice
+      }else{
+        this.$message.error('住宿时间必须大于1天');
+        return;
       }
     },
     //取消下单
@@ -249,6 +257,44 @@ export default {
     },
     //跳转到购买界面
     roomOrdering(item) {
+      let checkInBegin = this.submitData.checkInBegin;
+      let checkInEnd = this.submitData.checkInEnd;
+      if(!checkInEnd || !checkInEnd){
+        this.$notify({
+          title: '提示',
+          dangerouslyUseHTMLString: true,
+          message: '<div style="color:#FF0000">请选择入住开始和结束时间</div>',
+          position: 'bottom-left',
+          offset: 300
+        });
+        return;
+      }
+      console.log('checkInBegin:'+checkInBegin);
+      console.log('checkInEnd:'+checkInEnd);
+      let checkInBeginMoment = moment(checkInBegin);
+      console.log(checkInBeginMoment);
+      let checkInEndMoment = moment(checkInEnd);
+      if(checkInEndMoment.isBefore(checkInBeginMoment)){
+        this.$notify({
+          title: '提示',
+          dangerouslyUseHTMLString: true,
+          message: '<div style="color:#FF0000">退房时间不可在入住时间之后</div>',
+          position: 'bottom-left',
+          offset: 300
+        });
+        return;
+      }
+      let itemNum = this.submitData.itemNum;
+      if(itemNum <= 0){
+        this.$notify({
+          title: '提示',
+          dangerouslyUseHTMLString: true,
+          message: '<div style="color:#FF0000">住宿时间必须大于0</div>',
+          position: 'bottom-left',
+          offset: 300
+        });
+        return;
+      }
      this.orderingShow = true;
     },
     //处理下单
@@ -271,17 +317,23 @@ export default {
             });
             let data = res.data;
             console.log('预定结果:' + JSON.stringify(data));
-            this.clearAll()
+            this.clearAll();
           } else {
-            this.$message.error('操作失败');
-            this.clearAll()
+            this.$message.error({
+              message: '预定失败'
+            });
+            this.clearAll();
           }
+          await this.queryOneRoomData(this.roomItemData.roomDataId);
         });
         loading.close();
       } catch (error) {
         this.clearAll()
         loading.close();
-        this.$message.error(error.message || error.msg || "服务器异常");
+        this.$message.error({
+          message: error.message || error.msg || "服务器异常"
+        });
+        await this.queryOneRoomData(this.roomItemData.roomDataId);
       }
     },
     //处理新增和减少住宿天
@@ -299,7 +351,16 @@ export default {
     },
     clearAll() {
       console.log('触发清除所有')
-      this.submitData = {}
+      this.submitData = {
+        checkInBegin: '',
+        checkInEnd: '',
+        itemNum:0,
+        remark:'',
+        totalAmount: 0,
+        roomDataId: '',
+        subscriberId: '',
+      }
+      this.orderingShow = false;
     },
     //查询单个其他信息
     async queryOneRoomData(roomDataId) {
@@ -354,13 +415,15 @@ export default {
     async init() {
       let data = await this.$bizConstants.userMeta();
       this.userData = {...data};
-      console.log('当前用户信息:' + JSON.stringify(this.userData))
+      console.log('当前用户信息:' + JSON.stringify(this.userData));
+      this.submitData.subscriberId = data.authAppUserId;
       this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
   },
   async created() {
     console.log(this.$route.query.roomDataId);
     let roomDataId = this.$route.query.roomDataId;
+    this.submitData.roomDataId = roomDataId;
     await this.queryOneRoomData(roomDataId);
     await this.init();
   },

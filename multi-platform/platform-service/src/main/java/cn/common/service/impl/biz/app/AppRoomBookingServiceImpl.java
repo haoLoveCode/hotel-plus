@@ -184,7 +184,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
      */
     public void setOrderData(TradeOrder tradeOrder,
                              RoomData itemData){
-        String getRoomDataId = itemData.getRoomDataId();
+        String roomDataId = itemData.getRoomDataId();
         String tradeOrderId = tradeOrder.getTradeOrderId();
         String authAppUserId = tradeOrder.getAuthAppUserId();
         OrderData entity = new OrderData();
