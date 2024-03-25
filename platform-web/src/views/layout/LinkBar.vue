@@ -8,7 +8,7 @@
       active-text-color="#409EFF"
     >
       <img src="~@static/icons/main-logo.svg"/>
-      <span class="platform-title">通用系统网站</span>
+      <span class="platform-title">酒店系统前台</span>
     </el-menu>
   </div>
 </template>

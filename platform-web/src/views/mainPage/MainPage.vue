@@ -1,6 +1,5 @@
 <template>
   <div class="page-view">
-    <BasketView ref="basketViewRef"></BasketView>
     <MainPageHeader ref="MainPageHeaderRef"></MainPageHeader>
     <div class="search-view">
       <el-input
@@ -36,13 +35,13 @@
         </div>
       </div>
     </div>
-    <el-divider content-position="center" v-if="salesItemDataList.length > 0">商品信息</el-divider>
-    <div class="main-data-view" v-if="salesItemDataList.length > 0">
+    <el-divider content-position="center" v-if="roomDataList.length > 0">商品信息</el-divider>
+    <div class="main-data-view" v-if="roomDataList.length > 0">
       <div class="main-item">
         <div class="main-item-view"
              @mouseover="itemActive($event)" @mouseout="removeActive($event)"
-             v-for="(item,index) in salesItemDataList" :key="index">
-          <div class="main-item-top" @click="toSalesItemData(item)">
+             v-for="(item,index) in roomDataList" :key="index">
+          <div class="main-item-top" @click="toRoomDataView(item)">
             <el-image class="main-item-img" fit="fill" :src="item.mainImg" alt=""/>
           </div>
           <div class="main-item-bottom" style="font-size: 15px;font-weight: bold">
@@ -88,12 +87,10 @@
 import {mapGetters} from "vuex";
 import moment from 'moment';
 import Api from "@/services";
-import BasketView from "@/views/biz/basket/BasketView";
 import MainPageHeader from "@/views/mainPage/MainPageHeader";
 
 export default {
   components: {
-    BasketView:BasketView,
     MainPageHeader:MainPageHeader,
   },
   data() {
@@ -107,12 +104,12 @@ export default {
       mainSwiperList: [],
       dataList: [],
       mainDataTypeList: [],
-      salesItemDataList: [],
+      roomDataList: [],
       currentTime: '',
       mainDataActiveIndex: 0,
       queryParams: {
         keyword: '',
-        typeItemId: ''
+        roomDataId: ''
       },
       paginationData: {
         itemsPerPage: 10,
@@ -142,12 +139,12 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.paginationData.itemsPerPage = val
-      this.querySalesItemByPage();
+      this.queryRoomDataByPage();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.paginationData.currentPage = val
-      this.querySalesItemByPage();
+      this.queryRoomDataByPage();
     },
     //跳转到公告详情界面
     toNoticeDataView(item) {
@@ -159,7 +156,7 @@ export default {
       })
     },
     //跳转到其他信息界面
-    toSalesItemData(item) {
+    toRoomDataView(item) {
       this.$router.push({
         path: '/salesItemDataView',
         query: {
@@ -215,7 +212,7 @@ export default {
       });
     },
     //分页查询其他信息集合
-    async querySalesItemByPage() {
+    async queryRoomDataByPage() {
       const loading = this.$loading({
         lock: true,
         text: "正在请求。。。",
@@ -227,10 +224,10 @@ export default {
         itemsPerPage: this.paginationData.itemsPerPage,
         currentPage: this.paginationData.currentPage,
       }
-      await Api.querySalesItemByPage({
+      await Api.queryRoomDataByPage({
         ...params
       }).then(async (res) => {
-        this.salesItemDataList = new Array();
+        this.roomDataList = new Array();
         //console.log('res:'+JSON.stringify(res))
         let data = res.data
         //console.log('data:'+JSON.stringify(data))
@@ -250,7 +247,7 @@ export default {
           let dataList = data.data;
           //console.log('dataList:'+JSON.stringify(dataList));
           if (!dataList || Object.keys(dataList).length === 0) {
-            this.salesItemDataList = new Array();
+            this.roomDataList = new Array();
             loading.close();
             return;
           }
@@ -262,9 +259,9 @@ export default {
             let firstItem = imgList.at(0);
             let mainImg = await this.handleImageUrl(firstItem);
             item.mainImg = mainImg;
-            this.salesItemDataList.push(item);
+            this.roomDataList.push(item);
           })
-          //console.log('salesItemDataList:'+JSON.stringify(this.salesItemDataList));
+          //console.log('roomDataList:'+JSON.stringify(this.roomDataList));
           loading.close();
         }
       }).catch((error) => {
@@ -283,23 +280,23 @@ export default {
       })
     },
     async setMainDataType() {
-      let itemList = await this.querySalesItemType();
+      let itemList = await this.queryRoomType();
       //console.log('itemList:' + JSON.stringify(itemList));
       if (!itemList || itemList.length === 0) {
         return;
       }
       this.mainDataTypeList = itemList;
       let firstItem = itemList.at(0);
-      this.queryParams.typeItemId = firstItem.typeItemId;
-      await this.querySalesItemByPage();
+      this.queryParams.roomDataId = firstItem.roomDataId;
+      await this.queryRoomDataByPage();
     },
     //处理搜索
     async handleSearchData() {
-      await this.querySalesItemByPage();
+      await this.queryRoomDataByPage();
     },
-    async querySalesItemType() {
+    async queryRoomType() {
       let itemList = new Array();
-      await Api.querySalesItemType({}).then(async (res) => {
+      await Api.queryRoomType({}).then(async (res) => {
         if (!res.success) {
           return;
         }
@@ -370,9 +367,9 @@ export default {
     async handleMainTypeSelect(item, index) {
       //console.log(item);
       this.mainDataActiveIndex = index;
-      this.queryParams.typeItemId = item.salesItemTypeId;
+      this.queryParams.roomDataId = item.salesItemTypeId;
       //查询信息
-      await this.querySalesItemByPage(
+      await this.queryRoomDataByPage(
           {
             ...this.queryParams
           }
@@ -393,7 +390,7 @@ export default {
         console.log('点赞结果:' + JSON.stringify(res));
         loading.close();
         this.$message.success("处理成功");
-        await this.querySalesItemByPage();
+        await this.queryRoomDataByPage();
       }).catch((error) => {
         console.log(error);
         this.$message.error(error.message || error.msg || "服务器异常");
@@ -412,7 +409,7 @@ export default {
       await this.setMainSwiper();
       await this.queryNoticeData();
       await this.setMainDataType();
-      await this.querySalesItemByPage();
+      await this.queryRoomDataByPage();
       this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
   },
