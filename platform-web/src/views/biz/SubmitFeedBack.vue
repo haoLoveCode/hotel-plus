@@ -1,14 +1,14 @@
 <template>
-    <div class="add-body">
+    <div class="data-body">
       <el-form
         ref="submitForm"
         :model="submitData"
         :rules="validatorRules"
         label-width="130px"
-        class="add-body-form"
+        class="data-body-form"
       >
         <div class="text-area-view">
-          <div class="add-item-view">
+          <div class="data-item-view">
             <el-form-item label="内容标题" prop="dataTitle">
               <el-input
                   type="textarea"
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="text-area-view">
-          <div class="add-item-view">
+          <div class="data-item-view">
             <el-form-item label="内容" prop="dataValue">
               <el-input
                   type="textarea"
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="text-area-view">
-          <div class="add-item-view">
+          <div class="data-item-view">
             <el-form-item label="备注" prop="remarkData">
               <el-input
                   type="textarea"
@@ -206,7 +206,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.add-body {
+.data-body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -222,21 +222,23 @@ export default {
     align-items: center;
     width: 60%;
   }
-  .add-body-form {
+  .data-body-form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-content: center;
     align-items: flex-start;
-    width: 100%;
-    .add-body-div {
+    width: 80%;
+    //border: 1px solid #dbdbdb;
+    border: 1px solid #dbdbdb;
+    .data-body-div {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-content: center;
       align-items: center;
       width: auto;
-      .add-item-view {
+      .data-item-view {
 
       }
       .upload-item-view {
@@ -247,7 +249,7 @@ export default {
     }
     .text-area-view {
       width: 100%;
-      .add-item-view {
+      .data-item-view {
       }
     }
     .dynamic-body-div {

@@ -3,7 +3,7 @@
     <div class="submit-feedback" @click="submitFeedBack">
       <div class="submit-feedback-view">
         <div class="submit-feedback-text">
-          提交评论
+          提交反馈信息
         </div>
       </div>
     </div>
@@ -30,13 +30,13 @@
                  style="border-radius: 10px;"/>
           </div>
           <div class="user-name-view">
-            评论用户: {{item.realName}}
+            反馈信息用户: {{item.realName}}
           </div>
         </div>
         <div class="feedback-text" style="font-weight: bold">
-          评论标题: {{item.dataTitle}}
+          反馈信息标题: {{item.dataTitle}}
         </div>
-        <div class="feedback-text" @click="showRichText(item.dataValue)">
+        <div class="feedback-text" @click="showRichText(item.dataValue)" style="margin-bottom: 10px">
           {{item.dataValue}}
         </div>
       </div>
@@ -59,7 +59,7 @@
     <!--富文本查看弹窗-->
     <el-dialog
         append-to-body
-        title="评论内容"
+        title="反馈信息内容"
         :visible.sync="richTextVisible"
         width="50%">
       <div v-html="richText"></div>
@@ -359,7 +359,7 @@ export default {
         justify-content: flex-start;
         align-items: center;
         align-content: center;
-        margin-left: 20px;
+        margin-left: 10px;
         .avatar-view{
           border-radius: 10px;
           margin: 10px 0px;
