@@ -43,16 +43,6 @@ export const constantRouterMap = [
                 name: '房间信息',
             },
             {
-                path: "/salesItemBuyView",
-                component: require('@/views/biz/saleItem/SalesItemBuyView'),
-                name: '下单购买',
-            },
-            {
-                path: "/addAddressView",
-                component: require('@/views/biz/takeAddress/AddAddressView'),
-                name: '新增地址',
-            },
-            {
                 path: "/orderListView",
                 component: require('@/views/biz/tradeOrder/OrderListView'),
                 name: '订单列表',

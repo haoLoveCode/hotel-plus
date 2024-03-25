@@ -86,12 +86,11 @@
 import {mapGetters} from "vuex";
 import moment from 'moment';
 import Api from "@/services";
-import BasketView from "@/views/biz/basket/BasketView";
 
 export default {
   name: "OrderListView",
   components: {
-    BasketView:BasketView
+
   },
   data() {
     return {

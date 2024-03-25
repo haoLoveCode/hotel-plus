@@ -224,6 +224,15 @@ export default {
   },
   computed: {},
   methods: {
+    //跳转订单信息界面
+    toOrderListView(item) {
+      this.$router.push({
+        path: '/orderListView',
+        query: {
+
+        }
+      })
+    },
     //时间选择发生变化
     async handleTimeChange(value){
       console.log('checkInBeginChange:'+value);
@@ -318,6 +327,8 @@ export default {
             let data = res.data;
             console.log('预定结果:' + JSON.stringify(data));
             this.clearAll();
+            //跳转订单信息界面
+            this.toOrderListView();
           } else {
             this.$message.error({
               message: '预定失败'

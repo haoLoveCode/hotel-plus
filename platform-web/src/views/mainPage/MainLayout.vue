@@ -70,13 +70,6 @@
               </el-dropdown-item>
               <el-dropdown-item v-if="token">
                 <span
-                    @click="showTakeAddress"
-                    style="display:block;">
-                  我的收货地址
-                </span>
-              </el-dropdown-item>
-              <el-dropdown-item v-if="token">
-                <span
                     @click="logOut"
                     style="display:block;">
                   退出登录
@@ -96,8 +89,6 @@
     <AppUserLogin ref="appUserLogin"></AppUserLogin>
     <!--用户编辑-->
     <AppUserEdit ref="appUserEdit"></AppUserEdit>
-    <!--收货地址-->
-    <TakeAddress ref="takeAddressRef"></TakeAddress>
   </div>
 </template>
 <script>
@@ -107,7 +98,6 @@ import {AppMain} from "views/layout";
 import AppUserReg from "@/views/login/AppUserReg";
 import AppUserLogin from "./AppUserLogin";
 import AppUserEdit from "./AppUserEdit";
-import TakeAddress from "@/views/biz/takeAddress/TakeAddress"
 
 export default {
   components: {
@@ -115,7 +105,6 @@ export default {
     AppUserReg: AppUserReg,
     AppUserLogin: AppUserLogin,
     AppUserEdit: AppUserEdit,
-    TakeAddress: TakeAddress,
   },
   data() {
     return {
