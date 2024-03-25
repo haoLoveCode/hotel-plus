@@ -20,13 +20,6 @@
             <el-menu-item index="/memberCenter">个人中心</el-menu-item>
           </el-menu>
         </div>
-        <div class="biz-button-view">
-          <div class="biz-button" @click="publishData">
-            <el-button size="mini" type="primary">
-              发布数据
-            </el-button>
-          </div>
-        </div>
         <div class="user-data">
           <el-dropdown
               class="avatar-container"
