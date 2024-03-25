@@ -319,6 +319,12 @@ const globalServices = {
         url: `${httpUrl}/api/v1/roomBooking/queryRoomBooking`,
         needToken:true,
     },
+    /*取消预定*/
+    cancelBooking: {
+        method: 'POST',
+        url: `${httpUrl}/api/v1/roomBooking/cancelBooking`,
+        needToken:true,
+    },
     /*查询单个房间预订信息*/
     queryOneRoomBooking: {
         method: 'POST',

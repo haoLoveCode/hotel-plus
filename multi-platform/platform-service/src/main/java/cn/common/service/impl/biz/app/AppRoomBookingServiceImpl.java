@@ -209,6 +209,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
             entity.setBookingStatus(BookingStatusEnum.BOOKING_SUCCESS.getCode());
             entity.setBookingNo(outTradeNo);
             entity.setRoomBookingId(mainId);
+            entity.setRoomDataId(roomDataId);
             entity.setSubscriberId(authAppUserId);
             entity.setOperatorId(authAppUserId);
         } catch (Exception e) {

@@ -145,7 +145,6 @@ export default {
       });
       let params = {
         ...item,
-        orderStatus:'FINISH'
       }
       await Api.cancelBooking({
         ...params
