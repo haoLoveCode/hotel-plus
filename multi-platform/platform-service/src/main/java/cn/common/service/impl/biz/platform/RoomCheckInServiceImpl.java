@@ -19,7 +19,6 @@ import cn.common.repository.entity.biz.RoomCheckIn;
 import cn.common.repository.repository.biz.RoomCheckInRepository;
 import cn.common.service.biz.platform.RoomDataService;
 import cn.common.service.platform.AuthUserService;
-import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
@@ -162,7 +161,7 @@ public class RoomCheckInServiceImpl implements RoomCheckInService {
         log.info(">>>>>>>>>>>>>>>>>新增客房入住信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
         String authUserId = authUserService.currentAuthUserId();
         String roomBookingId = addReq.getRoomBookingId();
-        RoomData roomData = appRoomDataService.queryRoomByBookingUd(roomBookingId);
+        RoomData roomData = appRoomDataService.queryRoomByBookingId(roomBookingId);
         if(CheckParam.isNull(roomData)){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
         }

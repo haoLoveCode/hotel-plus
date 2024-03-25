@@ -2,6 +2,7 @@ package cn.common.service.impl.biz.platform;
 
 import cn.common.repository.entity.biz.AuthAppUser;
 import cn.common.repository.entity.biz.FeedbackData;
+import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.repository.biz.FeedbackDataRepository;
 import cn.common.req.biz.FeedbackDataAddReq;
 import cn.common.req.biz.FeedbackDataReq;
@@ -191,6 +192,13 @@ public class FeedbackDataServiceImpl implements FeedbackDataService {
         wrapper.selectAll(FeedbackData.class);
         wrapper.selectAs(AuthAppUser::getAvatarUrl, FeedbackDataResp::getAvatarUrl);
         wrapper.selectAs(AuthAppUser::getRealName, FeedbackDataResp::getRealName);
+        //关键词查询条件
+        String keyword = req.getKeyword();
+        if(!CheckParam.isNull(keyword)){
+            wrapper.or(or -> or.eq(FeedbackData::getDataTitle, keyword));
+            wrapper.or(or -> or.eq(FeedbackData::getDataValue, keyword));
+            wrapper.or(or -> or.eq(FeedbackData::getRemarkData, keyword));
+        }
         setQueryCriteria(wrapper, req);
         wrapper.orderBy(true, false, FeedbackData::getCreateTime);
         List<FeedbackDataResp> respList = feedbackDataRepository.selectJoinList(FeedbackDataResp.class,wrapper);
@@ -217,6 +225,13 @@ public class FeedbackDataServiceImpl implements FeedbackDataService {
         wrapper.selectAll(FeedbackData.class);
         wrapper.selectAs(AuthAppUser::getAvatarUrl, FeedbackDataResp::getAvatarUrl);
         wrapper.selectAs(AuthAppUser::getRealName, FeedbackDataResp::getRealName);
+        //关键词查询条件
+        String keyword = req.getKeyword();
+        if(!CheckParam.isNull(keyword)){
+            wrapper.or(or -> or.eq(FeedbackData::getDataTitle, keyword));
+            wrapper.or(or -> or.eq(FeedbackData::getDataValue, keyword));
+            wrapper.or(or -> or.eq(FeedbackData::getRemarkData, keyword));
+        }
         setQueryCriteria(wrapper, req);
         wrapper.orderBy(true, false, FeedbackData::getCreateTime);
         FeedbackDataResp resp = feedbackDataRepository.selectJoinOne(FeedbackDataResp.class,wrapper);
@@ -240,6 +255,13 @@ public class FeedbackDataServiceImpl implements FeedbackDataService {
         log.info(">>>>>>>>>>>>>>>>>分页查询投诉建议信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
         //构建查询条件
         MPJLambdaWrapper<FeedbackData> pageWrapper = new MPJLambdaWrapper<>();
+        //关键词查询条件
+        String keyword = pageReq.getKeyword();
+        if(!CheckParam.isNull(keyword)){
+            pageWrapper.or(or -> or.eq(FeedbackData::getDataTitle, keyword));
+            pageWrapper.or(or -> or.eq(FeedbackData::getDataValue, keyword));
+            pageWrapper.or(or -> or.eq(FeedbackData::getRemarkData, keyword));
+        }
         setQueryCriteria(pageWrapper, pageReq);
         pageWrapper.leftJoin(AuthAppUser.class, AuthAppUser::getAuthAppUserId, FeedbackData::getSubmitterId);
         pageWrapper.selectAll(FeedbackData.class);

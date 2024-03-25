@@ -19,7 +19,9 @@
     </div>
     <el-divider content-position="center">投诉建议信息</el-divider>
     <div class="feedback-data-view" v-if="feedbackItemList.length > 0">
-      <div class="feedback-view" v-for="(item,index) in feedbackItemList" :key="index">
+      <div class="feedback-view"
+           @mouseover="itemActive($event)" @mouseout="removeActive($event)"
+           v-for="(item,index) in feedbackItemList" :key="index">
         <div class="feedback-user-view">
           <div class="avatar-view">
             <img :src="handleImageUrl(item.mainImg)"
@@ -114,21 +116,13 @@ export default {
       this.richText = richText
       this.richTextVisible = true
     },
-    dataSetCssActive($event) {
-      console.log($event)
-      $event.currentTarget.className = 'vertical-data-item-active'
-    },
-    dataSetCssRemove($event) {
-      console.log($event)
-      $event.currentTarget.className = 'vertical-data-item'
-    },
     itemActive($event) {
       console.log($event)
-      $event.currentTarget.className = 'main-item-view-active'
+      $event.currentTarget.className = 'feedback-view-active'
     },
     removeActive($event) {
       console.log($event)
-      $event.currentTarget.className = 'main-item-view'
+      $event.currentTarget.className = 'feedback-view'
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -346,13 +340,19 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-content: center;
+    .feedback-view-active {
+      @extend .feedback-view;
+      box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    }
     .feedback-view{
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-content: center;
-      box-shadow: 0 0 1px 1px #409eff;
+      //box-shadow: 0 0 1px 1px #409eff;
       margin-top: 10px;
+      cursor: pointer;//悬浮时变手指
+      border-radius: 5px;
       .feedback-user-view{
         display: flex;
         flex-direction: row;

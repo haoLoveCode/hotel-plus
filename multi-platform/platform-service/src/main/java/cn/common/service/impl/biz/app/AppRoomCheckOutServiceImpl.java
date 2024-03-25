@@ -22,7 +22,6 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
@@ -101,7 +100,7 @@ public class AppRoomCheckOutServiceImpl implements AppRoomCheckOutService {
         log.info(">>>>>>>>>>>>>>>>>新增客房退房信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
         String authAppUserId = authAppUserService.authAppUserId();
         String roomBookingId = addReq.getRoomBookingId();
-        RoomData roomData = appRoomDataService.queryRoomByBookingUd(roomBookingId);
+        RoomData roomData = appRoomDataService.queryRoomByBookingId(roomBookingId);
         if(CheckParam.isNull(roomData)){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
         }

@@ -344,6 +344,12 @@ public class RoomDataServiceImpl implements RoomDataService {
         log.info(">>>>>>>>>>>>>>>>>分页查询房间信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
         //构建查询条件
         LambdaQueryWrapper<RoomData> pageWrapper = new LambdaQueryWrapper<>();
+        //关键词查询条件
+        String keyword = pageReq.getKeyword();
+        if(!CheckParam.isNull(keyword)){
+            pageWrapper.or(or -> or.eq(RoomData::getRoomTitle, keyword));
+            pageWrapper.or(or -> or.eq(RoomData::getBriefData, keyword));
+        }
         setPageCriteria(pageWrapper,pageReq);
         pageWrapper.orderBy(true,false,RoomData::getCreateTime);
         //开始分页

@@ -27,7 +27,7 @@ public interface AppRoomDataService {
      * @param roomBookingId 房间预定ID
      * @return cn.common.repository.entity.biz.RoomData
      */
-    RoomData queryRoomByBookingUd(String roomBookingId);
+    RoomData queryRoomByBookingId(String roomBookingId);
 
     /**
      * 新增房间信息

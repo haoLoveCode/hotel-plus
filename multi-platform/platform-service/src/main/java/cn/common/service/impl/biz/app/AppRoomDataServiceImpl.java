@@ -83,7 +83,7 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
       * @return cn.common.repository.entity.biz.RoomData
       */
     @Override
-    public RoomData queryRoomByBookingUd(String roomBookingId){
+    public RoomData queryRoomByBookingId(String roomBookingId){
         MPJLambdaWrapper<RoomData> roomWrapper = new MPJLambdaWrapper<>();
         roomWrapper.leftJoin(RoomBooking.class,RoomBooking::getRoomDataId,RoomData::getRoomDataId);
         roomWrapper.selectAll(RoomData.class);
@@ -169,7 +169,13 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
         log.info(">>>>>>>>>>>>>>>>>查询房间信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
         //构建查询条件
         LambdaQueryWrapper<RoomData> wrapper = new LambdaQueryWrapper<>();
-        setCriteria(wrapper,req);
+        //关键词查询条件
+        String keyword = req.getKeyword();
+        if(!CheckParam.isNull(keyword)){
+            wrapper.or(or -> or.eq(RoomData::getRoomTitle, keyword));
+            wrapper.or(or -> or.eq(RoomData::getBriefData, keyword));
+        }
+        setQueryCriteria(wrapper,req);
         wrapper.orderBy(true,false,RoomData::getCreateTime);
         List<RoomData> entityList = roomDataRepository.selectList(wrapper);
         if(CollectionUtils.isEmpty(entityList)){
@@ -203,7 +209,13 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
         log.info(">>>>>>>>>>>>>>>>>查询单个房间信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
         //构建查询条件
         LambdaQueryWrapper<RoomData> wrapper = new LambdaQueryWrapper<>();
-        setCriteria(wrapper,req);
+        //关键词查询条件
+        String keyword = req.getKeyword();
+        if(!CheckParam.isNull(keyword)){
+            wrapper.or(or -> or.eq(RoomData::getRoomTitle, keyword));
+            wrapper.or(or -> or.eq(RoomData::getBriefData, keyword));
+        }
+        setQueryCriteria(wrapper,req);
         wrapper.orderBy(true,false,RoomData::getCreateTime);
         RoomData entity = roomDataRepository.selectOne(wrapper);
         if(CheckParam.isNull(entity)){
@@ -219,62 +231,6 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     }
 
     /**
-     * 设置查询条件
-     * @author: Singer
-     * @date 2024/3/24
-     * @param wrapper 查询条件
-     * @param req 查询参数
-     * @return
-     */
-    private void setCriteria(LambdaQueryWrapper<RoomData> wrapper,
-                        RoomDataReq req){
-
-        if(!CheckParam.isNull(req.getRoomDataId())){
-            wrapper.eq(RoomData::getRoomDataId,req.getRoomDataId());
-        }
-
-        if(!CheckParam.isNull(req.getRoomTypeId())){
-            wrapper.eq(RoomData::getRoomTypeId,req.getRoomTypeId());
-        }
-
-        if(!CheckParam.isNull(req.getRoomTitle())){
-            wrapper.like(RoomData::getRoomTitle,req.getRoomTitle());
-        }
-
-        if(!CheckParam.isNull(req.getBriefData())){
-            wrapper.like(RoomData::getBriefData,req.getBriefData());
-        }
-
-        if(!CheckParam.isNull(req.getRoomNo())){
-            wrapper.like(RoomData::getRoomNo,req.getRoomNo());
-        }
-
-        if(!CheckParam.isNull(req.getMainImg())){
-            wrapper.like(RoomData::getMainImg,req.getMainImg());
-        }
-
-        if(!CheckParam.isNull(req.getRoomStatus())){
-            wrapper.eq(RoomData::getRoomStatus,req.getRoomStatus());
-        }
-
-        if(!CheckParam.isNull(req.getRoomFloor())){
-            wrapper.eq(RoomData::getRoomFloor,req.getRoomFloor());
-        }
-
-        if(!CheckParam.isNull(req.getUnitPrice())){
-            wrapper.ge(RoomData::getUnitPrice,req.getUnitPrice());
-        }
-
-        if(!CheckParam.isNull(req.getRoomArea())){
-            wrapper.ge(RoomData::getRoomArea,req.getRoomArea());
-        }
-
-        if(!CheckParam.isNull(req.getBedNum())){
-            wrapper.ge(RoomData::getBedNum,req.getBedNum());
-        }
-    }
-
-    /**
      * 分页查询房间信息
      * @author: Singer
      * @date 2024/3/24
@@ -287,7 +243,13 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
         log.info(">>>>>>>>>>>>>>>>>分页查询房间信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
         //构建查询条件
         LambdaQueryWrapper<RoomData> pageWrapper = new LambdaQueryWrapper<>();
-        setPageCriteria(pageWrapper,pageReq);
+        //关键词查询条件
+        String keyword = pageReq.getKeyword();
+        if(!CheckParam.isNull(keyword)){
+            pageWrapper.or(or -> or.eq(RoomData::getRoomTitle, keyword));
+            pageWrapper.or(or -> or.eq(RoomData::getBriefData, keyword));
+        }
+        setQueryCriteria(pageWrapper,pageReq);
         pageWrapper.orderBy(true,false,RoomData::getCreateTime);
         //开始分页
         Page<Object> page = PageHelper.startPage(pageReq.getCurrentPage(), pageReq.getItemsPerPage());
@@ -323,7 +285,7 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
      * @param pageReq 查询参数
      * @return
      */
-    private void setPageCriteria(LambdaQueryWrapper<RoomData> pageWrapper,
+    private void setQueryCriteria(LambdaQueryWrapper<RoomData> pageWrapper,
                         RoomDataReq pageReq){
 
         if(!CheckParam.isNull(pageReq.getRoomTypeId())){
