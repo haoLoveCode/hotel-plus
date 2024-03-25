@@ -60,7 +60,7 @@
                   type="info"
                   :underline="false"
                   style="font-size: 20px;margin: 20px 20px">
-                <div class="buy-again-div" @click="toRoomDataView(item)">
+                <div class="buy-again-div" @click="submitFeedBack(item)">
                   <div class="bottom-btn-text">
                     提交投诉或建议
                   </div>
@@ -139,6 +139,10 @@ export default {
   },
   computed: {},
   methods: {
+    //提交投诉和建议
+    submitFeedBack() {
+      this.$router.push({path: "/submitFeedBack"});
+    },
     //处理订单状态
     async cancelBooking(item) {
       const loading = this.$loading({

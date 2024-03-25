@@ -1,6 +1,12 @@
 <template>
   <div class="page-view">
-    <MainPageHeader ref="MainPageHeaderRef"></MainPageHeader>
+    <div class="submit-feedback" @click="submitFeedBack">
+      <div class="submit-feedback-view">
+        <div class="submit-feedback-text">
+          提交评论
+        </div>
+      </div>
+    </div>
     <div class="search-view">
       <el-input
           type="textarea"
@@ -11,42 +17,27 @@
         <el-button type="primary" icon="el-icon-search" @click="handleSearchData">搜索</el-button>
       </div>
     </div>
-    <el-divider content-position="center" v-if="feedbackItemList.length > 0">投诉建议信息</el-divider>
-    <div class="main-data-view" v-if="feedbackItemList.length > 0">
-      <div class="main-item">
-        <div class="main-item-view"
-             @click="toNewsData(item)"
-             @mouseover="itemActive($event)" @mouseout="removeActive($event)"
-             v-for="(item,index) in feedbackItemList" :key="index">
-          <div class="main-item-top">
-            <div class="main-item-text" style="font-weight: bold;font-size: 20px;">
-              {{ item.dataTitle }}
-            </div>
+    <el-divider content-position="center">投诉建议信息</el-divider>
+    <div class="feedback-data-view" v-if="feedbackItemList.length > 0">
+      <div class="feedback-view" v-for="(item,index) in feedbackItemList" :key="index">
+        <div class="feedback-user-view">
+          <div class="avatar-view">
+            <img :src="handleImageUrl(item.mainImg)"
+                 alt=""
+                 width="auto"
+                 height="100%"
+                 class="avatar-img-view"
+                 style="border-radius: 10px;"/>
           </div>
-          <div class="item-text-view">
-            <div class="item-text" style="font-size: 10px;">
-              新闻来源:{{ item.newsSource }}
-            </div>
-            <div class="item-text" style="font-size: 10px;">
-              备注:{{ item.remarkData }}
-            </div>
+          <div class="user-name-view">
+            评论用户: {{item.realName}}
           </div>
-          <div class="main-item-bottom" style="font-weight: bold;">
-            <div class="bottom-text-view">
-              发布人署名:{{ item.publisherSign }}
-            </div>
-            <div class="bottom-text-view">
-              发布时间:{{ item.createTime }}
-            </div>
-          </div>
-          <div class="upvote-view" @click="userUpvote(item)" v-if="false">
-            <div class="upvote-num">
-              点赞数:{{ item.upvoteNum }}
-            </div>
-            <el-image class="upvote-img" v-if="!item.upvoteStatus" fit="fill" src="/static/images/no-upvote.png"
-                      alt=""/>
-            <el-image class="upvote-img" v-if="item.upvoteStatus" fit="fill" src="/static/images/upvote-on.png" alt=""/>
-          </div>
+        </div>
+        <div class="feedback-text" style="font-weight: bold">
+          评论标题: {{item.dataTitle}}
+        </div>
+        <div class="feedback-text" @click="showRichText(item.dataValue)">
+          {{item.dataValue}}
         </div>
       </div>
     </div>
@@ -65,22 +56,30 @@
     <el-dialog append-to-body :visible.sync="previewVisible" title="图片预览">
       <img width="100%" :src="previewImageUrl" alt=""/>
     </el-dialog>
+    <!--富文本查看弹窗-->
+    <el-dialog
+        append-to-body
+        title="评论内容"
+        :visible.sync="richTextVisible"
+        width="50%">
+      <div v-html="richText"></div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import {mapGetters} from "vuex";
 import moment from 'moment';
 import Api from "@/services";
-import MainPageHeader from "@/views/mainPage/MainPageHeader";
-
 export default {
   components: {
-    MainPageHeader:MainPageHeader,
+
   },
   data() {
     return {
       //-------------------------
       noticeList: [],
+      richTextVisible: false,
+      richText: ``,
       //-------------------------
       previewImageUrl: '',
       previewVisible: false,
@@ -93,7 +92,7 @@ export default {
       mainDataActiveIndex: 0,
       queryParams: {
         keyword: '',
-        newsTypeId: ''
+        submitterId: ''
       },
       paginationData: {
         itemsPerPage: 10,
@@ -102,8 +101,19 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+
+  },
   methods: {
+    //提交投诉和建议
+    submitFeedBack() {
+      this.$router.push({path: "/submitFeedBack"});
+    },
+    async showRichText(richText) {
+      console.log(richText)
+      this.richText = richText
+      this.richTextVisible = true
+    },
     dataSetCssActive($event) {
       console.log($event)
       $event.currentTarget.className = 'vertical-data-item-active'
@@ -123,12 +133,12 @@ export default {
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.paginationData.itemsPerPage = val
-      this.queryFeedbackData();
+      this.queryFeedbackDataByPage();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.paginationData.currentPage = val
-      this.queryFeedbackData();
+      this.queryFeedbackDataByPage();
     },
     //跳转到公告详情界面
     toNoticeDataView(item) {
@@ -149,7 +159,7 @@ export default {
       })
     },
     //分页查询其他信息集合
-    async queryFeedbackData() {
+    async queryFeedbackDataByPage() {
       const loading = this.$loading({
         lock: true,
         text: "正在请求。。。",
@@ -161,7 +171,7 @@ export default {
         itemsPerPage: this.paginationData.itemsPerPage,
         currentPage: this.paginationData.currentPage,
       }
-      await Api.queryFeedbackData({
+      await Api.queryFeedbackDataByPage({
         ...params
       }).then(async (res) => {
         this.feedbackItemList = new Array();
@@ -218,7 +228,7 @@ export default {
     },
     //处理搜索
     async handleSearchData() {
-      await this.queryFeedbackData();
+      await this.queryFeedbackDataByPage();
     },
     // 拿到图片尺寸
     getImgSize (url) {
@@ -241,14 +251,16 @@ export default {
       this.previewVisible = true
     },
     async init() {
-      console.log('首页初始化')
-      await this.setMainSwiper();
-      await this.queryFeedbackData();
+      let userData = await this.$bizConstants.userMeta();
+      this.userData = {...userData};
+      console.log('当前用户信息:' + JSON.stringify(this.userData))
+      this.queryParams.submitterId = userData.authAppUserId;
+      await this.queryFeedbackDataByPage();
       this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
   },
-  created() {
-    this.init();
+  async created() {
+    await this.init();
   },
   mounted() {
 
@@ -298,6 +310,27 @@ export default {
       }
     }
   }
+  .submit-feedback{
+    position: fixed; //让元素跟随滚动
+    z-index: 998;
+    right:0;
+    top: 50%;
+    .submit-feedback-view{
+      width: 150px;
+      height: 50px;
+      background-color: #FF0000;
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      .submit-feedback-text{
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
   .search-view {
     width: 90%;
     margin-top: 10px;
@@ -312,122 +345,52 @@ export default {
       margin: 0px 10px;
     }
   }
-  .main-data-view {
+  .feedback-data-view{
+    width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 90%;
-    .main-item {
+    justify-content: flex-start;
+    align-content: center;
+    .feedback-view{
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: center;
-      flex: 1;
-      width: 100%;
-      background-color: #FFFFFF;
-      border: 1px solid #dbdbdb;
-      //border: 2px solid #0ae54f;
-      border-radius: 10px;
-      flex-wrap: wrap;
-      .main-item-view-active {
-        @extend .main-item-view;
-        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-      }
-      .main-item-view {
-        width: 90%;
+      align-content: center;
+      box-shadow: 0 0 1px 1px #409eff;
+      margin-top: 10px;
+      .feedback-user-view{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: flex-start;
-        align-items: flex-start;
-        margin: 10px 0;
-        cursor: pointer;//悬浮时变手指
-        //border: 2px solid #1482F0;
-        border-bottom: 2px solid #dbdbdb;
-        .main-item-top {
+        align-items: center;
+        align-content: center;
+        margin-left: 20px;
+        .avatar-view{
+          border-radius: 10px;
+          margin: 10px 0px;
+          width: 40px;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          margin: 5px 10px;
-          //border: 2px solid #e50a4c;
-          .main-item-text {
-            border-radius: 10px;
-          }
-          .main-item-img {
-            margin-top: 10px;
-            width: 200px;
-            height: 200px;
-            border: solid 1px #e6e6e6;
-            border-radius: 10px;
+          .avatar-img-view{
+            margin: 5px 0px;
+            width: 20px;
           }
         }
-        .item-text-view {
-          //border: 2px solid #e50a4c;
-          word-break: break-all;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin: 0px 10px;
-          .item-text {
-            width: 100%;
-          }
-        }
-        .main-item-bottom {
-          width: 80%;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-start;
-          word-break: break-all;
-          margin: 10px 10px;
-          .bottom-text-view{
+        .user-name-view{
 
-          }
-        }
-        .upvote-view {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          width: 200px;
-          .upvote-num {
-            font-size: 15px;
-          }
-          .upvote-img {
-            width: 30px;
-            height: 30px;
-          }
         }
       }
-    }
-  }
-  .main-data-type {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    //border: 1px solid #dbdbdb;
-    background-color: #FFFFFF;
-    border: 1px solid #dbdbdb;
-    border-radius: 10px;
-    margin-top: 20px;
-    .main-item-type {
-      font-weight: bold;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #FFFFFF;
-      .spot-item-text {
-        margin: 10px 20px;
+      .feedback-text{
+        margin-left: 20px;
+        word-break: break-all;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        font-size: 15px;
       }
-    }
-    .main-type-active {
-      @extend .main-item-type;
-      background-color: #087fe7;
-      color: #FFFFFF;
     }
   }
   .pagination-view {

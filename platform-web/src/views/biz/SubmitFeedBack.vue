@@ -133,27 +133,22 @@ export default {
       }
     };
   },
-  created() {
-    this.init();
+  async created() {
+    await this.init();
   },
   methods: {
-    //处理展示
-    showAdd(data) {
-      console.log('data:' + JSON.stringify(data))
-      if (data) {
-
-      }
-      this.init();
-    },
     async setOtherData() {
-      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
+
     },
     //处理初始化
     async init() {
       await this.setOtherData();
       //验证Token
       await this.$baseUtils.verifyToken();
-      await this.currentUserMeta();
+      let userData = await this.$bizConstants.userMeta();
+      this.userData = {...userData};
+      this.submitData.submitterId = userData.authAppUserId;
+      console.log('当前用户信息:' + JSON.stringify(this.userData))
     },
     clearAll() {
       console.log('触发清除所有')
