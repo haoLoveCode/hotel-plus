@@ -40,12 +40,7 @@
             <div class="bottom-btn-view">
               <el-link type="info" :underline="false" style="font-size: 20px;margin: 20px 20px">
                 <div class="bottom-btn-div" v-if="item.bookingStatus == 1">
-                  <div class="bottom-btn-text" @click="setOrderStatus(item)">
-                    登记入住
-                  </div>
-                </div>
-                <div class="bottom-btn-div" v-if="item.bookingStatus == 1">
-                  <div class="bottom-btn-text" @click="setOrderStatus(item)">
+                  <div class="bottom-btn-text" @click="cancelBooking(item)">
                     取消预定
                   </div>
                 </div>
@@ -54,6 +49,17 @@
                 <div class="buy-again-div" @click="toRoomDataView(item)">
                   <div class="bottom-btn-text">
                     再次预定
+                  </div>
+                </div>
+              </el-link>
+              <el-link
+                  v-if="item.bookingStatus == 2"
+                  type="info"
+                  :underline="false"
+                  style="font-size: 20px;margin: 20px 20px">
+                <div class="buy-again-div" @click="toRoomDataView(item)">
+                  <div class="bottom-btn-text">
+                    提交投诉或建议
                   </div>
                 </div>
               </el-link>
@@ -131,8 +137,8 @@ export default {
   },
   computed: {},
   methods: {
-    //修改订单状态（确认收货）
-    async setOrderStatus(item) {
+    //处理订单状态
+    async cancelBooking(item) {
       const loading = this.$loading({
         lock: true,
         text: "正在提交...",
@@ -141,7 +147,7 @@ export default {
         ...item,
         orderStatus:'FINISH'
       }
-      await Api.setOrderStatus({
+      await Api.cancelBooking({
         ...params
       }).then(async (res) => {
         if (!res.success) {

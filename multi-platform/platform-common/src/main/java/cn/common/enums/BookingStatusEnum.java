@@ -26,7 +26,7 @@ public enum BookingStatusEnum {
     /**
      * 已取消
      */
-    CAHCEL_BOOKING(3,"已取消"),
+    CANCEL_BOOKING(3,"已取消"),
 
     /**
      * 已退住

@@ -1,10 +1,7 @@
 package cn.common.service.biz.app;
 
 
-import cn.common.req.biz.BookingRoomReq;
-import cn.common.req.biz.RoomBookingAddReq;
-import cn.common.req.biz.RoomBookingReq;
-import cn.common.req.biz.RoomBookingUpdateReq;
+import cn.common.req.biz.*;
 import cn.common.resp.biz.RoomBookingResp;
 import cn.common.resp.biz.openBiz.TradeOrderResp;
 import pro.skywalking.req.base.BaseDeleteReq;
@@ -19,6 +16,16 @@ import java.util.List;
  * @date 2024/3/24
  */
 public interface AppRoomBookingService {
+
+    /**
+     *
+     * @description: 取消预定
+     * @author: create by singer - Singer email:singer-coder@qq.com
+     * @date 2024/3/25
+     * @param req
+     * @return
+     */
+    void cancelBooking(BookingRoomCancelReq req);
 
     /**
      * 新增房间预订信息

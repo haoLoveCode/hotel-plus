@@ -18,7 +18,6 @@ import cn.common.resp.biz.RoomCheckInResp;
 import cn.common.service.biz.AuthAppUserService;
 import cn.common.service.biz.app.AppRoomCheckInService;
 import cn.common.service.biz.app.AppRoomDataService;
-import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

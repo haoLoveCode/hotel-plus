@@ -9,15 +9,13 @@ import cn.common.repository.repository.biz.OrderDataRepository;
 import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.repository.repository.biz.RoomDataRepository;
 import cn.common.repository.repository.biz.TradeOrderRepository;
-import cn.common.req.biz.BookingRoomReq;
-import cn.common.req.biz.RoomBookingAddReq;
-import cn.common.req.biz.RoomBookingReq;
-import cn.common.req.biz.RoomBookingUpdateReq;
+import cn.common.req.biz.*;
 import cn.common.resp.biz.RoomBookingExportResp;
 import cn.common.resp.biz.RoomBookingResp;
 import cn.common.resp.biz.openBiz.TradeOrderResp;
 import cn.common.service.biz.AuthAppUserService;
 import cn.common.service.biz.app.AppRoomBookingService;
+import cn.common.service.biz.app.AppRoomDataService;
 import cn.common.service.biz.platform.RoomBookingService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
@@ -28,6 +26,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -91,11 +90,63 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
     private AuthAppUserService authAppUserService;
 
     @Resource
+    private AppRoomDataService appRoomDataService;
+
+    @Resource
     private HttpServletResponse response;
 
     @Resource
     private HttpServletRequest request;
 
+
+    /**
+      *
+      * @description: 取消预定
+      * @author: create by singer - Singer email:singer-coder@qq.com
+      * @date 2024/3/25
+      * @param req
+      * @return
+      */
+    public void cancelBooking(BookingRoomCancelReq req){
+        log.info(">>>>>>>>>>>>>>>>>取消预定Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
+        String authAppUserId = authAppUserService.authAppUserId();
+        String roomBookingId = req.getRoomBookingId();
+        RoomData roomData = appRoomDataService.queryRoomByBookingUd(roomBookingId);
+        if(CheckParam.isNull(roomData)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
+        }
+        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.CHECKED_IN.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被预定，不可取消");
+        }
+        RoomBooking roomBooking = roomBookingRepository.selectOne(new LambdaQueryWrapper<RoomBooking>()
+                .eq(RoomBooking::getRoomBookingId,roomBookingId));
+        if(CheckParam.isNull(roomBooking)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "预定订单不存在");
+        }
+        //非预定成功状态不可入住
+        if(roomBooking.getBookingStatus().compareTo(BookingStatusEnum.BOOKING_SUCCESS.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "非预定成功状态不可取消");
+        }
+        //此处为交易订单号
+        String bookingNo = roomBooking.getBookingNo();
+        TradeOrder tradeOrder = tradeOrderRepository.selectOne(new MPJLambdaWrapper<TradeOrder>()
+                .eq(TradeOrder::getOutTradeNo, bookingNo)
+                .eq(TradeOrder::getAuthAppUserId, authAppUserId));
+        if(CheckParam.isNull(tradeOrder)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "交易订单不存在");
+        }
+        //更新房间状态信息为闲置
+        roomData.setRoomStatus(RoomStatusEnum.UNUSED.getCode());
+        roomDataRepository.updateById(roomData);
+
+        //预定订单更新为已取消
+        roomBooking.setBookingStatus(BookingStatusEnum.CANCEL_BOOKING.getCode());
+        roomBookingRepository.updateById(roomBooking);
+
+        //更新订单为完结
+        tradeOrder.setOrderStatus(OrderStatusEnum.FINISH.getCode());
+        tradeOrderRepository.updateById(tradeOrder);
+    }
 
     /**
      * 新增房间预订信息

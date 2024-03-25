@@ -1,10 +1,7 @@
 package cn.common.api.biz;
 
 import cn.common.api.BaseApiController;
-import cn.common.req.biz.BookingRoomReq;
-import cn.common.req.biz.RoomBookingAddReq;
-import cn.common.req.biz.RoomBookingReq;
-import cn.common.req.biz.RoomBookingUpdateReq;
+import cn.common.req.biz.*;
 import cn.common.resp.biz.RoomBookingResp;
 import cn.common.resp.biz.openBiz.TradeOrderResp;
 import cn.common.service.biz.app.AppRoomBookingService;
@@ -46,6 +43,22 @@ public class AppRoomBookingController extends BaseApiController {
     @NeedLogin()
     public ApiResponse<TradeOrderResp> addItem(@RequestBody @Valid BookingRoomReq req) {
         return apiResponse(appRoomBookingService.addItem(req));
+    }
+
+    /**
+     *
+     * @description: 取消预定
+     * @author: create by singer - Singer email:singer-coder@qq.com
+     * @date 2024/3/25
+     * @param req
+     * @return
+     */
+    @PostMapping(value = "/cancelBooking")
+    @ApiLog(value = "取消预定")
+    @NeedLogin()
+    public ApiResponse cancelBooking(@RequestBody @Valid BookingRoomCancelReq req){
+        appRoomBookingService.cancelBooking(req);
+        return apiResponse();
     }
 
     /**
