@@ -288,8 +288,12 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     private void setQueryCriteria(LambdaQueryWrapper<RoomData> pageWrapper,
                         RoomDataReq pageReq){
 
+        if(!CheckParam.isNull(pageReq.getRoomDataId())){
+            pageWrapper.eq(RoomData::getRoomDataId,pageReq.getRoomDataId());
+        }
+
         if(!CheckParam.isNull(pageReq.getRoomTypeId())){
-            pageWrapper.like(RoomData::getRoomTypeId,pageReq.getRoomTypeId());
+            pageWrapper.eq(RoomData::getRoomTypeId,pageReq.getRoomTypeId());
         }
 
         if(!CheckParam.isNull(pageReq.getRoomTitle())){
@@ -309,7 +313,7 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
         }
 
         if(!CheckParam.isNull(pageReq.getRoomStatus())){
-            pageWrapper.like(RoomData::getRoomStatus,pageReq.getRoomStatus());
+            pageWrapper.eq(RoomData::getRoomStatus,pageReq.getRoomStatus());
         }
 
         if(!CheckParam.isNull(pageReq.getRoomFloor())){
@@ -317,15 +321,15 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
         }
 
         if(!CheckParam.isNull(pageReq.getUnitPrice())){
-            pageWrapper.like(RoomData::getUnitPrice,pageReq.getUnitPrice());
+            pageWrapper.ge(RoomData::getUnitPrice,pageReq.getUnitPrice());
         }
 
         if(!CheckParam.isNull(pageReq.getRoomArea())){
-            pageWrapper.like(RoomData::getRoomArea,pageReq.getRoomArea());
+            pageWrapper.ge(RoomData::getRoomArea,pageReq.getRoomArea());
         }
 
         if(!CheckParam.isNull(pageReq.getBedNum())){
-            pageWrapper.like(RoomData::getBedNum,pageReq.getBedNum());
+            pageWrapper.ge(RoomData::getBedNum,pageReq.getBedNum());
         }
     }
 
