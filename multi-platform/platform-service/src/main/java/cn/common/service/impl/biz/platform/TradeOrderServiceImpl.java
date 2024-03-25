@@ -9,16 +9,22 @@ import cn.common.req.biz.platform.TradeOrderAddReq;
 import cn.common.req.biz.platform.TradeOrderReq;
 import cn.common.req.biz.platform.TradeOrderUpdateReq;
 import cn.common.resp.biz.openBiz.TradeOrderResp;
+import cn.common.resp.biz.platform.TradeOrderExportResp;
 import cn.common.service.biz.AuthAppUserService;
 import cn.common.service.biz.app.AppTradeOrderService;
+import cn.common.service.biz.platform.TradeOrderService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
@@ -26,6 +32,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.enums.ErrorCode;
+import pro.skywalking.excel.ExportExcelHandler;
 import pro.skywalking.exception.BusinessException;
 import pro.skywalking.helper.PageBuilder;
 import pro.skywalking.req.base.BaseDeleteReq;
@@ -36,8 +43,10 @@ import pro.skywalking.utils.SnowflakeIdWorker;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -49,7 +58,7 @@ import java.util.stream.Collectors;
  */
 @Service("tradeOrderService")
 @Slf4j
-public class TradeOrderServiceImpl implements AppTradeOrderService {
+public class TradeOrderServiceImpl implements TradeOrderService {
 
     @Resource
     private TradeOrderRepository tradeOrderRepository;
@@ -63,6 +72,55 @@ public class TradeOrderServiceImpl implements AppTradeOrderService {
     @Resource
     private HttpServletResponse response;
 
+
+    /**
+     * 导出数据
+     * @author: Singer
+     * @date 2024-03-06
+     * @param pageReq
+     * @return java.util.List
+     */
+    @Override
+    public void exportData(TradeOrderReq pageReq){
+        log.info(">>>>>>>>>>>>>>>>>数据导出Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
+        //构建查询条件
+        MPJLambdaWrapper<TradeOrder> pageWrapper = new MPJLambdaWrapper<>();
+        setQueryCriteria(pageWrapper,pageReq);
+        pageWrapper.orderBy(true,false,TradeOrder::getCreateTime);
+        List<TradeOrder> pageList = tradeOrderRepository.selectList(pageWrapper);
+        if (CollectionUtils.isEmpty(pageList)) {
+            return;
+        }
+        List<TradeOrderExportResp> respList =
+                mapperFacade.mapAsList(pageList, TradeOrderExportResp.class);
+        try {
+            String fileName = "导出信息.xlsx";
+            ExportExcelHandler.setExportResponse(response,fileName);
+            ExcelWriter excelWriter = null;
+            try {
+                // 这里 需要指定写用哪个class去写
+                excelWriter = EasyExcel.write(response.getOutputStream(), TradeOrderExportResp.class).build();
+                // 这里注意 如果同一个sheet只要创建一次
+                WriteSheet writeSheet = EasyExcel.writerSheet("sheet").build();
+                excelWriter.write(respList,writeSheet);
+            } finally {
+                // 关闭流
+                if (excelWriter != null) {
+                    excelWriter.finish();
+                }
+            }
+        } catch (Exception e) {
+            log.error(">>>>>>>>>>>>>>>>>>>>>导出数据异常:{},{}<<<<<<<<<<<<<<<<<<<<<<",e.getMessage(),e);
+            ExportExcelHandler.setExportErrorResponse(response);
+            Map<String, String> map = Maps.newHashMap();
+            try {
+                response.getWriter().println(JSON.toJSONString(map));
+            } catch (IOException ioException) {
+                log.error(">>>>>>>>>>>>>>>>>导出数据发生异常:{},{}<<<<<<<<<<<<<<<<<",e.getMessage(),e);
+                ioException.printStackTrace();
+            }
+        }
+    }
 
     /**
      * 新增
