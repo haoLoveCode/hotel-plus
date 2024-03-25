@@ -193,12 +193,12 @@ export default {
             }
           });
           loading.close();
-          this.$router.push({path: "/mainPage"});
+          this.$router.push({path: "/mineFeedBackList"});
         } catch (error) {
           this.clearAll()
           loading.close();
           this.$message.error(error.message || error.msg || "服务器异常");
-          this.$router.push({path: "/mainPage"});
+          this.$router.push({path: "/mineFeedBackList"});
         }
       });
     },
