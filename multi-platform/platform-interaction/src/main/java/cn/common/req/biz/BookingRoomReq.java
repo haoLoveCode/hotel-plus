@@ -1,24 +1,25 @@
 package cn.common.req.biz;
 
 import com.alibaba.fastjson2.annotation.JSONField;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import pro.skywalking.constants.PlatformConstant;
 import pro.skywalking.validation.NotEmpty;
-import lombok.Data;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.io.*;
 
 /**
  * 房间预订信息新增Req
- * @title: RoomBookingAddReq.java
+ * @title: BookingRoomReq.java
  * @author Singer
  * @date 2024-02-29 11:13
  */
 @Data
-public class RoomBookingAddReq implements Serializable {
+public class BookingRoomReq implements Serializable {
 
-    private static final long serialVersionUID = -937269933411790819L;
+    private static final long serialVersionUID = -7616027920767734097L;
 
     /**
      * 预定人
@@ -27,10 +28,16 @@ public class RoomBookingAddReq implements Serializable {
     private String subscriberId;
 
     /**
-     * 预订单号
+     * 入住天数
      */
-    @NotEmpty(message = "预订单号->不可为空")
-    private String bookingNo;
+    @NotEmpty(message = "入住天数->不可为空")
+    private Integer itemNum;
+
+    /**
+     * 总金额
+     */
+    @NotEmpty(message = "总金额->不可为空")
+    private BigDecimal totalAmount;
 
     /**
      * 房间ID
@@ -43,14 +50,6 @@ public class RoomBookingAddReq implements Serializable {
      */
     //@NotEmpty(message = "备注信息->不可为空")
     private String remark;
-
-    /**
-     * 预订时间
-     */
-    @NotEmpty(message = "预订时间->不可为空")
-    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
-    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
-    private LocalDateTime bookingTime;
 
     /**
      * 入住开始时间
@@ -68,10 +67,6 @@ public class RoomBookingAddReq implements Serializable {
     @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
     private LocalDateTime checkInEnd;
 
-    /**
-     * 预定状态
-     */
-    //@NotEmpty(message = "预定状态->不可为空")
-    private Integer bookingStatus;
+
 
 }

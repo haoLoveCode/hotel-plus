@@ -1,10 +1,12 @@
 package cn.common.service.biz.app;
 
 
+import cn.common.req.biz.BookingRoomReq;
 import cn.common.req.biz.RoomBookingAddReq;
 import cn.common.req.biz.RoomBookingReq;
 import cn.common.req.biz.RoomBookingUpdateReq;
 import cn.common.resp.biz.RoomBookingResp;
+import cn.common.resp.biz.openBiz.TradeOrderResp;
 import pro.skywalking.req.base.BaseDeleteReq;
 import pro.skywalking.resp.page.Pagination;
 
@@ -25,7 +27,7 @@ public interface AppRoomBookingService {
      * @author: Singer
      * @date 2024/3/24
      */
-    void addItem(RoomBookingAddReq addReq);
+    TradeOrderResp addItem(BookingRoomReq addReq);
 
     /**
      * 批量删除房间预订信息

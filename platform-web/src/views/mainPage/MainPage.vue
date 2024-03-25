@@ -244,8 +244,9 @@ export default {
             if (!imgList || imgList.length === 0) {
               return;
             }
-            let firstItem = imgList.at(0);
-            let mainImg = await this.handleImageUrl(firstItem);
+            /*let firstItem = imgList.at(0);
+            let mainImg = await this.handleImageUrl(firstItem);*/
+            let mainImg = await this.handleImageUrl(item.mainImg);
             item.mainImg = mainImg;
             this.roomDataList.push(item);
           })

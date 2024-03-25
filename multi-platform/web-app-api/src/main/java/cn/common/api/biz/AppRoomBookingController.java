@@ -1,10 +1,12 @@
 package cn.common.api.biz;
 
 import cn.common.api.BaseApiController;
+import cn.common.req.biz.BookingRoomReq;
 import cn.common.req.biz.RoomBookingAddReq;
 import cn.common.req.biz.RoomBookingReq;
 import cn.common.req.biz.RoomBookingUpdateReq;
 import cn.common.resp.biz.RoomBookingResp;
+import cn.common.resp.biz.openBiz.TradeOrderResp;
 import cn.common.service.biz.app.AppRoomBookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -35,16 +37,15 @@ public class AppRoomBookingController extends BaseApiController {
     /**
      * 新增房间预订信息
      *
-     * @param addReq 新增房间预订信息Req
+     * @param req 新增房间预订信息Req
      * @author: Singer
      * @date 2024/3/24
      */
     @PostMapping(value = "/addItem")
     @ApiLog(value = "新增房间预订信息")
     @NeedLogin()
-    public ApiResponse addItem(@RequestBody @Valid RoomBookingAddReq addReq) {
-        appRoomBookingService.addItem(addReq);
-        return apiResponse();
+    public ApiResponse<TradeOrderResp> addItem(@RequestBody @Valid BookingRoomReq req) {
+        return apiResponse(appRoomBookingService.addItem(req));
     }
 
     /**

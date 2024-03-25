@@ -11,6 +11,7 @@ export const LOGIN_PAGE = '/LoginPage'
 export const TC_MAP_KEY = 'BSVBZ-SMTKV-TUPPE-5QAL4-HBOSZ-WLFMS'
 //登录请求地址
 export const LOGIN_REQUEST_URL = '/authUserLogin'
+//时间选项
 export const pickerOptions = {
   shortcuts: [{
     text: '今天',

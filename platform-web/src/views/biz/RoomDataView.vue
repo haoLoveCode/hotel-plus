@@ -33,28 +33,48 @@
           </div>
           <div class="basket-view">
             <div class="basket-btn-view">
-              <el-link type="info" :underline="false" @click="handleBasketBiz(1)">
+            <!--<el-link type="info" :underline="false" @click="handleBasketBiz(1)">
                 <img src="/static/icons/add-icon.png"
                      alt=""
                      width="auto"
                      height="20px"
                      style="border-radius: 10px;"/>
-              </el-link>
+              </el-link>-->
+              <el-date-picker
+                  v-model="submitData.checkInBegin"
+                  @change="handleTimeChange"
+                  type="datetime"
+                  placeholder="请填写-入住开始时间"
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </div>
-            <div class="basket-num-view" v-if="Object.keys(baskItemData).length > 0">
-              住 {{baskItemData.itemNum}} 天
+            <div class="basket-num-view" v-if="Object.keys(submitData).length > 0">
+              住 {{submitData.itemNum}} 天
             </div>
             <div class="basket-num-view" v-else>
               0
             </div>
             <div class="basket-btn-view">
-              <el-link type="info" :underline="false" @click="handleBasketBiz(2)">
+              <!--<el-link type="info" :underline="false" @click="handleBasketBiz(2)">
                 <img src="/static/icons/minus-icon.png"
                      alt=""
                      width="auto"
                      height="20px"
                      style="border-radius: 10px;"/>
-              </el-link>
+              </el-link>-->
+              <el-date-picker
+                  v-model="submitData.checkInEnd"
+                  @change="handleTimeChange"
+                  type="datetime"
+                  placeholder="请填写-入住结束时间"
+                  align="right"
+                  :value-format="timeFormat"
+                  :picker-options="pickerOptions"
+              >
+              </el-date-picker>
             </div>
           </div>
           <div class="buy-now-btn" @click="roomOrdering(roomItemData)">
@@ -109,7 +129,7 @@
             预定住宿天数:
           </div>
           <div class="ordering-text-value">
-            {{baskItemData.itemNum}}
+            {{submitData.itemNum}}天，({{submitData.checkInBegin}}-{{submitData.checkInEnd}})
           </div>
         </div>
         <div class="ordering-text-view">
@@ -117,8 +137,18 @@
             总价:
           </div>
           <div class="ordering-text-value">
-            {{baskItemData.itemNum * roomItemData.unitPrice}}
+            {{submitData.itemNum * roomItemData.unitPrice}}
           </div>
+        </div>
+        <div class="ordering-remark">
+          <el-input
+              type="textarea"
+              :rows="3"
+              v-model="submitData.remark"
+              placeholder="请填写-下单备注"
+              maxlength="30"
+              show-word-limit>
+          </el-input>
         </div>
         <div class="ordering-btn-view">
           <div class="ordering-btn-text">
@@ -141,6 +171,10 @@ export default {
   },
   data() {
     return {
+      //-----------------
+      pickerOptions:this.$bizConstants.pickerOptions,
+      timeFormat:'yyyy-MM-dd HH:mm:ss', //时间格式
+      //-----------------
       //下单弹窗
       orderingShow:false,
       itemStatusOptions: [
@@ -170,7 +204,13 @@ export default {
       previewVisible: false,
       currentTime: '',
       roomItemData: {},
-      submitData: {},
+      submitData: {
+        checkInBegin: '',
+        checkInEnd: '',
+        itemNum:1,
+        remark:'',
+        totalAmount: 0
+      },
       commentDataList: [],
       userData:{},
       paginationData: {
@@ -178,13 +218,31 @@ export default {
         totalCount: 0,
         currentPage: 1
       },
-      baskItemData:{
-        itemNum:1
-      }
     };
   },
   computed: {},
   methods: {
+    //时间选择发生变化
+    async handleTimeChange(value){
+      console.log('checkInBeginChange:'+value);
+      let checkInBegin = this.submitData.checkInBegin;
+      let checkInEnd = this.submitData.checkInEnd;
+      if(!checkInEnd || !checkInEnd){
+          return;
+      }
+      console.log('checkInBegin:'+checkInBegin);
+      console.log('checkInEnd:'+checkInEnd);
+      let checkInBeginMoment = moment(checkInBegin);
+      console.log(checkInBeginMoment);
+      let checkInEndMoment = moment(checkInEnd);
+
+      let diffDays = checkInEndMoment.diff(checkInBeginMoment, 'days')
+      console.log('diffDays:'+diffDays);
+      if(diffDays && diffDays >0){
+        this.submitData.itemNum = diffDays;
+        this.submitData.totalAmount = diffDays * this.roomItemData.unitPrice
+      }
+    },
     //取消下单
     async orderingCancel(){
       this.orderingShow = false;
@@ -193,36 +251,49 @@ export default {
     roomOrdering(item) {
      this.orderingShow = true;
     },
-    //查询当前用户信息
-    async currentUserMeta() {
-      await Api.currentUserMeta({
-
-      }).then(async (res) => {
-        if (!res.success) {
-          return;
-        }
-        if (this.$isNull(res)) {
-          return;
-        }
-        let data = res.data
-        if (this.$isNull(data)) {
-          return;
-        }
-        data.avatarUrl = await this.handleImageUrl(data.avatarUrl);
-        this.userData = {...data};
-        console.log('当前用户信息:' + JSON.stringify(this.userData))
+    //处理下单
+    async handleOrdering(){
+      const loading = this.$loading({
+        lock: true,
+        text: "正在提交...",
       });
+      let params = {
+        ...this.submitData,
+        subscriberId:this.userData.authAppUserId
+      }
+      try {
+        Api.handleBasketBiz(params).then(async (res) => {
+          if (res.success) {
+            this.$message({
+              message: "操作购物车成功",
+              type: "success",
+            });
+            let data = res.data;
+            console.log('添加购物车结果:' + JSON.stringify(data));
+            await this.queryOneBasketItem(this.salesItemData.salesItemId);
+            this.clearAll()
+          } else {
+            this.$message.error('操作失败');
+            this.clearAll()
+          }
+        });
+        loading.close();
+      } catch (error) {
+        this.clearAll()
+        loading.close();
+        this.$message.error(error.message || error.msg || "服务器异常");
+      }
     },
     //处理新增和减少住宿天
     async handleBasketBiz(bizType){
       if(bizType === 1){
-        this.baskItemData.itemNum += 1;
+        this.submitData.itemNum += 1;
       }
       if(bizType === 2){
-        if(this.baskItemData.itemNum <= 1){
-          this.baskItemData.itemNum = 1;
+        if(this.submitData.itemNum <= 1){
+          this.submitData.itemNum = 1;
         }else{
-          this.baskItemData.itemNum -= 1;
+          this.submitData.itemNum -= 1;
         }
       }
     },
@@ -280,22 +351,18 @@ export default {
         return '无'
       }
     },
-    //处理关闭购物车
-    async handleBasketClose(){
-      await this.currentUserMeta();
-      let roomDataId = this.roomItemData.roomDataId;
-      this.queryOneRoomData(roomDataId);
-    },
     async init() {
+      let data = await this.$bizConstants.userMeta();
+      this.userData = {...data};
+      console.log('当前用户信息:' + JSON.stringify(this.userData))
       this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
   },
-  created() {
+  async created() {
     console.log(this.$route.query.roomDataId);
     let roomDataId = this.$route.query.roomDataId;
-    this.currentUserMeta();
-    this.queryOneRoomData(roomDataId);
-    this.init();
+    await this.queryOneRoomData(roomDataId);
+    await this.init();
   },
   mounted() {
 
@@ -320,6 +387,9 @@ export default {
     font-size: 20px;
     margin: 10px 0px;
     margin-left: 20px;
+  }
+  .ordering-remark{
+    width: 90%;
   }
   .ordering-btn-view{
     display: flex;

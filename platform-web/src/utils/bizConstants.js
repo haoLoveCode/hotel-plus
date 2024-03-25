@@ -8,7 +8,32 @@ export const TOP_MENU_NODE = '0'
 export const LOGIN_PAGE = '/LoginPage'
 //腾讯地图KEY
 export const TC_MAP_KEY = 'BSVBZ-SMTKV-TUPPE-5QAL4-HBOSZ-WLFMS'
-
+//时间选项
+export const pickerOptions = {
+  disabledDate (time) {
+    return time.getTime() < Date.now() - 8.64e7; // 如果没有后面的-8.64e7就是不可以选择今天的
+  },
+  shortcuts: [{
+    text: '今天',
+    onClick(picker) {
+      picker.$emit('pick', new Date());
+    }
+  }, {
+    text: '昨天',
+    onClick(picker) {
+      const date = new Date();
+      date.setTime(date.getTime() - 3600 * 1000 * 24);
+      picker.$emit('pick', date);
+    }
+  }, {
+    text: '一周前',
+    onClick(picker) {
+      const date = new Date();
+      date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+      picker.$emit('pick', date);
+    }
+  }]
+}
 //需要重新登陆的Code 由后端决定
 export const NEED_LOGIN_CODE = [
   '501',
@@ -363,6 +388,7 @@ export default {
   tagColumns:tagColumns,
   panelOptions:panelOptions,
   itemStatusOptions:itemStatusOptions,
+  pickerOptions:pickerOptions,
   itemHotStatusOptions:itemHotStatusOptions,
   needAllStatusOptions:needAllStatusOptions,
   handleImageUrl:methodHandler.handleImageUrl,
