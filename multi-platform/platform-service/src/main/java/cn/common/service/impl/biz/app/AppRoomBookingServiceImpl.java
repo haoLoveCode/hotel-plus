@@ -203,8 +203,8 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
             orderDataRepository.insert(entity);
         }catch (Exception e){
             log.error(">>>>>>>>>>>下单出现异常 : {} , {} <<<<<<<<<",e.getMessage(),e);
-            throw new BusinessException(BizErrorCode.WX_PAY_SIGN_ERROR.getCode(),
-                    BizErrorCode.WX_PAY_SIGN_ERROR.getMessage());
+            throw new BusinessException(ErrorCode.ERROR.getCode(),
+                    ErrorCode.ERROR.getMessage()+StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
         }
     }
 

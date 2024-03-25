@@ -150,7 +150,7 @@
               show-word-limit>
           </el-input>
         </div>
-        <div class="ordering-btn-view">
+        <div class="ordering-btn-view" @click="handleOrdering">
           <div class="ordering-btn-text">
             确认下单
           </div>
@@ -259,18 +259,18 @@ export default {
       });
       let params = {
         ...this.submitData,
+        roomDataId:this.roomItemData.roomDataId,
         subscriberId:this.userData.authAppUserId
       }
       try {
-        Api.handleBasketBiz(params).then(async (res) => {
+        Api.addRoomBookingItem(params).then(async (res) => {
           if (res.success) {
             this.$message({
-              message: "操作购物车成功",
+              message: "预定成功",
               type: "success",
             });
             let data = res.data;
-            console.log('添加购物车结果:' + JSON.stringify(data));
-            await this.queryOneBasketItem(this.salesItemData.salesItemId);
+            console.log('预定结果:' + JSON.stringify(data));
             this.clearAll()
           } else {
             this.$message.error('操作失败');
