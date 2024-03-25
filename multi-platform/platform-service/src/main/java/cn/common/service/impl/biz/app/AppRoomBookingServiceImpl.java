@@ -154,6 +154,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
         RoomBooking entity = mapperFacade.map(req, RoomBooking.class);
         try {
             BaseUtil.setFieldValueNotNull(entity);
+            entity.setBookingNo(outTradeNo);
             entity.setRoomBookingId(mainId);
             entity.setSubscriberId(authAppUserId);
             entity.setOperatorId(authAppUserId);
