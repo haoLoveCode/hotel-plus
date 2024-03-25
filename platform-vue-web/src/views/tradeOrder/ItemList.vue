@@ -208,9 +208,10 @@
       </el-table-column>
       <el-table-column
         prop="itemId"
-        label="商品信息"
+        label="商品（房间）信息"
         header-align="center"
         align="center"
+        width="200"
       >
         <template v-slot="scope">
           {{handleTypeByValue(scope.row.itemId,roomDataOptions)}}
@@ -221,6 +222,7 @@
         label="下单用户信息"
         header-align="center"
         align="center"
+        width="200"
       >
         <template v-slot="scope">
           {{handleTypeByValue(scope.row.authAppUserId,authAppUserOptions)}}
