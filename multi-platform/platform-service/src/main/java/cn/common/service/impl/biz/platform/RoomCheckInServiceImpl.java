@@ -166,7 +166,7 @@ public class RoomCheckInServiceImpl implements RoomCheckInService {
         if(CheckParam.isNull(roomData)){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
         }
-        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.CHECKED_IN.getCode()) != 0){
+        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.BOOKING.getCode()) != 0){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被预定，不可入住");
         }
         RoomBooking roomBooking = roomBookingRepository.selectOne(new LambdaQueryWrapper<RoomBooking>()
@@ -201,7 +201,7 @@ public class RoomCheckInServiceImpl implements RoomCheckInService {
         roomCheckInRepository.insert(entity);
 
         //更新房间状态信息为已入住
-        roomData.setRoomStatus(RoomStatusEnum.BOOKED.getCode());
+        roomData.setRoomStatus(RoomStatusEnum.CHECK_IN.getCode());
         roomDataRepository.updateById(roomData);
 
         //更新为已入住

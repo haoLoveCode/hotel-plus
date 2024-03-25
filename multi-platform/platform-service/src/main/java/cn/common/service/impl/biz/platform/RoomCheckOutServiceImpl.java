@@ -166,8 +166,8 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
         if(CheckParam.isNull(roomData)){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
         }
-        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.BOOKED.getCode()) != 0){
-            throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被入住，不可退订");
+        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.CHECK_IN.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被入住，不可退住");
         }
         RoomBooking roomBooking = roomBookingRepository.selectOne(new LambdaQueryWrapper<RoomBooking>()
                 .eq(RoomBooking::getRoomBookingId,roomBookingId));

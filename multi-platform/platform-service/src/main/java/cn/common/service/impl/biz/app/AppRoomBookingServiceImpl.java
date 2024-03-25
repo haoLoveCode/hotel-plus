@@ -1,6 +1,5 @@
 package cn.common.service.impl.biz.app;
 
-import cn.common.enums.BizErrorCode;
 import cn.common.enums.BookingStatusEnum;
 import cn.common.enums.OrderTypeEnum;
 import cn.common.enums.RoomStatusEnum;
@@ -10,25 +9,18 @@ import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.repository.repository.biz.RoomDataRepository;
 import cn.common.repository.repository.biz.TradeOrderRepository;
 import cn.common.req.biz.*;
-import cn.common.resp.biz.RoomBookingExportResp;
 import cn.common.resp.biz.RoomBookingResp;
 import cn.common.resp.biz.openBiz.TradeOrderResp;
 import cn.common.service.biz.AuthAppUserService;
 import cn.common.service.biz.app.AppRoomBookingService;
 import cn.common.service.biz.app.AppRoomDataService;
-import cn.common.service.biz.platform.RoomBookingService;
-import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
@@ -38,7 +30,6 @@ import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
 import pro.skywalking.enums.OrderStatusEnum;
-import pro.skywalking.excel.ExportExcelHandler;
 import pro.skywalking.exception.BusinessException;
 import pro.skywalking.helper.PageBuilder;
 import pro.skywalking.req.base.BaseDeleteReq;
@@ -50,12 +41,9 @@ import pro.skywalking.utils.SnowflakeIdWorker;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -115,7 +103,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
         if(CheckParam.isNull(roomData)){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
         }
-        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.CHECKED_IN.getCode()) != 0){
+        if(roomData.getRoomStatus().compareTo(RoomStatusEnum.BOOKING.getCode()) != 0){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被预定，不可取消");
         }
         RoomBooking roomBooking = roomBookingRepository.selectOne(new LambdaQueryWrapper<RoomBooking>()
@@ -220,7 +208,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
         roomBookingRepository.insert(entity);
 
         //更新房间状态
-        roomData.setRoomStatus(RoomStatusEnum.CHECKED_IN.getCode());
+        roomData.setRoomStatus(RoomStatusEnum.BOOKING.getCode());
         roomDataRepository.updateById(roomData);
 
         TradeOrderResp resp = mapperFacade.map(tradeOrder, TradeOrderResp.class);
@@ -476,7 +464,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
 
         RoomData roomUpdateData = new RoomData();
         roomUpdateData.setRoomDataId(result.getRoomDataId());
-        roomUpdateData.setRoomStatus(RoomStatusEnum.CHECKED_IN.getCode());
+        roomUpdateData.setRoomStatus(RoomStatusEnum.BOOKING.getCode());
         roomDataRepository.update(roomUpdateData,new LambdaQueryWrapper<RoomData>().eq(RoomData::getRoomDataId,roomDataId));
 
         roomData.setRoomStatus(RoomStatusEnum.UNUSED.getCode());

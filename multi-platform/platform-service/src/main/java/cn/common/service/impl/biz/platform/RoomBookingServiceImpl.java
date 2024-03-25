@@ -162,7 +162,7 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         roomBookingRepository.insert(entity);
 
         //更新房间状态
-        roomData.setRoomStatus(RoomStatusEnum.CHECKED_IN.getCode());
+        roomData.setRoomStatus(RoomStatusEnum.BOOKING.getCode());
         roomDataRepository.updateById(roomData);
     }
 
@@ -379,7 +379,7 @@ public class RoomBookingServiceImpl implements RoomBookingService {
 
         RoomData roomUpdateData = new RoomData();
         roomUpdateData.setRoomDataId(result.getRoomDataId());
-        roomUpdateData.setRoomStatus(RoomStatusEnum.CHECKED_IN.getCode());
+        roomUpdateData.setRoomStatus(RoomStatusEnum.BOOKING.getCode());
         roomDataRepository.update(roomUpdateData,new LambdaQueryWrapper<RoomData>().eq(RoomData::getRoomDataId,roomDataId));
 
         roomData.setRoomStatus(RoomStatusEnum.UNUSED.getCode());

@@ -22,7 +22,7 @@ public enum RoomStatusEnum {
     /**
      * 已预订
      */
-    CHECKED_IN(2,"已预订"),
+    BOOKING(2,"已预订"),
 
     /**
      * 维护中
@@ -32,7 +32,7 @@ public enum RoomStatusEnum {
     /**
      * 已入住
      */
-    BOOKED(4,"已入住"),
+    CHECK_IN(4,"已入住"),
 
     /**
      * 已退住
