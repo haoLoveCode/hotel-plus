@@ -14,7 +14,6 @@ import cn.common.repository.entity.biz.RoomCheckOut;
 import cn.common.repository.repository.biz.RoomCheckOutRepository;
 import cn.common.service.biz.platform.RoomDataService;
 import cn.common.service.platform.AuthUserService;
-import cn.hutool.extra.validation.ValidationUtil;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
@@ -31,7 +30,6 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import pro.skywalking.utils.SnowflakeIdWorker;
 import com.google.common.collect.Lists;
 import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.Page;
@@ -41,7 +39,7 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -67,7 +65,7 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
     private RoomCheckOutRepository roomCheckOutRepository;
 
     @Resource
-    private RoomDataService appRoomDataService;
+    private RoomDataService roomDataService;
 
     @Resource
     private RoomBookingRepository roomBookingRepository;
@@ -152,7 +150,7 @@ public class RoomCheckOutServiceImpl implements RoomCheckOutService {
 
         String roomBookingId = addReq.getRoomBookingId();
 
-        RoomData roomData = appRoomDataService.queryRoomByBookingUd(roomBookingId);
+        RoomData roomData = roomDataService.queryRoomByBookingUd(roomBookingId);
         if(CheckParam.isNull(roomData)){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
         }

@@ -8,22 +8,16 @@ import cn.common.repository.repository.biz.RoomImgRepository;
 import cn.common.req.biz.openBiz.roomData.RoomDataAddReq;
 import cn.common.req.biz.openBiz.roomData.RoomDataReq;
 import cn.common.req.biz.openBiz.roomData.RoomDataUpdateReq;
-import cn.common.resp.biz.RoomDataExportResp;
 import cn.common.resp.biz.RoomDataResp;
 import cn.common.service.biz.app.AppRoomDataService;
-import cn.common.service.biz.platform.RoomDataService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
@@ -32,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
-import pro.skywalking.excel.ExportExcelHandler;
 import pro.skywalking.exception.BusinessException;
 import pro.skywalking.helper.PageBuilder;
 import pro.skywalking.req.base.BaseDeleteReq;
@@ -44,7 +37,6 @@ import pro.skywalking.utils.SnowflakeIdWorker;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +82,7 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
       * @param roomBookingId 房间预定ID
       * @return cn.common.repository.entity.biz.RoomData
       */
+    @Override
     public RoomData queryRoomByBookingUd(String roomBookingId){
         MPJLambdaWrapper<RoomData> roomWrapper = new MPJLambdaWrapper<>();
         roomWrapper.leftJoin(RoomBooking.class,RoomBooking::getRoomBookingId,RoomData::getRoomDataId);

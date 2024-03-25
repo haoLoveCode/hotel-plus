@@ -90,6 +90,7 @@ public class RoomDataServiceImpl implements RoomDataService {
      * @param roomBookingId 房间预定ID
      * @return cn.common.repository.entity.biz.RoomData
      */
+    @Override
     public RoomData queryRoomByBookingUd(String roomBookingId){
         MPJLambdaWrapper<RoomData> roomWrapper = new MPJLambdaWrapper<>();
         roomWrapper.leftJoin(RoomBooking.class,RoomBooking::getRoomBookingId,RoomData::getRoomDataId);

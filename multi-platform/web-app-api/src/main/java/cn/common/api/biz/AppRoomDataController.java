@@ -5,7 +5,7 @@ import cn.common.req.biz.openBiz.roomData.RoomDataAddReq;
 import cn.common.req.biz.openBiz.roomData.RoomDataReq;
 import cn.common.req.biz.openBiz.roomData.RoomDataUpdateReq;
 import cn.common.resp.biz.RoomDataResp;
-import cn.common.service.biz.platform.RoomDataService;
+import cn.common.service.biz.app.AppRoomDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import pro.skywalking.anon.ApiLog;
@@ -27,109 +27,101 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "api/v1/roomData")
 @Slf4j
-public class RoomDataController extends BaseApiController {
+public class AppRoomDataController extends BaseApiController {
 
     @Resource
-    private RoomDataService roomDataService;
+    private AppRoomDataService appRoomDataService;
 
     /**
      * 新增房间信息
+     *
+     * @param addReq 新增房间信息Req
      * @author: Singer
      * @date 2024/3/24
-     * @param addReq 新增房间信息Req
      */
     @PostMapping(value = "/addItem")
     @ApiLog(value = "新增房间信息")
     @NeedLogin()
-    public ApiResponse addItem(@RequestBody @Valid RoomDataAddReq addReq){
-        roomDataService.addItem(addReq);
+    public ApiResponse addItem(@RequestBody @Valid RoomDataAddReq addReq) {
+        appRoomDataService.addItem(addReq);
         return apiResponse();
     }
 
     /**
-     * 导出房间信息数据
-     * @author: Singer
-     * @date 2024/3/24
-     * @param pageReq
-     * @return java.util.List
-    */
-    @PostMapping(value = "/exportData")
-    @ApiLog(value = "房间信息数据导出")
-    @NeedLogin()
-    public void exportData(@RequestBody(required = false) @Valid RoomDataReq pageReq){
-        roomDataService.exportData(pageReq);
-    }
-
-    /**
      * 主键ID集合批量删除房间信息
+     *
+     * @param req 需要被删除的房间信息
      * @author: Singer
      * @date 2024/3/24
-     * @param req 需要被删除的房间信息
      */
     @PostMapping(value = "/batchDeleteItem")
     @ApiLog(value = "根据主键ID集合批量删除房间信息")
     @NeedLogin()
-    public ApiResponse batchDeleteItem(@RequestBody BaseDeleteReq req){
-        roomDataService.batchDeleteItem(req);
+    public ApiResponse batchDeleteItem(@RequestBody BaseDeleteReq req) {
+        appRoomDataService.batchDeleteItem(req);
         return apiResponse();
     }
 
     /**
      * 更新房间信息
+     *
+     * @param updateReq 更新房间信息请求参数
      * @author: Singer
      * @date 2024/3/24
-     * @param updateReq 更新房间信息请求参数
      */
     @PutMapping(value = "/updateItem")
     @ApiLog(value = "更新房间信息")
     @NeedLogin()
-    public ApiResponse updateItem(@RequestBody @Valid RoomDataUpdateReq updateReq){
-        roomDataService.updateItem(updateReq);
+    public ApiResponse updateItem(@RequestBody @Valid RoomDataUpdateReq updateReq) {
+        appRoomDataService.updateItem(updateReq);
         return apiResponse();
     }
 
     /**
      * 查询房间信息
-     * @author: Singer
-     * @date 2024/3/24
+     *
      * @param
      * @return java.util.List
+     * @author: Singer
+     * @date 2024/3/24
      */
     @PostMapping(value = "/queryRoomData")
     @ApiLog(value = "查询房间信息")
     @NeedLogin()
     public ApiResponse<List<RoomDataResp>> queryRoomData(
-        @RequestBody @Valid RoomDataReq req){
-        return apiResponse(roomDataService.queryRoomData(req));
+            @RequestBody @Valid RoomDataReq req) {
+        return apiResponse(appRoomDataService.queryRoomData(req));
     }
 
     /**
      * 查询单个房间信息
-     * @author: Singer
-     * @date 2024/3/24
+     *
      * @param
      * @return java.util.List
+     * @author: Singer
+     * @date 2024/3/24
      */
     @PostMapping(value = "/queryOneRoomData")
     @ApiLog(value = "查询房间信息")
     @NeedLogin()
     public ApiResponse<RoomDataResp> queryOneRoomData(
-        @RequestBody @Valid RoomDataReq req){
-        return apiResponse(roomDataService.queryOneRoomData(req));
+            @RequestBody @Valid RoomDataReq req) {
+        return apiResponse(appRoomDataService.queryOneRoomData(req));
     }
 
     /**
      * 分页查询房间信息
+     *
+     * @param pageReq 分页查询房间信息Req
+     * @return Pagination
      * @author: Singer
      * @date 2024/3/24
-     * @param  pageReq 分页查询房间信息Req
-     * @return Pagination
      */
     @PostMapping(value = "/queryByPage")
     @ApiLog(value = "分页查询房间信息")
     @NeedLogin()
     public ApiResponse<Pagination<RoomDataResp>> queryByPage(
-        @RequestBody @Valid RoomDataReq pageReq){
-        return apiResponse(roomDataService.queryByPage(pageReq));
+            @RequestBody @Valid RoomDataReq pageReq) {
+        return apiResponse(appRoomDataService.queryByPage(pageReq));
     }
 }
