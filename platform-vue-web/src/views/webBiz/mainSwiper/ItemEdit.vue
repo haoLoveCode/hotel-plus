@@ -45,7 +45,7 @@
         <el-divider content-position="center">上传图片</el-divider>
         <div class="add-body-div">
           <div class="add-item-view">
-            <el-form-item label="用户头像图:">
+            <el-form-item label="上传轮播图:">
               <div class="upload-item-view">
                 <UploadImg
                     class="upload-item"

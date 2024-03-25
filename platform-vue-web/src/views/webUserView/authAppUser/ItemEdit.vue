@@ -1,15 +1,15 @@
 <template>
   <el-dialog title="编辑APP认证用户" :center="true" :visible.sync="editVisible">
-    <div class="update-body">
+    <div class="data-body">
       <el-form
           ref="submitForm"
           :model="submitData"
           :rules="validatorRules"
           label-width="130px"
-          class="update-body-form"
+          class="data-body-form"
       >
-        <div class="update-body-div">
-          <div class="update-item-view">
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="用户名" prop="userName">
               <el-input
                   v-model="submitData.userName"
@@ -19,7 +19,7 @@
               </el-input>
             </el-form-item>
           </div>
-          <div class="update-item-view">
+          <div class="data-item-view">
             <el-form-item label="用户编号" prop="userNumber">
               <el-input
                   v-model="submitData.userNumber"
@@ -29,7 +29,7 @@
               </el-input>
             </el-form-item>
           </div>
-          <div class="update-item-view">
+          <div class="data-item-view">
             <el-form-item label="手机号码" prop="phoneNumber">
               <el-input
                   v-model="submitData.phoneNumber"
@@ -40,8 +40,8 @@
             </el-form-item>
           </div>
         </div>
-        <div class="update-body-div">
-          <div class="update-item-view">
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="昵称" prop="nickName">
               <el-input
                   v-model="submitData.nickName"
@@ -51,7 +51,7 @@
               </el-input>
             </el-form-item>
           </div>
-          <div class="update-item-view">
+          <div class="data-item-view">
             <el-form-item label="真实姓名" prop="realName">
               <el-input
                   v-model="submitData.realName"
@@ -61,7 +61,7 @@
               </el-input>
             </el-form-item>
           </div>
-          <div class="update-item-view">
+          <div class="data-item-view">
             <el-form-item label="性别" prop="gender">
               <el-select
                   v-model="submitData.gender"
@@ -77,8 +77,8 @@
             </el-form-item>
           </div>
         </div>
-        <div class="update-body-div">
-          <div class="update-item-view">
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="明文密码" prop="decryptionPassword">
               <el-input
                   v-model="submitData.decryptionPassword"
@@ -88,7 +88,7 @@
               </el-input>
             </el-form-item>
           </div>
-          <div class="update-item-view">
+          <div class="data-item-view">
             <el-form-item label="用户状态" prop="authStatus">
               <el-select
                   v-model="submitData.authStatus"
@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="text-area-view">
-          <div class="update-item-view">
+          <div class="data-item-view">
             <el-form-item label="OpenID" prop="openId">
               <el-input
                   v-model="submitData.openId"
@@ -117,8 +117,8 @@
           </div>
         </div>
         <el-divider content-position="center">上传头像</el-divider>
-        <div class="update-body-div">
-          <div class="update-item-view">
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="用户头像图:">
               <div class="upload-item-view">
                 <UploadImg
@@ -435,13 +435,13 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.update-body {
+.data-body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
   align-items: center;
-  .update-body-form {
+  .data-body-form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -449,18 +449,18 @@ export default {
     align-items: flex-start;
     .text-area-view {
       width: 100%;
-      .update-item-view {
+      .data-item-view {
 
       }
     }
-    .update-body-div {
+    .data-body-div {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
       align-content: center;
       align-items: center;
       width: auto;
-      .update-item-view {
+      .data-item-view {
 
       }
       .upload-item-view {

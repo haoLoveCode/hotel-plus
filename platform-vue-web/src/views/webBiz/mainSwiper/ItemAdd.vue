@@ -1,15 +1,15 @@
 <template>
   <el-dialog title="新增首页轮播图" :center="true" :visible.sync="addVisible">
-    <div class="add-body">
+    <div class="data-body">
       <el-form
           ref="submitForm"
           :model="submitData"
           :rules="validatorRules"
           label-width="200px"
-          class="add-body-form"
+          class="data-body-form"
       >
-        <div class="add-body-div">
-          <div class="add-item-view">
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="标题" prop="mainTitle">
               <el-input
                   v-model="submitData.mainTitle"
@@ -19,7 +19,7 @@
               </el-input>
             </el-form-item>
           </div>
-          <div class="add-item-view">
+          <div class="data-item-view">
             <el-form-item label="跳转地址" prop="routerUrl">
               <el-input
                   v-model="submitData.routerUrl"
@@ -30,8 +30,8 @@
             </el-form-item>
           </div>
         </div>
-        <div class="add-body-div">
-          <div class="add-item-view">
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="关联项" prop="itemId">
               <el-input
                   v-model="submitData.itemId"
@@ -43,9 +43,9 @@
           </div>
         </div>
         <el-divider content-position="center">上传图片</el-divider>
-        <div class="add-body-div">
-          <div class="add-item-view">
-            <el-form-item label="用户头像图:">
+        <div class="data-body-div">
+          <div class="data-item-view">
+            <el-form-item label="上传轮播图:">
               <div class="upload-item-view">
                 <UploadImg
                     class="upload-item"
@@ -250,21 +250,21 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.add-body {
+.data-body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
   align-items: center;
 
-  .add-body-form {
+  .data-body-form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-content: center;
     align-items: flex-start;
 
-    .add-body-div {
+    .data-body-div {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -272,7 +272,7 @@ export default {
       align-items: center;
       width: auto;
 
-      .add-item-view {
+      .data-item-view {
 
       }
 

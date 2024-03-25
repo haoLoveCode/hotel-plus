@@ -4,16 +4,16 @@
       @close="handleCancel"
       :center="true"
       :visible.sync="copyVisible">
-    <div class="copy-body">
+    <div class="data-body">
       <el-form
           ref="submitForm"
           :model="submitData"
           :rules="validatorRules"
           label-width="130px"
-          class="copy-body-form"
+          class="data-body-form"
       >
         <div class="text-area-view">
-          <div class="copy-item-view">
+          <div class="data-item-view">
             <el-form-item label="标题" prop="dataTitle">
               <el-input
                   type="textarea"
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="text-area-view">
-          <div class="copy-item-view">
+          <div class="data-item-view">
             <el-form-item label="备注信息" prop="remarkData">
               <el-input
                   type="textarea"
@@ -40,8 +40,8 @@
             </el-form-item>
           </div>
         </div>
-        <div class="copy-body-div">
-          <div class="copy-item-view">
+        <div class="data-body-div">
+          <div class="data-item-view">
             <el-form-item label="是否上架" prop="dataStatus">
               <el-select
                   v-model="submitData.dataStatus"
@@ -236,14 +236,14 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.copy-body {
+.data-body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
   align-items: center;
 
-  .copy-body-form {
+  .data-body-form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -251,7 +251,7 @@ export default {
     align-items: flex-start;
     width: 100%;
 
-    .copy-body-div {
+    .data-body-div {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -259,7 +259,7 @@ export default {
       align-items: center;
       width: auto;
 
-      .copy-item-view {
+      .data-item-view {
 
       }
 
@@ -273,7 +273,7 @@ export default {
     .text-area-view {
       width: 100%;
 
-      .copy-item-view {
+      .data-item-view {
       }
     }
 
