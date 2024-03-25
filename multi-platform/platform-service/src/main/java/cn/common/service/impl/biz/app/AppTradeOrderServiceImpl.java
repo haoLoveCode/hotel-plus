@@ -1,10 +1,7 @@
 package cn.common.service.impl.biz.app;
 
-import cn.common.enums.BizErrorCode;
-import cn.common.repository.entity.biz.OrderAddress;
 import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.entity.biz.TradeOrder;
-import cn.common.repository.repository.biz.OrderAddressRepository;
 import cn.common.repository.repository.biz.TradeOrderRepository;
 import cn.common.req.biz.platform.SetTradeOrderReq;
 import cn.common.req.biz.platform.TradeOrderAddReq;
@@ -16,7 +13,6 @@ import cn.common.service.biz.app.AppTradeOrderService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
@@ -56,9 +52,6 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
     private TradeOrderRepository tradeOrderRepository;
 
     @Resource
-    private OrderAddressRepository orderAddressRepository;
-
-    @Resource
     private MapperFacade mapperFacade;
 
     @Resource
@@ -73,13 +66,14 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
 
     /**
      * 新增
+     *
+     * @param addReq 新增Req
      * @author: Singer
      * @date 2024-03-06
-     * @param addReq 新增Req
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-    public void addItem(TradeOrderAddReq addReq){
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void addItem(TradeOrderAddReq addReq) {
         log.info(">>>>>>>>>>>>>>>>>新增Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
         String takeAddressId = addReq.getTakeAddressId();
         TradeOrder entity = mapperFacade.map(addReq, TradeOrder.class);
@@ -90,117 +84,85 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
             entity.setTradeOrderId(SnowflakeIdWorker.uniqueMainId());
             entity.setOperatorId(authUserId);
         } catch (Exception e) {
-            log.error("新增->设置为空的属性失败 {} , {} ",e.getMessage(),e);
+            log.error("新增->设置为空的属性失败 {} , {} ", e.getMessage(), e);
             throw new BusinessException(ErrorCode.ERROR.getCode(),
-                    ErrorCode.ERROR.getMessage()+ StrUtil.COLON+e.getMessage()+StrUtil.COLON+e);
+                    ErrorCode.ERROR.getMessage() + StrUtil.COLON + e.getMessage() + StrUtil.COLON + e);
         }
         tradeOrderRepository.insert(entity);
         //插入收货地址信息
-        insertOrderAddress(entity,takeAddressId);
-    }
-
-    /**
-     *
-     * @description: 插入收货地址信息
-     * @author: create by singer - Singer email:singer-coder@qq.com
-     * @date 2024/3/7
-     * @param tradeOrder  交易订单信息
-     * @param takeAddressId  收货地址ID
-     * @return
-     */
-    private void insertOrderAddress(TradeOrder tradeOrder,String takeAddressId){
-        OrderAddress entity = new OrderAddress();
-        entity.setAuthAppUserId(tradeOrder.getAuthAppUserId());
-        entity.setOrderId(tradeOrder.getTradeOrderId());
-        entity.setTakeAddressId(takeAddressId);
-        entity.setOrderAddressId(SnowflakeIdWorker.uniqueMainId());
-        try{
-            //防止字段为空
-            BaseUtil.setFieldValueNotNull(entity);
-            orderAddressRepository.insert(entity);
-        }catch (Exception e){
-            log.error(">>>>>>>>>>>下单出现异常 : {} , {} <<<<<<<<<",e.getMessage(),e);
-            throw new BusinessException(BizErrorCode.WX_PAY_SIGN_ERROR.getCode(),
-                    BizErrorCode.WX_PAY_SIGN_ERROR.getMessage());
-        }
+        //insertOrderAddress(entity,takeAddressId);
     }
 
     /**
      * 批量删除信息
+     *
+     * @param req 需要被删除的信息
      * @author: Singer
      * @date 2024-03-06
-     * @param req 需要被删除的信息
      */
     @Override
-    public void batchDeleteItem(BaseDeleteReq req){
+    public void batchDeleteItem(BaseDeleteReq req) {
         List<String> mainIdList = req.getMainIdList();
-        if(CollectionUtils.isEmpty(mainIdList)) {
+        if (CollectionUtils.isEmpty(mainIdList)) {
             return;
         }
         List<TradeOrder> entityList = tradeOrderRepository.selectList(
-            new MPJLambdaWrapper<TradeOrder>().in(TradeOrder::getTradeOrderId,mainIdList));
+                new MPJLambdaWrapper<TradeOrder>().in(TradeOrder::getTradeOrderId, mainIdList));
         entityList.stream().forEach(item -> {
-            //删除原来的收货地址信息
-            orderAddressRepository.delete(new LambdaQueryWrapper<OrderAddress>()
-                    .eq(OrderAddress::getOrderId,item.getTradeOrderId()));
             tradeOrderRepository.deleteById(item);
         });
     }
 
-     /**
-       *
-       * @description: 查询单个交易订单数据
-       * @author: create by singer - Singer email:singer-coder@qq.com
-       * @date 2024-03-06
-       * @param  outTradeNo 外部交易订单号
-       * @return cn.common.resp.biz.openBiz.TradeOrderResp
-       */
+    /**
+     * @param outTradeNo 外部交易订单号
+     * @return cn.common.resp.biz.openBiz.TradeOrderResp
+     * @description: 查询单个交易订单数据
+     * @author: create by singer - Singer email:singer-coder@qq.com
+     * @date 2024-03-06
+     */
     @Override
-    public TradeOrderResp queryByOrderNo(String outTradeNo){
-         String authUserId = authAppUserService.authAppUserId();
-         TradeOrder entity = tradeOrderRepository.selectOne(new MPJLambdaWrapper<TradeOrder>()
+    public TradeOrderResp queryByOrderNo(String outTradeNo) {
+        String authUserId = authAppUserService.authAppUserId();
+        TradeOrder entity = tradeOrderRepository.selectOne(new MPJLambdaWrapper<TradeOrder>()
                 .eq(TradeOrder::getOutTradeNo, outTradeNo)
                 .eq(TradeOrder::getAuthAppUserId, authUserId));
-        if(CheckParam.isNull(entity)){
+        if (CheckParam.isNull(entity)) {
             return new TradeOrderResp();
         }
-        return mapperFacade.map(entity,TradeOrderResp.class);
+        return mapperFacade.map(entity, TradeOrderResp.class);
     }
 
-     /**
-       *
-       * @description: 查询当前用户的所有订单信息
-       * @author: create by singer - Singer email:singer-coder@qq.com
-       * @date 2024-03-06
-       * @return java.util.List
-       */
+    /**
+     * @return java.util.List
+     * @description: 查询当前用户的所有订单信息
+     * @author: create by singer - Singer email:singer-coder@qq.com
+     * @date 2024-03-06
+     */
     @Override
-    public List<TradeOrderResp> queryOrderList(){
+    public List<TradeOrderResp> queryOrderList() {
         String authUserId = authAppUserService.authAppUserId();
         //构建查询条件
         MPJLambdaWrapper<TradeOrder> queryWrapper = new MPJLambdaWrapper<>();
-        queryWrapper.leftJoin(OrderAddress.class,OrderAddress::getOrderId,TradeOrder::getTradeOrderId);
-        queryWrapper.leftJoin(RoomData.class,RoomData::getRoomDataId,TradeOrder::getItemId);
+        queryWrapper.leftJoin(RoomData.class, RoomData::getRoomDataId, TradeOrder::getItemId);
         //是否查询当前用户卖出的
         /*Boolean queryMineSales = pageReq.getQueryMineSales();
         if(queryMineSales){
             pageWrapper.eq(RoomData::getPublisherId,authUserId);
         }*/
         queryWrapper.selectAll(TradeOrder.class);
-        queryWrapper.selectAs(OrderAddress::getTakeAddressId,TradeOrderResp::getTakeAddressId);
-        queryWrapper.selectAs(RoomData::getRoomDataId,TradeOrderResp::getRoomDataId);
-        queryWrapper.selectAs(RoomData::getBriefData,TradeOrderResp::getBriefData);
-        queryWrapper.selectAs(RoomData::getRoomNo,TradeOrderResp::getRoomNo);
-        queryWrapper.selectAs(RoomData::getRoomArea,TradeOrderResp::getRoomArea);
-        queryWrapper.selectAs(RoomData::getRoomStatus,TradeOrderResp::getRoomStatus);
-        queryWrapper.selectAs(RoomData::getRoomFloor,TradeOrderResp::getRoomFloor);
-        queryWrapper.selectAs(RoomData::getRoomTitle,TradeOrderResp::getRoomTitle);
-        queryWrapper.selectAs(RoomData::getRoomTypeId,TradeOrderResp::getRoomTypeId);
-        queryWrapper.selectAs(RoomData::getBedNum,TradeOrderResp::getBedNum);
-        queryWrapper.selectAs(RoomData::getMainImg,TradeOrderResp::getMainImg);
-        queryWrapper.selectAs(RoomData::getUnitPrice,TradeOrderResp::getUnitPrice);
-        List<TradeOrderResp> respList = tradeOrderRepository.selectJoinList(TradeOrderResp.class,queryWrapper);
-        if(CollectionUtils.isEmpty(respList)){
+        queryWrapper.selectAs(RoomData::getRoomDataId, TradeOrderResp::getRoomDataId);
+        queryWrapper.selectAs(RoomData::getBriefData, TradeOrderResp::getBriefData);
+        queryWrapper.selectAs(RoomData::getRoomNo, TradeOrderResp::getRoomNo);
+        queryWrapper.selectAs(RoomData::getRoomArea, TradeOrderResp::getRoomArea);
+        queryWrapper.selectAs(RoomData::getRoomStatus, TradeOrderResp::getRoomStatus);
+        queryWrapper.selectAs(RoomData::getRoomFloor, TradeOrderResp::getRoomFloor);
+        queryWrapper.selectAs(RoomData::getRoomTitle, TradeOrderResp::getRoomTitle);
+        queryWrapper.selectAs(RoomData::getRoomTypeId, TradeOrderResp::getRoomTypeId);
+        queryWrapper.selectAs(RoomData::getBedNum, TradeOrderResp::getBedNum);
+        queryWrapper.selectAs(RoomData::getMainImg, TradeOrderResp::getMainImg);
+        queryWrapper.selectAs(RoomData::getUnitPrice, TradeOrderResp::getUnitPrice);
+        List<TradeOrderResp> respList = tradeOrderRepository.selectJoinList(TradeOrderResp.class, queryWrapper);
+        if (CollectionUtils.isEmpty(respList)) {
             return Lists.newArrayList();
         }
         return respList;
@@ -208,126 +170,128 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
 
     /**
      * 查询所有信息
-     * @author: Singer
-     * @date 2024-03-06
+     *
      * @param
      * @return java.util.List
+     * @author: Singer
+     * @date 2024-03-06
      */
     @Override
-    public List<TradeOrderResp> queryAllTradeOrder(){
+    public List<TradeOrderResp> queryAllTradeOrder() {
         List<TradeOrder> entityList = tradeOrderRepository.selectList(new MPJLambdaWrapper<>());
-            if(CollectionUtils.isEmpty(entityList)){
+        if (CollectionUtils.isEmpty(entityList)) {
             return Lists.newArrayList();
         }
-        return mapperFacade.mapAsList(entityList,TradeOrderResp.class);
+        return mapperFacade.mapAsList(entityList, TradeOrderResp.class);
     }
 
     /**
      * 分页查询
+     *
+     * @param pageReq 分页查询Req
+     * @return Pagination
      * @author: Singer
      * @date 2024-03-06
-     * @param  pageReq 分页查询Req
-     * @return Pagination
      */
     @Override
     public Pagination<TradeOrderResp> queryByPage(
-        TradeOrderReq pageReq){
+            TradeOrderReq pageReq) {
         log.info(">>>>>>>>>>>>>>>>>分页查询Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(pageReq));
         String authUserId = authAppUserService.authAppUserId();
         //构建查询条件
         MPJLambdaWrapper<TradeOrder> pageWrapper = new MPJLambdaWrapper<>();
-        pageWrapper.leftJoin(OrderAddress.class,OrderAddress::getOrderId,TradeOrder::getTradeOrderId);
-        pageWrapper.leftJoin(RoomData.class,RoomData::getRoomDataId,TradeOrder::getItemId);
+        pageWrapper.leftJoin(RoomData.class, RoomData::getRoomDataId, TradeOrder::getItemId);
         //是否查询当前用户卖出的
         /*Boolean queryMineSales = pageReq.getQueryMineSales();
         if(queryMineSales){
             pageWrapper.eq(RoomData::getPublisherId,authUserId);
         }*/
         pageWrapper.selectAll(TradeOrder.class);
-        pageWrapper.selectAs(OrderAddress::getTakeAddressId,TradeOrderResp::getTakeAddressId);
-        pageWrapper.selectAs(RoomData::getRoomDataId,TradeOrderResp::getRoomDataId);
-        pageWrapper.selectAs(RoomData::getBriefData,TradeOrderResp::getBriefData);
-        pageWrapper.selectAs(RoomData::getRoomNo,TradeOrderResp::getRoomNo);
-        pageWrapper.selectAs(RoomData::getRoomArea,TradeOrderResp::getRoomArea);
-        pageWrapper.selectAs(RoomData::getRoomStatus,TradeOrderResp::getRoomStatus);
-        pageWrapper.selectAs(RoomData::getRoomFloor,TradeOrderResp::getRoomFloor);
-        pageWrapper.selectAs(RoomData::getRoomTitle,TradeOrderResp::getRoomTitle);
-        pageWrapper.selectAs(RoomData::getRoomTypeId,TradeOrderResp::getRoomTypeId);
-        pageWrapper.selectAs(RoomData::getBedNum,TradeOrderResp::getBedNum);
-        pageWrapper.selectAs(RoomData::getMainImg,TradeOrderResp::getMainImg);
-        pageWrapper.selectAs(RoomData::getUnitPrice,TradeOrderResp::getUnitPrice);
-        setPageCriteria(pageWrapper,pageReq);
-        pageWrapper.orderBy(true,false,TradeOrder::getCreateTime);
+        pageWrapper.selectAs(RoomData::getRoomDataId, TradeOrderResp::getRoomDataId);
+        pageWrapper.selectAs(RoomData::getBriefData, TradeOrderResp::getBriefData);
+        pageWrapper.selectAs(RoomData::getRoomNo, TradeOrderResp::getRoomNo);
+        pageWrapper.selectAs(RoomData::getRoomArea, TradeOrderResp::getRoomArea);
+        pageWrapper.selectAs(RoomData::getRoomStatus, TradeOrderResp::getRoomStatus);
+        pageWrapper.selectAs(RoomData::getRoomFloor, TradeOrderResp::getRoomFloor);
+        pageWrapper.selectAs(RoomData::getRoomTitle, TradeOrderResp::getRoomTitle);
+        pageWrapper.selectAs(RoomData::getRoomTypeId, TradeOrderResp::getRoomTypeId);
+        pageWrapper.selectAs(RoomData::getBedNum, TradeOrderResp::getBedNum);
+        pageWrapper.selectAs(RoomData::getMainImg, TradeOrderResp::getMainImg);
+        pageWrapper.selectAs(RoomData::getUnitPrice, TradeOrderResp::getUnitPrice);
+        setPageCriteria(pageWrapper, pageReq);
+        pageWrapper.orderBy(true, false, TradeOrder::getCreateTime);
         //开始分页
         Page<Object> page = PageHelper.startPage(pageReq.getCurrentPage(), pageReq.getItemsPerPage());
-        List<TradeOrderResp> respList = tradeOrderRepository.selectJoinList(TradeOrderResp.class,pageWrapper);
+        List<TradeOrderResp> respList = tradeOrderRepository.selectJoinList(TradeOrderResp.class, pageWrapper);
         if (CollectionUtils.isEmpty(respList)) {
-            return PageBuilder.buildPageResult(page,new ArrayList<>());
+            return PageBuilder.buildPageResult(page, new ArrayList<>());
         }
         Integer startIndex = (pageReq.getItemsPerPage() * pageReq.getCurrentPage()) - pageReq.getItemsPerPage() + 1;
         AtomicInteger idBeginIndex = new AtomicInteger(startIndex);
-            respList.stream().forEach(item -> {
-                item.setId(Integer.valueOf(idBeginIndex.getAndIncrement()).longValue());
+        respList.stream().forEach(item -> {
+            item.setId(Integer.valueOf(idBeginIndex.getAndIncrement()).longValue());
         });
-        return PageBuilder.buildPageResult(page,respList);
+        return PageBuilder.buildPageResult(page, respList);
     }
 
     /**
      * 设置分页条件
+     *
+     * @param pageWrapper 查询条件
+     * @param pageReq     分页插件
+     * @return
      * @author: Singer
      * @date 2024-03-06
-     * @param pageWrapper 查询条件
-     * @param pageReq 分页插件
-     * @return
      */
-    private void setPageCriteria(MPJLambdaWrapper<TradeOrder> pageWrapper, TradeOrderReq pageReq){
+    private void setPageCriteria(MPJLambdaWrapper<TradeOrder> pageWrapper, TradeOrderReq pageReq) {
 
-        if(!CheckParam.isNull(pageReq.getItemId())){
-            pageWrapper.eq(TradeOrder::getItemId,pageReq.getItemId());
+        if (!CheckParam.isNull(pageReq.getItemId())) {
+            pageWrapper.eq(TradeOrder::getItemId, pageReq.getItemId());
         }
 
-        if(!CheckParam.isNull(pageReq.getAuthAppUserId())){
-            pageWrapper.eq(TradeOrder::getAuthAppUserId,pageReq.getAuthAppUserId());
+        if (!CheckParam.isNull(pageReq.getAuthAppUserId())) {
+            pageWrapper.eq(TradeOrder::getAuthAppUserId, pageReq.getAuthAppUserId());
         }
 
-        if(!CheckParam.isNull(pageReq.getOrderType())){
-            pageWrapper.eq(TradeOrder::getOrderType,pageReq.getOrderType());
+        if (!CheckParam.isNull(pageReq.getOrderType())) {
+            pageWrapper.eq(TradeOrder::getOrderType, pageReq.getOrderType());
         }
 
-        if(!CheckParam.isNull(pageReq.getOrderRemark())){
-            pageWrapper.like(TradeOrder::getOrderRemark,pageReq.getOrderRemark());
+        if (!CheckParam.isNull(pageReq.getOrderRemark())) {
+            pageWrapper.like(TradeOrder::getOrderRemark, pageReq.getOrderRemark());
         }
 
-        if(!CheckParam.isNull(pageReq.getOutTradeNo())){
-            pageWrapper.like(TradeOrder::getOutTradeNo,pageReq.getOutTradeNo());
+        if (!CheckParam.isNull(pageReq.getOutTradeNo())) {
+            pageWrapper.like(TradeOrder::getOutTradeNo, pageReq.getOutTradeNo());
         }
 
-        if(!CheckParam.isNull(pageReq.getOrderAmount())){
-            pageWrapper.eq(TradeOrder::getOrderAmount,pageReq.getOrderAmount());
+        if (!CheckParam.isNull(pageReq.getOrderAmount())) {
+            pageWrapper.eq(TradeOrder::getOrderAmount, pageReq.getOrderAmount());
         }
 
-        if(!CheckParam.isNull(pageReq.getPayType())){
-            pageWrapper.eq(TradeOrder::getPayType,pageReq.getPayType());
+        if (!CheckParam.isNull(pageReq.getPayType())) {
+            pageWrapper.eq(TradeOrder::getPayType, pageReq.getPayType());
         }
 
-        if(!CheckParam.isNull(pageReq.getExtraData())){
-            pageWrapper.like(TradeOrder::getExtraData,pageReq.getExtraData());
+        if (!CheckParam.isNull(pageReq.getExtraData())) {
+            pageWrapper.like(TradeOrder::getExtraData, pageReq.getExtraData());
         }
 
-        if(!CheckParam.isNull(pageReq.getOrderStatus())){
-            pageWrapper.eq(TradeOrder::getOrderStatus,pageReq.getOrderStatus());
+        if (!CheckParam.isNull(pageReq.getOrderStatus())) {
+            pageWrapper.eq(TradeOrder::getOrderStatus, pageReq.getOrderStatus());
         }
     }
 
     /**
      * 更新订单状态
+     *
+     * @param req 更新请求参数
      * @author: Singer
      * @date 2024-03-06
-     * @param req 更新请求参数
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-    public void setOrderStatus(SetTradeOrderReq req){
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void setOrderStatus(SetTradeOrderReq req) {
         log.info(">>>>>>>>>>>>>>>>>更新订单状态 {} <<<<<<<<<<<<<<<<", JSON.toJSONString(req));
         String mainId = req.getTradeOrderId();
         MPJLambdaWrapper<TradeOrder> lambdaWrapper = new MPJLambdaWrapper<TradeOrder>()
@@ -337,7 +301,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         if (CheckParam.isNull(result)) {
             return;
         }
-        if(!CheckParam.isNull(req.getOrderStatus())){
+        if (!CheckParam.isNull(req.getOrderStatus())) {
             result.setOrderStatus(req.getOrderStatus());
         }
         tradeOrderRepository.updateById(result);
@@ -345,13 +309,14 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
 
     /**
      * 更新
+     *
+     * @param updateReq 更新请求参数
      * @author: Singer
      * @date 2024-03-06
-     * @param updateReq 更新请求参数
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-    public void updateItem(TradeOrderUpdateReq updateReq){
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void updateItem(TradeOrderUpdateReq updateReq) {
         log.info(">>>>>>>>>>>>>>>>>更新请求参数 {} <<<<<<<<<<<<<<<<", JSON.toJSONString(updateReq));
         String takeAddressId = updateReq.getTakeAddressId();
         String mainId = updateReq.getTradeOrderId();
@@ -362,49 +327,45 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         if (CheckParam.isNull(result)) {
             return;
         }
-        setNeedUpdateItem(result,updateReq);
+        setNeedUpdateItem(result, updateReq);
         tradeOrderRepository.updateById(result);
-        //删除原来的收货地址信息
-        orderAddressRepository.delete(new LambdaQueryWrapper<OrderAddress>()
-                .eq(OrderAddress::getOrderId,result.getTradeOrderId()));
-        //插入收货地址信息
-        insertOrderAddress(result,takeAddressId);
     }
 
     /**
      * 设置需要更新的字段
+     *
+     * @param updateReq 更新参数
+     * @param entity    产业
      * @author: Singer
      * @date 2024-03-06
-     * @param updateReq 更新参数
-     * @param entity 产业
      */
     private void setNeedUpdateItem(TradeOrder entity,
-        TradeOrderUpdateReq updateReq){
-        if(!CheckParam.isNull(updateReq.getItemId())){
+                                   TradeOrderUpdateReq updateReq) {
+        if (!CheckParam.isNull(updateReq.getItemId())) {
             entity.setItemId(updateReq.getItemId());
         }
-        if(!CheckParam.isNull(updateReq.getAuthAppUserId())){
+        if (!CheckParam.isNull(updateReq.getAuthAppUserId())) {
             entity.setAuthAppUserId(updateReq.getAuthAppUserId());
         }
-        if(!CheckParam.isNull(updateReq.getOrderType())){
+        if (!CheckParam.isNull(updateReq.getOrderType())) {
             entity.setOrderType(updateReq.getOrderType());
         }
-        if(!CheckParam.isNull(updateReq.getOrderRemark())){
+        if (!CheckParam.isNull(updateReq.getOrderRemark())) {
             entity.setOrderRemark(updateReq.getOrderRemark());
         }
-        if(!CheckParam.isNull(updateReq.getOutTradeNo())){
+        if (!CheckParam.isNull(updateReq.getOutTradeNo())) {
             entity.setOutTradeNo(updateReq.getOutTradeNo());
         }
-        if(!CheckParam.isNull(updateReq.getOrderAmount())){
+        if (!CheckParam.isNull(updateReq.getOrderAmount())) {
             entity.setOrderAmount(updateReq.getOrderAmount());
         }
-        if(!CheckParam.isNull(updateReq.getPayType())){
+        if (!CheckParam.isNull(updateReq.getPayType())) {
             entity.setPayType(updateReq.getPayType());
         }
-        if(!CheckParam.isNull(updateReq.getExtraData())){
+        if (!CheckParam.isNull(updateReq.getExtraData())) {
             entity.setExtraData(updateReq.getExtraData());
         }
-        if(!CheckParam.isNull(updateReq.getOrderStatus())){
+        if (!CheckParam.isNull(updateReq.getOrderStatus())) {
             entity.setOrderStatus(updateReq.getOrderStatus());
         }
     }
