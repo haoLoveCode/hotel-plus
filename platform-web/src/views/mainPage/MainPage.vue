@@ -20,7 +20,7 @@
         </div>
       </el-link>
     </div>
-    <el-divider content-position="center" v-if="roomDataList.length > 0">商品信息</el-divider>
+    <el-divider content-position="center" v-if="roomDataList.length > 0">房间信息</el-divider>
     <div class="main-data-view" v-if="roomDataList.length > 0">
       <div class="main-item">
         <div class="main-item-view"
@@ -249,7 +249,7 @@ export default {
             item.mainImg = mainImg;
             this.roomDataList.push(item);
           })
-          //console.log('roomDataList:'+JSON.stringify(this.roomDataList));
+          console.log('roomDataList:'+JSON.stringify(this.roomDataList));
           loading.close();
         }
       }).catch((error) => {

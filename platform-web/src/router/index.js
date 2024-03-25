@@ -38,9 +38,9 @@ export const constantRouterMap = [
                 name: '公告内容',
             },
             {
-                path: "/salesItemDataView",
-                component: require('@/views/biz/saleItem/SalesItemDataView'),
-                name: '商品信息',
+                path: "/roomDataView",
+                component: require('@/views/biz/RoomDataView'),
+                name: '房间信息',
             },
             {
                 path: "/salesItemBuyView",

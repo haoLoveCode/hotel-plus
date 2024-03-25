@@ -1,6 +1,5 @@
 <template>
-  <div class="page-view" v-if="Object.keys(salesItemData).length > 0" >
-    <BasketView ref="basketViewRef" @handleBasketClose="handleBasketClose" />
+  <div class="page-view" v-if="Object.keys(roomItemData).length > 0" >
     <div class="title-view">
       <div class="title-text">
         商品详情
@@ -9,7 +8,7 @@
     <div class="platform-view">
       <div class="item-title-view">
         <div class="title-img-view">
-          <img :src="handleImageUrl(salesItemData.mainImg)"
+          <img :src="handleImageUrl(roomItemData.mainImg)"
                alt=""
                width="auto"
                height="100%"
@@ -18,17 +17,16 @@
         </div>
         <div class="title-text-view">
           <div class="title-text" style="color: #00479d;font-size: 30px;">
-            {{ salesItemData.itemName }}
+            {{ roomItemData.roomTitle }}
           </div>
           <div class="title-text" style="color: #FF0000;font-size: 25px;font-weight: bold">
-            ¥: {{ salesItemData.salePrice }}
-          </div>
-          <div class="title-text" style="color: #808080;font-size: 20px;
-                                  text-decoration:line-through;">
-            ¥: {{ salesItemData.originalPrice }}
+            ¥: {{ roomItemData.unitPrice }}
           </div>
           <div class="title-text" style="color: #304156;font-size: 20px;">
-            {{ salesItemData.itemTitle }}
+            房间编号：{{ roomItemData.roomNo }}
+          </div>
+          <div class="title-text" style="color: #304156;font-size: 20px;">
+            房间状态：<el-tag size="medium">{{handleTypeByValue(roomItemData.roomStatus,itemStatusOptions)}}</el-tag>
           </div>
           <div class="basket-view">
             <div class="basket-btn-view">
@@ -62,7 +60,7 @@
               </el-link>
             </div>
           </div>
-          <div class="buy-now-btn" @click="toSalesItemBuy(salesItemData)">
+          <div class="buy-now-btn" @click="toSalesItemBuy(roomItemData)">
             <el-link type="info" :underline="false" style="font-size: 20px;margin: 20px 20px">
               <div class="buy-btn-div">
                 <div class="buy-btn">
@@ -93,9 +91,9 @@
     <el-divider content-position="center">商品介绍</el-divider>
     <div class="platform-data-view">
       <div class="item-time-view">
-        上架时间: {{ salesItemData.createTime }}
+        上架时间: {{ roomItemData.createTime }}
       </div>
-      <div class="item-value-view" v-html="salesItemData.itemSummary">
+      <div class="item-value-view" v-html="roomItemData.itemSummary">
       </div>
     </div>
   </div>
@@ -104,20 +102,41 @@
 import {mapGetters} from "vuex";
 import moment from 'moment';
 import Api from "@/services";
-import BasketView from "@/views/biz/basket/BasketView";
 
 export default {
-  name: "SalesItemDataView",
+  name: "roomItemDataView",
   components: {
-    BasketView:BasketView
+
   },
   data() {
     return {
+      itemStatusOptions: [
+        {
+          'text':'闲置',
+          'value': 1
+        },
+        {
+          'text':'已预订',
+          'value': 2
+        },
+        {
+          'text':'维护中',
+          'value': 3
+        },
+        {
+          'text':'已入住',
+          'value': 4
+        },
+        {
+          'text':'已退住',
+          'value': 5
+        },
+      ],
       mainSwiperList: [],
       previewImageUrl: '',
       previewVisible: false,
       currentTime: '',
-      salesItemData: {},
+      roomItemData: {},
       submitData: {},
       commentDataList: [],
       userData:{},
@@ -139,7 +158,7 @@ export default {
       this.$router.push({
         path: '/salesItemBuyView',
         query: {
-          salesItemId: item.salesItemId,
+          roomDataId: item.roomDataId,
         }
       })
     },
@@ -173,7 +192,7 @@ export default {
         bizType:bizType,
         itemNum:1,
         remarkData:"无",
-        salesItemId:this.salesItemData.salesItemId,
+        roomDataId:this.roomItemData.roomDataId,
         authAppUserId:this.userData.authAppUserId,
       }
       try {
@@ -185,7 +204,6 @@ export default {
             });
             let data = res.data;
             console.log('添加购物车结果:' + JSON.stringify(data));
-            await this.queryOneBasketItem(this.salesItemData.salesItemId);
             this.clearAll()
           } else {
             this.$message.error('操作失败');
@@ -204,9 +222,9 @@ export default {
       this.submitData = {}
     },
     //查询单个其他信息
-    async queryOneSalesItem(salesItemId) {
-      await Api.queryOneSalesItem({
-        salesItemId: salesItemId
+    async queryOneRoomData(roomDataId) {
+      await Api.queryOneRoomData({
+        roomDataId: roomDataId
       }).then(async (res) => {
         if (!res.success) {
           return;
@@ -219,7 +237,7 @@ export default {
         if (this.$isNull(data)) {
           return;
         }
-        this.salesItemData = {...data}
+        this.roomItemData = {...data}
         this.mainSwiperList = new Array();
         let imgList = data.imgList;
         await imgList.map(async (item) => {
@@ -227,28 +245,6 @@ export default {
           this.mainSwiperList.push(mainImg);
         });
         //console.log('mainSwiperList:' + JSON.stringify(this.mainSwiperList))
-      });
-    },
-    //查询单个购物车商品信息
-    async queryOneBasketItem(salesItemId) {
-      await Api.queryOneBasketItem({
-        salesItemId: salesItemId
-      }).then(async (res) => {
-        if (!res.success) {
-          return;
-        }
-        if (this.$isNull(res)) {
-          return;
-        }
-        //console.log('queryOneBasketItem:data:' + JSON.stringify(res))
-        let data = res.data
-        if (this.$isNull(data)) {
-          return;
-        }
-        if(!data.basketDataId){
-          return;
-        }
-        this.baskItemData = {...data}
       });
     },
     handlePreView(url) {
@@ -278,20 +274,18 @@ export default {
     //处理关闭购物车
     async handleBasketClose(){
       await this.currentUserMeta();
-      let salesItemId = this.salesItemData.salesItemId;
-      this.queryOneSalesItem(salesItemId);
-      this.queryOneBasketItem(salesItemId);
+      let roomDataId = this.roomItemData.roomDataId;
+      this.queryOneRoomData(roomDataId);
     },
     async init() {
       this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
   },
   created() {
-    console.log(this.$route.query.salesItemId);
-    let salesItemId = this.$route.query.salesItemId;
+    console.log(this.$route.query.roomDataId);
+    let roomDataId = this.$route.query.roomDataId;
     this.currentUserMeta();
-    this.queryOneSalesItem(salesItemId);
-    this.queryOneBasketItem(salesItemId);
+    this.queryOneRoomData(roomDataId);
     this.init();
   },
   mounted() {
@@ -405,6 +399,7 @@ export default {
         //border: 1px solid #304156;
         .title-text {
           margin-left: 20px;
+          margin-top: 10px;
           font-weight: bold;
           word-break: break-all;
           width: 100%;
