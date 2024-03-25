@@ -2,7 +2,7 @@
   <div class="page-view" v-if="Object.keys(roomItemData).length > 0" >
     <div class="title-view">
       <div class="title-text">
-        商品详情
+        房间详情
       </div>
     </div>
     <div class="platform-view">
@@ -23,10 +23,13 @@
             ¥: {{ roomItemData.unitPrice }}
           </div>
           <div class="title-text" style="color: #304156;font-size: 20px;">
+            楼层/床位数：{{ roomItemData.roomFloor }}楼，{{ roomItemData.bedNum }}个床位
+          </div>
+          <div class="title-text" style="color: #304156;font-size: 20px;">
             房间编号：{{ roomItemData.roomNo }}
           </div>
           <div class="title-text" style="color: #304156;font-size: 20px;">
-            房间状态：<el-tag size="medium">{{handleTypeByValue(roomItemData.roomStatus,itemStatusOptions)}}</el-tag>
+            房间状态：<el-tag size="medium" type="danger">{{handleTypeByValue(roomItemData.roomStatus,itemStatusOptions)}}</el-tag>
           </div>
           <div class="basket-view">
             <div class="basket-btn-view">
@@ -34,18 +37,12 @@
                 <img src="/static/icons/add-icon.png"
                      alt=""
                      width="auto"
-                     height="30px"
+                     height="20px"
                      style="border-radius: 10px;"/>
               </el-link>
             </div>
             <div class="basket-num-view" v-if="Object.keys(baskItemData).length > 0">
-              <!--<el-input
-                  size="medium"
-                  style="width: 40px;border: 1px solid #304156"
-                  autosize
-                  v-model="addBasketData.itemNum">
-              </el-input>-->
-              {{baskItemData.itemNum}}
+              住 {{baskItemData.itemNum}} 天
             </div>
             <div class="basket-num-view" v-else>
               0
@@ -55,16 +52,16 @@
                 <img src="/static/icons/minus-icon.png"
                      alt=""
                      width="auto"
-                     height="30px"
+                     height="20px"
                      style="border-radius: 10px;"/>
               </el-link>
             </div>
           </div>
-          <div class="buy-now-btn" @click="toSalesItemBuy(roomItemData)">
+          <div class="buy-now-btn" @click="roomOrdering(roomItemData)">
             <el-link type="info" :underline="false" style="font-size: 20px;margin: 20px 20px">
               <div class="buy-btn-div">
                 <div class="buy-btn">
-                  立即下单
+                  下单入住
                 </div>
               </div>
             </el-link>
@@ -88,14 +85,48 @@
         </el-carousel>
       </div>
     </div>
-    <el-divider content-position="center">商品介绍</el-divider>
+    <el-divider content-position="center">房间介绍</el-divider>
     <div class="platform-data-view">
       <div class="item-time-view">
         上架时间: {{ roomItemData.createTime }}
       </div>
-      <div class="item-value-view" v-html="roomItemData.itemSummary">
+      <div class="item-value-view" v-html="roomItemData.briefData">
       </div>
     </div>
+    <el-dialog
+        append-to-body
+        title="确认下单信息"
+        :center="true"
+        @close="orderingCancel"
+        width="50%"
+        :visible.sync="orderingShow">
+      <div class="ordering-view">
+        <div class="ordering-title">
+          {{ roomItemData.roomTitle }}
+        </div>
+        <div class="ordering-text-view">
+          <div class="ordering-text-title">
+            预定住宿天数:
+          </div>
+          <div class="ordering-text-value">
+            {{baskItemData.itemNum}}
+          </div>
+        </div>
+        <div class="ordering-text-view">
+          <div class="ordering-text-title">
+            总价:
+          </div>
+          <div class="ordering-text-value">
+            {{baskItemData.itemNum * roomItemData.unitPrice}}
+          </div>
+        </div>
+        <div class="ordering-btn-view">
+          <div class="ordering-btn-text">
+            确认下单
+          </div>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -110,6 +141,8 @@ export default {
   },
   data() {
     return {
+      //下单弹窗
+      orderingShow:false,
       itemStatusOptions: [
         {
           'text':'闲置',
@@ -145,22 +178,20 @@ export default {
         totalCount: 0,
         currentPage: 1
       },
-      addBasketData: {
-        itemNum: 1
-      },
-      baskItemData:{}
+      baskItemData:{
+        itemNum:1
+      }
     };
   },
   computed: {},
   methods: {
+    //取消下单
+    async orderingCancel(){
+      this.orderingShow = false;
+    },
     //跳转到购买界面
-    toSalesItemBuy(item) {
-      this.$router.push({
-        path: '/salesItemBuyView',
-        query: {
-          roomDataId: item.roomDataId,
-        }
-      })
+    roomOrdering(item) {
+     this.orderingShow = true;
     },
     //查询当前用户信息
     async currentUserMeta() {
@@ -182,39 +213,17 @@ export default {
         console.log('当前用户信息:' + JSON.stringify(this.userData))
       });
     },
-    //处理新增和减少购物车商品
+    //处理新增和减少住宿天
     async handleBasketBiz(bizType){
-      const loading = this.$loading({
-        lock: true,
-        text: "正在提交...",
-      });
-      let params = {
-        bizType:bizType,
-        itemNum:1,
-        remarkData:"无",
-        roomDataId:this.roomItemData.roomDataId,
-        authAppUserId:this.userData.authAppUserId,
+      if(bizType === 1){
+        this.baskItemData.itemNum += 1;
       }
-      try {
-        Api.handleBasketBiz(params).then(async (res) => {
-          if (res.success) {
-            this.$message({
-              message: "操作购物车成功",
-              type: "success",
-            });
-            let data = res.data;
-            console.log('添加购物车结果:' + JSON.stringify(data));
-            this.clearAll()
-          } else {
-            this.$message.error('操作失败');
-            this.clearAll()
-          }
-        });
-        loading.close();
-      } catch (error) {
-        this.clearAll()
-        loading.close();
-        this.$message.error(error.message || error.msg || "服务器异常");
+      if(bizType === 2){
+        if(this.baskItemData.itemNum <= 1){
+          this.baskItemData.itemNum = 1;
+        }else{
+          this.baskItemData.itemNum -= 1;
+        }
       }
     },
     clearAll() {
@@ -295,6 +304,57 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.ordering-view{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  //margin-top: 20px;
+  width: 100%;
+  border: 1px solid #909399;
+  border-radius: 5px;
+  .ordering-title{
+    width: 100%;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px 0px;
+    margin-left: 20px;
+  }
+  .ordering-btn-view{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF0000;
+    border-radius: 10px;
+    width: 30%;
+    cursor: pointer;//悬浮时变手指
+    margin: 10px 0px;
+    .ordering-btn-text{
+      margin: 10px 10px;
+      color: #FFFFFF;
+      font-weight: bold;
+      color: #FFFFFF;
+    }
+  }
+  .ordering-text-view{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 5px 0px;
+    margin-left: 20px;
+    width: 100%;
+    font-size: 20px;
+    .ordering-text-title{
+
+    }
+    .ordering-text-value{
+      margin: 0px 20px;
+    }
+  }
+}
 .page-view {
   display: flex;
   flex-direction: column;
@@ -314,27 +374,6 @@ export default {
     .title-text {
       margin: 10px 10px;
       font-weight: bold;
-    }
-  }
-  .basket-flow-view{
-    position: fixed; //让元素跟随滚动
-    z-index: 998;
-    right:0;
-    top: 50%;
-    .basket-data-view{
-      width: 150px;
-      height: 50px;
-      background-color: #FF0000;
-      color: #FFFFFF;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-      .basket-text-view{
-        font-size: 20px;
-        font-weight: bold;
-      }
     }
   }
   .main-swiper-view {
