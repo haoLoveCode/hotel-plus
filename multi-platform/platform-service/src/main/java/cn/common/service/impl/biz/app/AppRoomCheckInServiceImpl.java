@@ -120,7 +120,7 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
         }
         //此处为交易订单号
         String bookingNo = roomBooking.getBookingNo();
-        TradeOrder tradeOrder = tradeOrderRepository.selectOne(new MPJLambdaWrapper<TradeOrder>()
+        TradeOrder tradeOrder = tradeOrderRepository.selectOne(new LambdaQueryWrapper<TradeOrder>()
                 .eq(TradeOrder::getOutTradeNo, bookingNo)
                 .eq(TradeOrder::getAuthAppUserId, authAppUserId));
         if(CheckParam.isNull(tradeOrder)){

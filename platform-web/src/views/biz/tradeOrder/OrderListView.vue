@@ -28,6 +28,9 @@
             <div class="title-text">
               支付方式：{{handleTypeByValue(item.payType,payTypeOptions)}}
             </div>
+            <div class="title-text" style="color: #304156;font-size: 20px;">
+              订单金额：{{ item.orderAmount }}
+            </div>
             <div class="title-text">
               房间编号: {{ item.roomNo }}
             </div>
@@ -53,7 +56,7 @@
                 </div>
               </el-link>
               <el-link
-                  v-if="item.bookingStatus == 2"
+                  v-if="item.bookingStatus == 4"
                   type="info"
                   :underline="false"
                   style="font-size: 20px;margin: 20px 20px">
@@ -365,7 +368,7 @@ export default {
               background-color: #FF0000;
               border-radius: 10px;
               .bottom-btn-text {
-                margin: 5px 10px;
+                margin: 5px 5px;
                 color: #FFFFFF;
                 font-weight: bold;
               }

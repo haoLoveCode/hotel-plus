@@ -3,6 +3,7 @@ package cn.common.service.impl.biz.app;
 import cn.common.repository.entity.biz.RoomBooking;
 import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.entity.biz.TradeOrder;
+import cn.common.repository.entity.platform.AuthPermission;
 import cn.common.repository.repository.biz.TradeOrderRepository;
 import cn.common.req.biz.platform.SetTradeOrderReq;
 import cn.common.req.biz.platform.TradeOrderAddReq;
@@ -14,6 +15,7 @@ import cn.common.service.biz.app.AppTradeOrderService;
 import cn.common.service.platform.AuthUserService;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
@@ -38,6 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @author Singer
@@ -124,7 +127,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
     @Override
     public TradeOrderResp queryByOrderNo(String outTradeNo) {
         String authUserId = authAppUserService.authAppUserId();
-        TradeOrder entity = tradeOrderRepository.selectOne(new MPJLambdaWrapper<TradeOrder>()
+        TradeOrder entity = tradeOrderRepository.selectOne(new LambdaQueryWrapper<TradeOrder>()
                 .eq(TradeOrder::getOutTradeNo, outTradeNo)
                 .eq(TradeOrder::getAuthAppUserId, authUserId));
         if (CheckParam.isNull(entity)) {
@@ -254,6 +257,8 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         respList.stream().forEach(item -> {
             item.setId(Integer.valueOf(idBeginIndex.getAndIncrement()).longValue());
         });
+        //此处需要去重
+        respList = respList.stream().filter(BaseUtil.distinctByKey(TradeOrderResp::getRoomBookingId)).collect(Collectors.toList());
         return PageBuilder.buildPageResult(page, respList);
     }
 
