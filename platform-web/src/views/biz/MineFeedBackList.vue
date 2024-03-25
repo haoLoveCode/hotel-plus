@@ -339,44 +339,6 @@ export default {
         console.log('当前用户信息:' + JSON.stringify(this.userData))
       });
     },
-    async queryAllAuthAppUser() {
-      const loading = this.$loading({
-        lock: true,
-        text: "正在请求。。。",
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)'
-      });
-      try {
-        Api.queryAllAuthAppUser({}).then((res) => {
-          if (res.success) {
-            console.log('res:' + JSON.stringify(res))
-            if (this.$isNull(res)) {
-              return;
-            }
-            let data = res.data
-            if (this.$isNull(data)) {
-              return;
-            }
-            this.authAppUserOptions = new Array();
-            data.map((item) => {
-              let options = {
-                'text': item.userName,
-                'value': item.authAppUserId
-              }
-              this.authAppUserOptions.push(options)
-            })
-            console.log('this.authAppUserOptions:' + JSON.stringify(this.authAppUserOptions))
-            loading.close();
-          } else {
-            loading.close();
-            this.$message.error('服务器异常');
-          }
-        });
-      } catch (error) {
-        loading.close();
-        this.$message.error(error.message || error.msg || "服务器异常");
-      }
-    },
     async showRichText(richText) {
       console.log(richText)
       this.richText = richText
@@ -579,7 +541,7 @@ export default {
     // 初始化数据
     async init() {
       await this.currentUserMeta();
-      await this.queryAllAuthAppUser();
+      this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
       //await this.queryFeedbackData();
       this.queryPageList();
     },
