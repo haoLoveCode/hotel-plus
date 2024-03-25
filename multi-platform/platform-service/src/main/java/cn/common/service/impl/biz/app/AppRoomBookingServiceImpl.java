@@ -1,6 +1,7 @@
 package cn.common.service.impl.biz.app;
 
 import cn.common.enums.BizErrorCode;
+import cn.common.enums.BookingStatusEnum;
 import cn.common.enums.OrderTypeEnum;
 import cn.common.enums.RoomStatusEnum;
 import cn.common.repository.entity.biz.*;
@@ -154,6 +155,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
         RoomBooking entity = mapperFacade.map(req, RoomBooking.class);
         try {
             BaseUtil.setFieldValueNotNull(entity);
+            entity.setBookingStatus(BookingStatusEnum.BOOKING_SUCCESS.getCode());
             entity.setBookingNo(outTradeNo);
             entity.setRoomBookingId(mainId);
             entity.setSubscriberId(authAppUserId);
@@ -282,7 +284,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
                         RoomBookingReq req){
 
         if(!CheckParam.isNull(req.getSubscriberId())){
-            wrapper.like(RoomBooking::getSubscriberId,req.getSubscriberId());
+            wrapper.eq(RoomBooking::getSubscriberId,req.getSubscriberId());
         }
 
         if(!CheckParam.isNull(req.getBookingNo())){
@@ -290,7 +292,7 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
         }
 
         if(!CheckParam.isNull(req.getRoomDataId())){
-            wrapper.like(RoomBooking::getRoomDataId,req.getRoomDataId());
+            wrapper.eq(RoomBooking::getRoomDataId,req.getRoomDataId());
         }
 
         if(!CheckParam.isNull(req.getRemark())){
@@ -298,19 +300,19 @@ public class AppRoomBookingServiceImpl implements AppRoomBookingService {
         }
 
         if(!CheckParam.isNull(req.getBookingTime())){
-            wrapper.like(RoomBooking::getBookingTime,req.getBookingTime());
+            wrapper.ge(RoomBooking::getBookingTime,req.getBookingTime());
         }
 
         if(!CheckParam.isNull(req.getCheckInBegin())){
-            wrapper.like(RoomBooking::getCheckInBegin,req.getCheckInBegin());
+            wrapper.ge(RoomBooking::getCheckInBegin,req.getCheckInBegin());
         }
 
         if(!CheckParam.isNull(req.getCheckInEnd())){
-            wrapper.like(RoomBooking::getCheckInEnd,req.getCheckInEnd());
+            wrapper.le(RoomBooking::getCheckInEnd,req.getCheckInEnd());
         }
 
         if(!CheckParam.isNull(req.getBookingStatus())){
-            wrapper.like(RoomBooking::getBookingStatus,req.getBookingStatus());
+            wrapper.eq(RoomBooking::getBookingStatus,req.getBookingStatus());
         }
     }
 

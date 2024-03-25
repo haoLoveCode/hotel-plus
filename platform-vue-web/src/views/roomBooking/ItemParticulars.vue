@@ -131,12 +131,16 @@ export default {
           'value': 1
         },
         {
-          'text':'已取消',
+          'text':'已入住',
           'value': 2
         },
         {
-          'text':'已完成',
+          'text':'已取消',
           'value': 3
+        },
+        {
+          'text':'已完成',
+          'value': 4
         },
       ],
       //-----------------

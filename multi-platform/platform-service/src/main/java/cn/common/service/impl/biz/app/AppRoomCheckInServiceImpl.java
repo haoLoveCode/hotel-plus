@@ -1,16 +1,21 @@
 package cn.common.service.impl.biz.app;
 
+import cn.common.enums.BookingStatusEnum;
 import cn.common.enums.RoomStatusEnum;
 import cn.common.repository.entity.biz.RoomBooking;
 import cn.common.repository.entity.biz.RoomCheckIn;
 import cn.common.repository.entity.biz.RoomData;
+import cn.common.repository.entity.biz.TradeOrder;
 import cn.common.repository.repository.biz.RoomBookingRepository;
 import cn.common.repository.repository.biz.RoomCheckInRepository;
 import cn.common.repository.repository.biz.RoomDataRepository;
+import cn.common.repository.repository.biz.TradeOrderRepository;
 import cn.common.req.biz.RoomCheckInAddReq;
 import cn.common.req.biz.RoomCheckInReq;
 import cn.common.req.biz.RoomCheckInUpdateReq;
+import cn.common.resp.biz.RoomBookingResp;
 import cn.common.resp.biz.RoomCheckInResp;
+import cn.common.service.biz.AuthAppUserService;
 import cn.common.service.biz.app.AppRoomCheckInService;
 import cn.common.service.biz.app.AppRoomDataService;
 import cn.common.service.platform.AuthUserService;
@@ -29,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pro.skywalking.collection.CollectionUtils;
 import pro.skywalking.constants.BaseConstant;
 import pro.skywalking.enums.ErrorCode;
+import pro.skywalking.enums.OrderStatusEnum;
 import pro.skywalking.exception.BusinessException;
 import pro.skywalking.helper.PageBuilder;
 import pro.skywalking.req.base.BaseDeleteReq;
@@ -58,6 +64,9 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
     private RoomCheckInRepository roomCheckInRepository;
 
     @Resource
+    private TradeOrderRepository tradeOrderRepository;
+
+    @Resource
     private AppRoomDataService appRoomDataService;
 
     @Resource
@@ -73,7 +82,7 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
     private BaseConstant baseConstant;
 
     @Resource
-    private AuthUserService authUserService;
+    private AuthAppUserService authAppUserService;
 
     @Resource
     private HttpServletResponse response;
@@ -93,8 +102,8 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addItem(RoomCheckInAddReq addReq) {
         log.info(">>>>>>>>>>>>>>>>>新增客房入住信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
+        String authAppUserId = authAppUserService.authAppUserId();
         String roomBookingId = addReq.getRoomBookingId();
-
         RoomData roomData = appRoomDataService.queryRoomByBookingUd(roomBookingId);
         if(CheckParam.isNull(roomData)){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "房间信息不存在");
@@ -102,14 +111,29 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
         if(roomData.getRoomStatus().compareTo(RoomStatusEnum.CHECKED_IN.getCode()) != 0){
             throw new BusinessException(ErrorCode.ERROR.getCode(), "该房间没有被预定，不可入住");
         }
-
+        RoomBooking roomBooking = roomBookingRepository.selectOne(new LambdaQueryWrapper<RoomBooking>()
+                .eq(RoomBooking::getRoomBookingId,roomBookingId));
+        if(CheckParam.isNull(roomBooking)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "预定订单不存在");
+        }
+        //非预定成功状态不可入住
+        if(roomBooking.getBookingStatus().compareTo(BookingStatusEnum.BOOKING_SUCCESS.getCode()) != 0){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "非预定成功状态不可入住");
+        }
+        //此处为交易订单号
+        String bookingNo = roomBooking.getBookingNo();
+        TradeOrder tradeOrder = tradeOrderRepository.selectOne(new MPJLambdaWrapper<TradeOrder>()
+                .eq(TradeOrder::getOutTradeNo, bookingNo)
+                .eq(TradeOrder::getAuthAppUserId, authAppUserId));
+        if(CheckParam.isNull(tradeOrder)){
+            throw new BusinessException(ErrorCode.ERROR.getCode(), "交易订单不存在");
+        }
         String mainId = SnowflakeIdWorker.uniqueMainId();
-        String authUserId = authUserService.currentAuthUserId();
         RoomCheckIn entity = mapperFacade.map(addReq, RoomCheckIn.class);
         try {
             BaseUtil.setFieldValueNotNull(entity);
             entity.setRoomCheckInId(mainId);
-            entity.setOperatorId(authUserId);
+            entity.setOperatorId(authAppUserId);
         } catch (Exception e) {
             log.error("新增客房入住信息->设置为空的属性失败 {} , {} ", e.getMessage(), e);
             throw new BusinessException(ErrorCode.ERROR.getCode(),
@@ -120,6 +144,14 @@ public class AppRoomCheckInServiceImpl implements AppRoomCheckInService {
         //更新房间状态信息为已入住
         roomData.setRoomStatus(RoomStatusEnum.BOOKED.getCode());
         roomDataRepository.updateById(roomData);
+
+        //更新为已入住
+        roomBooking.setBookingStatus(BookingStatusEnum.CHECKED_IN.getCode());
+        roomBookingRepository.updateById(roomBooking);
+
+        //更新订单为完结
+        tradeOrder.setOrderStatus(OrderStatusEnum.FINISH.getCode());
+        tradeOrderRepository.updateById(tradeOrder);
     }
 
     /**

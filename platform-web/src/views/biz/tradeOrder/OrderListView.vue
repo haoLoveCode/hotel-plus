@@ -23,7 +23,7 @@
               {{ item.roomTitle }}
             </div>
             <div class="title-text" style="color: #FF0000;font-weight: bold">
-              {{handleTypeByValue(item.orderStatus,orderStatusOptions)}}
+              预定状态：{{handleTypeByValue(item.bookingStatus,bookingStatusOptions)}}
             </div>
             <div class="title-text">
               支付方式：{{handleTypeByValue(item.payType,payTypeOptions)}}
@@ -39,9 +39,14 @@
             </div>
             <div class="bottom-btn-view">
               <el-link type="info" :underline="false" style="font-size: 20px;margin: 20px 20px">
-                <div class="bottom-btn-div" v-if="item.orderStatus != 'FINISH'">
+                <div class="bottom-btn-div" v-if="item.bookingStatus == 1">
                   <div class="bottom-btn-text" @click="setOrderStatus(item)">
-                    确认收货
+                    登记入住
+                  </div>
+                </div>
+                <div class="bottom-btn-div" v-if="item.bookingStatus == 1">
+                  <div class="bottom-btn-text" @click="setOrderStatus(item)">
+                    取消预定
                   </div>
                 </div>
               </el-link>
@@ -88,6 +93,24 @@ export default {
       orderStatusOptions:this.$bizConstants.orderStatusOptions,
       payTypeOptions:this.$bizConstants.payTypeOptions,
       orderTypeOptions:this.$bizConstants.orderTypeOptions,
+      bookingStatusOptions: [
+        {
+          'text':'预定成功',
+          'value': 1
+        },
+        {
+          'text':'已入住',
+          'value': 2
+        },
+        {
+          'text':'已取消',
+          'value': 3
+        },
+        {
+          'text':'已完成',
+          'value': 4
+        },
+      ],
       //-----------------
       orderDataList: [],
       previewImageUrl: '',
