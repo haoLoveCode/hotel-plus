@@ -20,7 +20,7 @@
           </div>
           <div class="title-text-view">
             <div class="title-text" style="color: #00479d;font-size: 20px;">
-              {{ item.itemName }}
+              {{ item.roomTitle }}
             </div>
             <div class="title-text" style="color: #FF0000;font-weight: bold">
               {{handleTypeByValue(item.orderStatus,orderStatusOptions)}}
@@ -29,7 +29,7 @@
               支付方式：{{handleTypeByValue(item.payType,payTypeOptions)}}
             </div>
             <div class="title-text">
-              {{handleTypeByValue(item.orderType,orderTypeOptions)}}
+              房间编号: {{ item.roomNo }}
             </div>
             <div class="title-text" style="color: #304156;font-size: 20px;">
               订单编号：{{ item.outTradeNo }}
@@ -46,9 +46,9 @@
                 </div>
               </el-link>
               <el-link type="info" :underline="false" style="font-size: 20px;margin: 20px 20px">
-                <div class="buy-again-div" @click="toSalesItemData(item)">
+                <div class="buy-again-div" @click="toRoomDataView(item)">
                   <div class="bottom-btn-text">
-                    再次购买
+                    再次预定
                   </div>
                 </div>
               </el-link>
@@ -97,6 +97,7 @@ export default {
       userData:{},
       queryParams: {
         keyword: '',
+        authAppUserId: '',
       },
       paginationData: {
         itemsPerPage: 10,
@@ -136,12 +137,12 @@ export default {
         await this.queryOrderListByPage();
       });
     },
-    //跳转商品信息界面
-    toSalesItemData(item) {
+    //跳转房间信息界面
+    toRoomDataView(item) {
       this.$router.push({
-        path: '/salesItemDataView',
+        path: '/roomDataView',
         query: {
-          salesItemId: item.salesItemId,
+          roomDataId: item.roomDataId,
         }
       })
     },
@@ -224,7 +225,7 @@ export default {
       let userData = await this.$bizConstants.userMeta();
       this.userData = {...userData};
       console.log('当前用户信息:' + JSON.stringify(this.userData))
-      this.queryParams.
+      this.queryParams.authAppUserId = userData.authAppUserId;
       this.currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
     },
     itemActive($event) {

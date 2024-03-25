@@ -1,5 +1,6 @@
 package cn.common.service.impl.biz.app;
 
+import cn.common.repository.entity.biz.RoomBooking;
 import cn.common.repository.entity.biz.RoomData;
 import cn.common.repository.entity.biz.TradeOrder;
 import cn.common.repository.repository.biz.TradeOrderRepository;
@@ -161,6 +162,16 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         queryWrapper.selectAs(RoomData::getBedNum, TradeOrderResp::getBedNum);
         queryWrapper.selectAs(RoomData::getMainImg, TradeOrderResp::getMainImg);
         queryWrapper.selectAs(RoomData::getUnitPrice, TradeOrderResp::getUnitPrice);
+
+        queryWrapper.selectAs(RoomBooking::getRoomBookingId, TradeOrderResp::getRoomBookingId);
+        queryWrapper.selectAs(RoomBooking::getBookingNo, TradeOrderResp::getBookingNo);
+        queryWrapper.selectAs(RoomBooking::getBookingStatus, TradeOrderResp::getBookingStatus);
+        queryWrapper.selectAs(RoomBooking::getBookingTime, TradeOrderResp::getBookingTime);
+        queryWrapper.selectAs(RoomBooking::getRemark, TradeOrderResp::getRemark);
+        queryWrapper.selectAs(RoomBooking::getCheckInEnd, TradeOrderResp::getCheckInEnd);
+        queryWrapper.selectAs(RoomBooking::getCheckInBegin, TradeOrderResp::getCheckInBegin);
+        queryWrapper.selectAs(RoomBooking::getSubscriberId, TradeOrderResp::getSubscriberId);
+
         List<TradeOrderResp> respList = tradeOrderRepository.selectJoinList(TradeOrderResp.class, queryWrapper);
         if (CollectionUtils.isEmpty(respList)) {
             return Lists.newArrayList();
@@ -201,6 +212,7 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         //构建查询条件
         MPJLambdaWrapper<TradeOrder> pageWrapper = new MPJLambdaWrapper<>();
         pageWrapper.leftJoin(RoomData.class, RoomData::getRoomDataId, TradeOrder::getItemId);
+        pageWrapper.leftJoin(RoomBooking.class, RoomBooking::getRoomDataId, RoomData::getRoomDataId);
         setQueryCriteria(pageWrapper,pageReq);
         //是否查询当前用户卖出的
         /*Boolean queryMineSales = pageReq.getQueryMineSales();
@@ -219,6 +231,16 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
         pageWrapper.selectAs(RoomData::getBedNum, TradeOrderResp::getBedNum);
         pageWrapper.selectAs(RoomData::getMainImg, TradeOrderResp::getMainImg);
         pageWrapper.selectAs(RoomData::getUnitPrice, TradeOrderResp::getUnitPrice);
+
+        pageWrapper.selectAs(RoomBooking::getRoomBookingId, TradeOrderResp::getRoomBookingId);
+        pageWrapper.selectAs(RoomBooking::getBookingNo, TradeOrderResp::getBookingNo);
+        pageWrapper.selectAs(RoomBooking::getBookingStatus, TradeOrderResp::getBookingStatus);
+        pageWrapper.selectAs(RoomBooking::getBookingTime, TradeOrderResp::getBookingTime);
+        pageWrapper.selectAs(RoomBooking::getRemark, TradeOrderResp::getRemark);
+        pageWrapper.selectAs(RoomBooking::getCheckInEnd, TradeOrderResp::getCheckInEnd);
+        pageWrapper.selectAs(RoomBooking::getCheckInBegin, TradeOrderResp::getCheckInBegin);
+        pageWrapper.selectAs(RoomBooking::getSubscriberId, TradeOrderResp::getSubscriberId);
+
         setQueryCriteria(pageWrapper, pageReq);
         pageWrapper.orderBy(true, false, TradeOrder::getCreateTime);
         //开始分页

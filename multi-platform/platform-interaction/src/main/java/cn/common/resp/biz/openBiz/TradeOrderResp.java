@@ -1,5 +1,8 @@
 package cn.common.resp.biz.openBiz;
 
+import com.alibaba.fastjson2.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
+import pro.skywalking.constants.PlatformConstant;
 import pro.skywalking.req.platform.base.BaseResp;
 import lombok.Data;
 import pro.skywalking.validation.NotEmpty;
@@ -133,5 +136,56 @@ public class TradeOrderResp extends BaseResp implements Serializable {
 
 
     //-------------房间信息---end--------------
+
+    /**
+     * 业务主键ID
+     */
+    private String roomBookingId;
+
+    /**
+     * 预定人
+     */
+    private String subscriberId;
+
+    /**
+     * 预订单号
+     */
+    private String bookingNo;
+
+    /**
+     * 备注信息
+     */
+    private String remark;
+
+    //-------------房间预定信息---start--------------
+
+
+    /**
+     * 预订时间
+     */
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
+    private LocalDateTime bookingTime;
+
+    /**
+     * 入住开始时间
+     */
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
+    private LocalDateTime checkInBegin;
+
+    /**
+     * 入住结束时间
+     */
+    @JSONField(format = PlatformConstant.TIME_SECONDS_FORMAT)
+    @DateTimeFormat(pattern = PlatformConstant.TIME_SECONDS_FORMAT)
+    private LocalDateTime checkInEnd;
+
+    /**
+     * 预定状态
+     */
+    private Integer bookingStatus;
+
+    //-------------房间预定信息---end--------------
 
 }
