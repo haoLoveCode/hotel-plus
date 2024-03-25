@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
  * @Description: 交易订单信息相关服务方法实现
  * @date 2024-03-06
  */
-@Service("appTradeOrderService")
+@Service("tradeOrderService")
 @Slf4j
 public class TradeOrderServiceImpl implements AppTradeOrderService {
 

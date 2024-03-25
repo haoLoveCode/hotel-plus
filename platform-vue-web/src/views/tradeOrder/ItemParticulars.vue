@@ -15,7 +15,7 @@
               <el-tag size="medium">商品信息:</el-tag>
             </div>
             <div class="descriptions-value">
-              {{handleTypeByValue(particularsData.itemId,salesItemOptions)}}
+              {{handleTypeByValue(particularsData.itemId,roomDataOptions)}}
             </div>
           </div>
         </div>
@@ -137,7 +137,7 @@ export default {
       payTypeOptions:this.$bizConstants.payTypeOptions,
       orderTypeOptions:this.$bizConstants.orderTypeOptions,
       authAppUserOptions:[],
-      salesItemOptions: [],
+      roomDataOptions: [],
       takeAddressData:{},
       areaSelectData: [],
       //设置联动层级(0-省市联动/1-省市区联动/2-省市区街道联动)
@@ -266,7 +266,7 @@ export default {
         this.$message.error(error.message || error.msg || "服务器异常");
       }
     },
-    async querySalesItem() {
+    async queryRoomData() {
       const loading = this.$loading({
         lock: true,
         text: "正在请求。。。",
@@ -274,7 +274,7 @@ export default {
         background: 'rgba(0, 0, 0, 0.8)'
       });
       try {
-        Api.querySalesItem({}).then((res) => {
+        Api.queryRoomData({}).then((res) => {
           if (res.success) {
             console.log('res:' + JSON.stringify(res))
             if (this.$isNull(res)) {
@@ -284,15 +284,15 @@ export default {
             if (this.$isNull(data)) {
               return;
             }
-            this.salesItemOptions = new Array();
+            this.roomDataOptions = new Array();
             data.map((item) => {
               let options = {
-                'text': item.itemName,
-                'value': item.salesItemId
+                'text': item.roomNo,
+                'value': item.roomDataId
               }
-              this.salesItemOptions.push(options)
+              this.roomDataOptions.push(options)
             })
-            console.log('this.salesItemOptions:' + JSON.stringify(this.salesItemOptions))
+            console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
             loading.close();
           } else {
             loading.close();
@@ -342,7 +342,7 @@ export default {
     async init(data) {
       await this.queryOneTakeAddress(data);
       this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
-      await this.querySalesItem();
+      await this.queryRoomData();
       this.authUserOptions = await this.$bizConstants.authUserOptions()
       this.showParticulars(data);
     },

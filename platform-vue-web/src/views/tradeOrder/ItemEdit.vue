@@ -19,7 +19,7 @@
                   :clearable="true"
                   placeholder="请选择商品信息">
                 <el-option
-                    v-for="(item,index) in salesItemOptions"
+                    v-for="(item,index) in roomDataOptions"
                     :key="item.value"
                     :label="item.text"
                     :value="item.value">
@@ -194,7 +194,7 @@ export default {
       payTypeOptions:this.$bizConstants.payTypeOptions,
       orderTypeOptions:this.$bizConstants.orderTypeOptions,
       authAppUserOptions:[],
-      salesItemOptions: [],
+      roomDataOptions: [],
       takeAddressList: [],
       //-----------------
       title: "编辑",
@@ -332,7 +332,7 @@ export default {
         this.$message.error(error.message || error.msg || "服务器异常");
       }
     },
-    async querySalesItem() {
+    async queryRoomData() {
       const loading = this.$loading({
         lock: true,
         text: "正在请求。。。",
@@ -340,7 +340,7 @@ export default {
         background: 'rgba(0, 0, 0, 0.8)'
       });
       try {
-        Api.querySalesItem({}).then((res) => {
+        Api.queryRoomData({}).then((res) => {
           if (res.success) {
             console.log('res:' + JSON.stringify(res))
             if (this.$isNull(res)) {
@@ -350,15 +350,15 @@ export default {
             if (this.$isNull(data)) {
               return;
             }
-            this.salesItemOptions = new Array();
+            this.roomDataOptions = new Array();
             data.map((item) => {
               let options = {
-                'text': item.itemName,
-                'value': item.salesItemId
+                'text': item.roomNo,
+                'value': item.roomDataId
               }
-              this.salesItemOptions.push(options)
+              this.roomDataOptions.push(options)
             })
-            console.log('this.salesItemOptions:' + JSON.stringify(this.salesItemOptions))
+            console.log('this.roomDataOptions:' + JSON.stringify(this.roomDataOptions))
             loading.close();
           } else {
             loading.close();
@@ -384,7 +384,7 @@ export default {
     async setOtherData(data) {
       this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
       await this.queryTakeAddress(data.authAppUserId);
-      await this.querySalesItem();
+      await this.queryRoomData();
     },
     //处理初始化
     async init(data) {
