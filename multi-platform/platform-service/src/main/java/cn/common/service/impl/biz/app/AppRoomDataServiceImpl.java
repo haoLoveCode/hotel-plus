@@ -229,8 +229,12 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
     private void setCriteria(LambdaQueryWrapper<RoomData> wrapper,
                         RoomDataReq req){
 
+        if(!CheckParam.isNull(req.getRoomDataId())){
+            wrapper.eq(RoomData::getRoomDataId,req.getRoomDataId());
+        }
+
         if(!CheckParam.isNull(req.getRoomTypeId())){
-            wrapper.like(RoomData::getRoomTypeId,req.getRoomTypeId());
+            wrapper.eq(RoomData::getRoomTypeId,req.getRoomTypeId());
         }
 
         if(!CheckParam.isNull(req.getRoomTitle())){
@@ -250,23 +254,23 @@ public class AppRoomDataServiceImpl implements AppRoomDataService {
         }
 
         if(!CheckParam.isNull(req.getRoomStatus())){
-            wrapper.like(RoomData::getRoomStatus,req.getRoomStatus());
+            wrapper.eq(RoomData::getRoomStatus,req.getRoomStatus());
         }
 
         if(!CheckParam.isNull(req.getRoomFloor())){
-            wrapper.like(RoomData::getRoomFloor,req.getRoomFloor());
+            wrapper.eq(RoomData::getRoomFloor,req.getRoomFloor());
         }
 
         if(!CheckParam.isNull(req.getUnitPrice())){
-            wrapper.like(RoomData::getUnitPrice,req.getUnitPrice());
+            wrapper.ge(RoomData::getUnitPrice,req.getUnitPrice());
         }
 
         if(!CheckParam.isNull(req.getRoomArea())){
-            wrapper.like(RoomData::getRoomArea,req.getRoomArea());
+            wrapper.ge(RoomData::getRoomArea,req.getRoomArea());
         }
 
         if(!CheckParam.isNull(req.getBedNum())){
-            wrapper.like(RoomData::getBedNum,req.getBedNum());
+            wrapper.ge(RoomData::getBedNum,req.getBedNum());
         }
     }
 

@@ -30,14 +30,17 @@
             <el-image class="main-item-img" fit="fill" :src="item.mainImg" alt=""/>
           </div>
           <div class="main-item-bottom" style="font-size: 15px;font-weight: bold">
-            {{ item.itemName }}
+            {{ item.roomTitle }}
           </div>
           <div class="item-text-view">
             <div class="item-text" style="font-size: 18px;font-weight: bold;color: #e1251b">
-              售价:{{ item.salePrice }}
+              价格:{{ item.unitPrice }}/天
             </div>
-            <div class="item-text" style="font-size: 18px;font-weight: bold;color: #304156;text-decoration:line-through;">
-              原价:{{ item.originalPrice }}
+            <div class="item-text" style="font-size: 15px;">
+              房间面积:{{ item.roomArea }}
+            </div>
+            <div class="item-text" style="font-size: 15px;">
+              床位数量:{{ item.bedNum }}
             </div>
           </div>
           <div class="upvote-view" @click="userUpvote(item)" v-if="false">
@@ -94,7 +97,7 @@ export default {
       mainDataActiveIndex: 0,
       queryParams: {
         keyword: '',
-        roomDataId: ''
+        roomTypeId: ''
       },
       paginationData: {
         itemsPerPage: 10,
@@ -143,9 +146,9 @@ export default {
     //跳转到其他信息界面
     toRoomDataView(item) {
       this.$router.push({
-        path: '/salesItemDataView',
+        path: '/roomDataView',
         query: {
-          salesItemId: item.salesItemId,
+          roomDataId: item.roomDataId,
         }
       })
     },
@@ -260,7 +263,7 @@ export default {
       this.$router.push({
         path: '/mainData',
         query: {
-          salesItemId: item.salesItemId,
+          roomDataId: item.roomDataId,
         }
       })
     },
@@ -352,7 +355,7 @@ export default {
     async handleMainTypeSelect(item, index) {
       //console.log(item);
       this.mainDataActiveIndex = index;
-      this.queryParams.roomDataId = item.salesItemTypeId;
+      this.queryParams.roomTypeId = item.roomTypeId;
       //查询信息
       await this.queryRoomDataByPage(
           {
