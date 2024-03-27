@@ -65,7 +65,7 @@
               <el-input
                   v-model="submitData.bookingNo"
                   placeholder="请填写-预订单号"
-                  maxlength="10"
+                  maxlength="50"
                   show-word-limit>
               </el-input>
             </el-form-item>

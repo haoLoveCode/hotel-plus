@@ -159,7 +159,6 @@ public class RoomCheckInServiceImpl implements RoomCheckInService {
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void addItem(RoomCheckInAddReq addReq){
         log.info(">>>>>>>>>>>>>>>>>新增客房入住信息Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
-        String authUserId = authUserService.currentAuthUserId();
         String roomBookingId = addReq.getRoomBookingId();
         RoomData roomData = appRoomDataService.queryRoomByBookingId(roomBookingId);
         if(CheckParam.isNull(roomData)){
