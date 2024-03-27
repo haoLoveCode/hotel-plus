@@ -46,8 +46,8 @@ export const NEED_LOGIN_CODE = [
 //订单类型
 export const orderTypeOptions = [
   {
-    'text':'课程',
-    'value': 'SALES_ITEM'
+    'text':'房间预定',
+    'value': 'ROOM_ORDERING'
   },
 ]
 //订单支付方式

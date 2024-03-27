@@ -276,6 +276,7 @@ public class RoomBookingServiceImpl implements RoomBookingService {
         List<RoomBooking> entityList = roomBookingRepository.selectList(
             new LambdaQueryWrapper<RoomBooking>().in(RoomBooking::getRoomBookingId,mainIdList));
         entityList.stream().forEach(item -> {
+            tradeOrderRepository.delete(new LambdaQueryWrapper<TradeOrder>().eq(TradeOrder::getItemId,item.getBookingNo()))
             roomBookingRepository.deleteById(item);
         });
     }

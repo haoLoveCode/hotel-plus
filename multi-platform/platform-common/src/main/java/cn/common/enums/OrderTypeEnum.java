@@ -18,7 +18,6 @@ public enum OrderTypeEnum {
      */
     SALES_ITEM ("SALES_ITEM","商品");
 
-
     /**
      * 状态码
      */
