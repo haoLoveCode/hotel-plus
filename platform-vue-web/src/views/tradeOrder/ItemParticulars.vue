@@ -225,47 +225,6 @@ export default {
       });
       console.log(map)
     },
-    //查询用户的收货地址
-    async queryOneTakeAddress(data) {
-      const loading = this.$loading({
-        lock: true,
-        text: "正在请求。。。",
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)'
-      });
-      try {
-        Api.queryOneTakeAddress({
-          authAppUserId:data.authAppUserId,
-          takeAddressId:data.takeAddressId,
-        }).then(async (res) => {
-          if (res.success) {
-            console.log('res:' + JSON.stringify(res))
-            if (this.$isNull(res)) {
-              return;
-            }
-            let data = res.data
-            if (this.$isNull(data) || Object.keys(data).length === 0) {
-              return;
-            }
-            this.takeAddressData = {...data}
-            //设置地图中心点和地图的标记点
-            let position = {
-              longitude:Number(data.placeLongitude),
-              latitude:Number(data.placeLatitude),
-            }
-            this.setCurrentLocation(position);
-            console.log('this.takeAddressData:' + JSON.stringify(this.takeAddressData))
-            loading.close();
-          } else {
-            loading.close();
-            this.$message.error('服务器异常');
-          }
-        });
-      } catch (error) {
-        loading.close();
-        this.$message.error(error.message || error.msg || "服务器异常");
-      }
-    },
     async queryRoomData() {
       const loading = this.$loading({
         lock: true,

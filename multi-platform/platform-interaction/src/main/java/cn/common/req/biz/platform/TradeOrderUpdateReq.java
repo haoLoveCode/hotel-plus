@@ -83,10 +83,5 @@ public class TradeOrderUpdateReq implements Serializable {
      @NotEmpty(message = "订单状态->不可为空")
      private String orderStatus;
 
-    /**
-     * 收货地址ID
-     */
-    @NotEmpty(message = "收货地址ID-不可为空")
-    private String takeAddressId;
 
 }

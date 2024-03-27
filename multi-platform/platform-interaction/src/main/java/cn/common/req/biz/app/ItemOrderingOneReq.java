@@ -24,10 +24,5 @@ public class ItemOrderingOneReq implements Serializable {
     @NotEmpty(message = "商品ID->不可为空")
     private String itemId;
 
-    /**
-     * 收货地址ID
-     */
-    @NotEmpty(message = "收货地址ID-不可为空")
-    private String takeAddressId;
 
 }

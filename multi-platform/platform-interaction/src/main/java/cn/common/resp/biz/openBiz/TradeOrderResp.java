@@ -72,11 +72,6 @@ public class TradeOrderResp extends BaseResp implements Serializable {
      */
     private String orderStatus;
 
-    /**
-     * 收货地址ID
-     */
-    private String takeAddressId;
-
     //-------------房间信息---start--------------
 
     /**

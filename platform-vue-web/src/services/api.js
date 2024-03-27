@@ -380,26 +380,6 @@ const globalServices = {
         responseType: 'blob',
     },
     //---------------交易订单信息----end-------------------
-    //---------------订单-收货地址关联信息----start-------------------
-    /*查询订单-收货地址关联信息*/
-    queryOrderAddress: {
-        method: 'POST',
-        url: `${httpUrl}/api/v1/orderAddress/queryOrderAddress`,
-        needToken:true,
-    },
-    /*编辑订单-收货地址关联信息*/
-    editOrderAddressItem: {
-        method: 'PUT',
-        url: `${httpUrl}/api/v1/orderAddress/updateItem`,
-        needToken:true,
-    },
-    /*批量删除订单-收货地址关联信息*/
-    batchDeleteOrderAddress: {
-        method: 'POST',
-        url: `${httpUrl}/api/v1/orderAddress/batchDeleteItem`,
-        needToken:true,
-    },
-    //---------------订单-收货地址关联信息----end-------------------
     //---------------房间类型信息----start-------------------
     /*分页查询房间类型信息*/
     queryRoomTypeByPage: {

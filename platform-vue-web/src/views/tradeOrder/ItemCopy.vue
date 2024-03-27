@@ -129,25 +129,6 @@
           </div>
         </div>
         <div class="text-area-view">
-          <div class="copy-item-view" style="width: 100%">
-            <el-form-item label="收货地址" prop="takeAddressId">
-              <el-select
-                  style="width: 100%;height: 30px;"
-                  v-model="submitData.takeAddressId"
-                  :clearable="true"
-                  size="medium"
-                  placeholder="请选择收货地址">
-                <el-option
-                    v-for="(item,index) in takeAddressList"
-                    :key="item.value"
-                    :label="item.text"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="text-area-view">
           <div class="copy-item-view">
             <el-form-item label="订单备注" prop="orderRemark">
               <el-input
@@ -232,13 +213,6 @@ export default {
             trigger: 'change'
           }
         ],
-        takeAddressId: [
-          {
-            required: true,
-            message: '请选择收货地址',
-            trigger: 'change'
-          }
-        ],
         orderRemark: [
           {
             required: true,
@@ -290,47 +264,6 @@ export default {
     async handleAppUserChange(value){
       console.log('handleAppUserChange:'+value);
       await this.queryTakeAddress(value);
-    },
-    //查询用户的收货地址
-    async queryTakeAddress(authAppUserId) {
-      const loading = this.$loading({
-        lock: true,
-        text: "正在请求。。。",
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)'
-      });
-      try {
-        Api.queryTakeAddress({
-          authAppUserId:authAppUserId
-        }).then(async (res) => {
-          if (res.success) {
-            console.log('res:' + JSON.stringify(res))
-            if (this.$isNull(res)) {
-              return;
-            }
-            let dataList = res.data
-            if (this.$isNull(dataList) || dataList.length === 0) {
-              return;
-            }
-            this.takeAddressList = new Array();
-            await dataList.map(async (item) => {
-              let options = {
-                'text': item.addressDetailed,
-                'value': item.takeAddressId
-              }
-              this.takeAddressList.push(options)
-            })
-            console.log('this.takeAddressList:' + JSON.stringify(this.takeAddressList))
-            loading.close();
-          } else {
-            loading.close();
-            this.$message.error('服务器异常');
-          }
-        });
-      } catch (error) {
-        loading.close();
-        this.$message.error(error.message || error.msg || "服务器异常");
-      }
     },
     //选择的用户信息发生改变
     async handleAppUserChange(value){

@@ -79,7 +79,6 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addItem(TradeOrderAddReq addReq) {
         log.info(">>>>>>>>>>>>>>>>>新增Req {} <<<<<<<<<<<<<<<<", JSON.toJSONString(addReq));
-        String takeAddressId = addReq.getTakeAddressId();
         TradeOrder entity = mapperFacade.map(addReq, TradeOrder.class);
         entity.setId(null);
         try {
@@ -346,7 +345,6 @@ public class AppTradeOrderServiceImpl implements AppTradeOrderService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateItem(TradeOrderUpdateReq updateReq) {
         log.info(">>>>>>>>>>>>>>>>>更新请求参数 {} <<<<<<<<<<<<<<<<", JSON.toJSONString(updateReq));
-        String takeAddressId = updateReq.getTakeAddressId();
         String mainId = updateReq.getTradeOrderId();
         MPJLambdaWrapper<TradeOrder> lambdaWrapper = new MPJLambdaWrapper<TradeOrder>()
                 .eq(TradeOrder::getTradeOrderId, mainId);
