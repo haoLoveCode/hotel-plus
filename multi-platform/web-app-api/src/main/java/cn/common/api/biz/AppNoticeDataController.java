@@ -83,7 +83,7 @@ public class AppNoticeDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryNoticeData")
     @ApiLog(value = "查询公告信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<List<NoticeDataResp>> queryNoticeData(
         @RequestBody @Valid NoticeDataReq req){
         return apiResponse(appNoticeDataService.queryNoticeData(req));
@@ -98,7 +98,7 @@ public class AppNoticeDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryOneNoticeData")
     @ApiLog(value = "查询公告信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<NoticeDataResp> queryOneNoticeData(
         @RequestBody @Valid NoticeDataReq req){
         return apiResponse(appNoticeDataService.queryOneNoticeData(req));
@@ -113,7 +113,7 @@ public class AppNoticeDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryByPage")
     @ApiLog(value = "分页查询公告信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<Pagination<NoticeDataResp>> queryByPage(
         @RequestBody @Valid NoticeDataReq pageReq){
         return apiResponse(appNoticeDataService.queryByPage(pageReq));

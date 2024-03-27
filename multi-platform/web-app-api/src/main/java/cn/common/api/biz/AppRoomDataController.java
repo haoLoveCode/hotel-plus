@@ -87,7 +87,7 @@ public class AppRoomDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryRoomData")
     @ApiLog(value = "查询房间信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<List<RoomDataResp>> queryRoomData(
             @RequestBody @Valid RoomDataReq req) {
         return apiResponse(appRoomDataService.queryRoomData(req));
@@ -103,7 +103,7 @@ public class AppRoomDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryOneRoomData")
     @ApiLog(value = "查询房间信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<RoomDataResp> queryOneRoomData(
             @RequestBody @Valid RoomDataReq req) {
         return apiResponse(appRoomDataService.queryOneRoomData(req));
@@ -119,7 +119,7 @@ public class AppRoomDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryByPage")
     @ApiLog(value = "分页查询房间信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<Pagination<RoomDataResp>> queryByPage(
             @RequestBody @Valid RoomDataReq pageReq) {
         return apiResponse(appRoomDataService.queryByPage(pageReq));

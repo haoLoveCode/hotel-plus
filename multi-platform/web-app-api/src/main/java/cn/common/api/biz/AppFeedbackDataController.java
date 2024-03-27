@@ -83,7 +83,7 @@ public class AppFeedbackDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryFeedbackData")
     @ApiLog(value = "查询投诉建议信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<List<FeedbackDataResp>> queryFeedbackData(
         @RequestBody @Valid FeedbackDataReq req){
         return apiResponse(appFeedbackDataService.queryFeedbackData(req));
@@ -98,7 +98,7 @@ public class AppFeedbackDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryOneFeedbackData")
     @ApiLog(value = "查询投诉建议信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<FeedbackDataResp> queryOneFeedbackData(
         @RequestBody @Valid FeedbackDataReq req){
         return apiResponse(appFeedbackDataService.queryOneFeedbackData(req));
@@ -113,7 +113,7 @@ public class AppFeedbackDataController extends BaseApiController {
      */
     @PostMapping(value = "/queryByPage")
     @ApiLog(value = "分页查询投诉建议信息")
-    @NeedLogin()
+    @NeedLogin(value = false)
     public ApiResponse<Pagination<FeedbackDataResp>> queryByPage(
         @RequestBody @Valid FeedbackDataReq pageReq){
         return apiResponse(appFeedbackDataService.queryByPage(pageReq));
