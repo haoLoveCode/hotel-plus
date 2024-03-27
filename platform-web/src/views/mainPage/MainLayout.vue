@@ -20,6 +20,14 @@
             <el-menu-item index="/memberCenter">个人中心</el-menu-item>
           </el-menu>
         </div>
+        <div class="biz-button-view">
+          <div class="biz-button">
+            <el-link href="http://localhost:8088/" target="_blank">跳转后台</el-link>
+            <!--<el-button size="mini" type="warning" @click="toBackPlatform">
+
+            </el-button>-->
+          </div>
+        </div>
         <div class="user-data">
           <el-dropdown
               class="avatar-container"
@@ -112,6 +120,9 @@ export default {
     };
   },
   computed: {
+    toBackPlatform(){
+      //window.location.href="http://localhost:8088/";
+    },
     //设置当前时间
     async setCurrentTime(){
       console.log('设置时间')

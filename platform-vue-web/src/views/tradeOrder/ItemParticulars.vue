@@ -100,7 +100,7 @@
           </div>
         </div>
       </div>
-      <el-divider content-position="center">收货地址在线地图</el-divider>
+      <el-divider content-position="center" v-if="false">收货地址在线地图</el-divider>
       <div class="map-address-view">
         {{takeAddressData.addressDetailed}}
       </div>

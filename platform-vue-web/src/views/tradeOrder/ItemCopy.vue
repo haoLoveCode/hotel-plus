@@ -66,7 +66,7 @@
               <el-input
                   v-model="submitData.outTradeNo"
                   placeholder="请填写-支付订单号"
-                  maxlength="10"
+                  maxlength="30"
                   show-word-limit>
               </el-input>
             </el-form-item>
