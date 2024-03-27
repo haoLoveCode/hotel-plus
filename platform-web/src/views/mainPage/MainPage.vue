@@ -250,7 +250,7 @@ export default {
             item.mainImg = mainImg;
             this.roomDataList.push(item);
           })
-          console.log('roomDataList:'+JSON.stringify(this.roomDataList));
+          //console.log('roomDataList:'+JSON.stringify(this.roomDataList));
           loading.close();
         }
       }).catch((error) => {

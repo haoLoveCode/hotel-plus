@@ -164,7 +164,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
             return;
         }
         List<TradeOrder> entityList = tradeOrderRepository.selectList(
-                new MPJLambdaWrapper<TradeOrder>().in(TradeOrder::getTradeOrderId, mainIdList));
+                new LambdaQueryWrapper<TradeOrder>().in(TradeOrder::getTradeOrderId, mainIdList));
         entityList.stream().forEach(item -> {
             tradeOrderRepository.deleteById(item);
         });

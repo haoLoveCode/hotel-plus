@@ -326,7 +326,7 @@ public class FeedbackDataServiceImpl implements FeedbackDataService {
     public void updateItem(FeedbackDataUpdateReq updateReq) {
         log.info(">>>>>>>>>>>>>>>>>更新投诉建议信息请求参数 {} <<<<<<<<<<<<<<<<", JSON.toJSONString(updateReq));
         String mainId = updateReq.getFeedbackDataId();
-        FeedbackData result = feedbackDataRepository.selectOne(new MPJLambdaWrapper<FeedbackData>()
+        FeedbackData result = feedbackDataRepository.selectOne(new LambdaQueryWrapper<FeedbackData>()
                 .eq(FeedbackData::getFeedbackDataId, mainId));
         if (CheckParam.isNull(result)) {
             return;

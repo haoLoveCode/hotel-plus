@@ -1,11 +1,12 @@
 <template>
-  <div class="page-view" v-if="orderDataList && Object.keys(orderDataList).length > 0" >
+  <div class="page-view">
     <div class="title-view">
       <div class="title-text">
         订单列表
       </div>
     </div>
-    <div class="order-data-view">
+    <el-divider content-position="center" v-if="!orderDataList || orderDataList.length == 0">暂无订单</el-divider>
+    <div class="order-data-view" v-if="orderDataList && Object.keys(orderDataList).length > 0" >
       <div class="order-item-view"
            @mouseover="itemActive($event)" @mouseout="removeActive($event)"
            v-for="(item,index) in orderDataList" :key="index">
@@ -196,6 +197,10 @@ export default {
     },
     //查询订单信息
     async queryOrderListByPage() {
+      if(!this.userData || !this.userData.authAppUserId){
+        let userData = await this.$bizConstants.userMeta();
+        this.userData = {...userData};
+      }
       let params = {
         authAppUserId:this.userData.authAppUserId,
         ...this.queryParams,
@@ -272,8 +277,8 @@ export default {
     },
   },
   async created() {
-    await this.queryOrderListByPage();
     await this.init();
+    await this.queryOrderListByPage();
   },
   mounted() {
 
