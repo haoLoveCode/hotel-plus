@@ -299,7 +299,6 @@ export default {
       this.particularsVisible = true;
     },
     async init(data) {
-      await this.queryOneTakeAddress(data);
       this.authAppUserOptions = await this.$bizConstants.queryAuthAppUser();
       await this.queryRoomData();
       this.authUserOptions = await this.$bizConstants.authUserOptions()
