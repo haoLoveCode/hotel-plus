@@ -47,7 +47,7 @@ Vue.prototype.$commonOptions = commonOptions     // 列表选项类
 Vue.prototype.$isNull = baseUtils.isNull     // 判断空的方法
 Vue.prototype.handleImageUrl = baseUtils.handleImageUrl     // 处理图片的方法
 Vue.prototype.$platformText = '国内领先的酒店信息平台'     // 显示的平台名称和介绍
-Vue.prototype.$showMoreStatus = false     // 是否显示更多
+Vue.prototype.$showMoreStatus = true     // 是否显示更多
 Vue.prototype.$mainThemeColor = '#27408B' //系统主要颜色
 //Vue.prototype.$mainThemeColor = '#304156' //系统主要颜色
 // register global utility filters.
@@ -101,7 +101,7 @@ router.afterEach(() => {
             watermark_height:150,               //水印长度
             watermark_parent_node:'#app',       //水印的上一级节点，最好挂在根结点
         }
-        //watermark.init(markParams)
+        watermark.init(markParams)
     },1000)
     NProgress.done(); // 结束Progress
 });

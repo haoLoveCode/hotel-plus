@@ -501,7 +501,7 @@ export default {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          // border: 2px solid #e50a4c;
+          //border: 2px solid #e50a4c;
           .main-item-img {
             margin-top: 10px;
             width: 200px;
